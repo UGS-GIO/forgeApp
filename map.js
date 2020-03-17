@@ -22,6 +22,7 @@
       "esri/widgets/Compass",
       "esri/widgets/Search",
       "esri/widgets/Legend",
+      "esri/widgets/Expand",
       "esri/widgets/Sketch/SketchViewModel",
       "esri/widgets/BasemapToggle",
       "esri/widgets/ScaleBar",
@@ -53,7 +54,7 @@
       "calcite-maps/calcitemaps-arcgis-support-v0.10",
       "dojo/query",
       "dojo/domReady!"
-    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, Selection, List, Collapse, Dropdown, CalciteMaps, CalciteMapArcGISSupport, query) {
+    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, Selection, List, Collapse, Dropdown, CalciteMaps, CalciteMapArcGISSupport, query) {
       /******************************************************************
        *
        * Create the map, view and widgets
@@ -483,6 +484,24 @@ mapView.ui.add(locateWidget, "top-left");
                 }
             });
             
+ //legend expand widget
+ var expandLegend = new Expand({
+    view: mapView,
+    content: layerList,
+    //group: "top-left",
+    expandTooltip: "Expand Legend",
+    expanded: false
+  })
+
+//legend expand widget
+var legend = new Expand({
+view: mapView,
+content: layerList,
+//group: "top-left",
+expandTooltip: "Expand Legend",
+expanded: true
+})
+
             //layerlist action for opacity
             
             layerList.on("trigger-action", function(event) {
@@ -796,7 +815,43 @@ document
   });
 
 
+// Load
 
+isResponsiveSize = mapView.widthBreakpoint === "xsmall";
+updateView(isResponsiveSize);
+
+// Breakpoints
+
+mapView.watch("widthBreakpoint", function(breakpoint) {
+    console.log("watching breakpoint");
+    console.log(breakpoint);
+  switch (breakpoint) {
+    case "xsmall":
+      updateView(true);
+      break;
+    case "small":
+    case "medium":
+    case "large":
+    case "xlarge":
+      updateView(false);
+      break;
+    default:
+  }
+});
+
+function updateView(isMobile) {
+    console.log("Is Mobile");
+  setLegendMobile(isMobile);
+}
+
+
+function setLegendMobile(isMobile) {
+  var toAdd = isMobile ? expandLegend : legend;
+  var toRemove = isMobile ? legend : expandLegend;
+
+  mapView.ui.remove(toRemove);
+  mapView.ui.add(toAdd, "top-left");
+}
 
 
     });
