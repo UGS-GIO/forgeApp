@@ -154,7 +154,7 @@ mapView.ui.add(locateWidget, "top-left");
 
 
             landownership = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/0",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/0",
                 title: "Land Ownership",
                 opacity: .3,
                 elevationInfo: [{
@@ -165,7 +165,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             boundary = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/3",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/3",
                 title: "FORGE Boundary",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -173,7 +173,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             wells = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/4",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/4",
                 title: "Wells",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -181,7 +181,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             roads = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/1",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/1",
                 title: "Roads",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -189,7 +189,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             plss = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/2",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/2",
                 title: "PLSS",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -198,7 +198,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             office = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/5",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/5",
                 title: "Field Office",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -206,7 +206,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             power = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/6",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/6",
                 title: "Power Line",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -214,7 +214,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             waterLevel = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/7",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/7",
                 title: "Water Levels",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -222,7 +222,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             waterChemistry = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/8",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/8",
                 title: "Water Chemistry",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -230,7 +230,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             seismoms = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/9",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/9",
                 title: "Seismometers",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -238,7 +238,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             seismicity = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/10",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/10",
                 title: "Seismicity 1850 to 2016",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -246,7 +246,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             benchmarks = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/11",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/11",
                 title: "Benchmarks",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -254,7 +254,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             iso1km = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/12",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/12",
                 title: "Isotherms at 1km depth",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -262,7 +262,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             iso2km = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/13",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/13",
                 title: "Isotherms at 2km depth",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -270,7 +270,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             iso3km = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/14",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/14",
                 title: "Isotherms at 3km depth",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -278,7 +278,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             iso4km = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/15",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/15",
                 title: "Isotherms at 4km depth",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -286,7 +286,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             heatflow = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/16",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/16",
                 title: "Heat Flow Isotherms",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -294,7 +294,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             shallowWells = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/17",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
                 title: "Shallow Well Temperatures",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -302,7 +302,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
             intermediateWells = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/18",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
                 title: "Intermediate Well Temperatures",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -310,7 +310,7 @@ mapView.ui.add(locateWidget, "top-left");
             });
 
            deepWells = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Webmap2020_View/FeatureServer/19",
+                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
                 title: "Deep Well Temperatures",
                 elevationInfo: [{
                     mode: "on-the-ground"
@@ -370,7 +370,7 @@ mapView.ui.add(locateWidget, "top-left");
                 // });
 
                 geologicUnits = new MapImageLayer ({
-                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_2020/MapServer/",
+                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
                     title: "Geologic Units",
                     listMode: "hide-children",
                     sublayers: [
@@ -383,7 +383,7 @@ mapView.ui.add(locateWidget, "top-left");
                 });
 
                 geologicLines = new MapImageLayer ({
-                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_2020/MapServer/",
+                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
                     title: "Geologic Lines",
                     listMode: "hide-children",
                     sublayers: [
@@ -396,7 +396,7 @@ mapView.ui.add(locateWidget, "top-left");
                 });
 
                 geologicLabels = new MapImageLayer ({
-                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_2020/MapServer/",
+                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
                     title: "Geologic Labels",
                     listMode: "hide-children",
                     sublayers: [
@@ -413,7 +413,7 @@ mapView.ui.add(locateWidget, "top-left");
                 });
 
                 geologicSymbols = new MapImageLayer ({
-                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_2020/MapServer/",
+                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
                     title: "Geologic Symbols",
                     listMode: "hide-children",
                     sublayers: [
@@ -446,7 +446,7 @@ mapView.ui.add(locateWidget, "top-left");
             mapView.map.add(seismicData);    
             mapView.map.add(thermalData);
             mapView.map.add(geography);
-            mapView.map.add(subSurface);
+            //mapView.map.add(subSurface);
             //mapView.map.ground.layers.add(bedrockElevation);
             mapView.map.add(geology);
             mapView.map.add(infrastructure);
