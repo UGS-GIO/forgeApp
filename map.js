@@ -375,7 +375,7 @@ mapView.ui.add(locateWidget, "top-left");
                     listMode: "hide-children",
                     sublayers: [
                         {
-                            id: 16,
+                            id: 4,
                             //title: "Geologic Units"
                         }
                     ]
@@ -388,7 +388,7 @@ mapView.ui.add(locateWidget, "top-left");
                     listMode: "hide-children",
                     sublayers: [
                         {
-                            id: 15,
+                            id: 3,
                             //title: "Geologic Units"
                         }
                     ]
@@ -401,7 +401,7 @@ mapView.ui.add(locateWidget, "top-left");
                     listMode: "hide-children",
                     sublayers: [
                         {
-                            id: 12,
+                            id: 0,
                             //title: "Geologic Units"
                         },
                         {
@@ -418,7 +418,7 @@ mapView.ui.add(locateWidget, "top-left");
                     listMode: "hide-children",
                     sublayers: [
                         {
-                            id: 14,
+                            id: 2,
                             //title: "Geologic Units"
                         }
                     ]
