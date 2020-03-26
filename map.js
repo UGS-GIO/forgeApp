@@ -107,11 +107,321 @@
       mapView.when(function(){
         CalciteMapArcGISSupport.setPopupPanelSync(mapView);
       });
-      // Search - add to navbar
+      
+
+//layers
+      bedrockSymbology = new SceneLayer ({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Bedrock_1mExtrusion/SceneServer",
+        title: "Subsurface Bedrock",
+        opacity: 0.4,
+        // elevationInfo: [{
+        //     mode: "on-the-ground"
+        // }],
+    });
+
+    // bedrockSymbology = new SceneLayer ({
+    //     url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/ExtrudeBetweenTest_WSL1/SceneServer",
+    //     title: "Subsurface Bedrock",
+    //     opacity: 0.4,
+    //     // elevationInfo: [{
+    //     //     mode: "on-the-ground"
+    //     // }],
+    // });
+
+
+
+        landownership = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/0",
+            title: "Land Ownership",
+            opacity: .3,
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }],
+
+
+        });
+
+        boundary = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/3",
+            title: "FORGE Boundary",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }],
+        });
+
+        wells = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/4",
+            title: "Wells",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        roads = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/1",
+            title: "Roads",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        plss = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/2",
+            title: "PLSS",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+            labelsVisible: false,
+        });
+
+        office = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/5",
+            title: "Field Office",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        power = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/6",
+            title: "Power Line",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        waterLevel = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/7",
+            title: "Water Levels",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        waterChemistry = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/8",
+            title: "Water Chemistry",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        seismoms = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/9",
+            title: "Seismometers",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        seismicity = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/10",
+            title: "Seismicity 1850 to 2016",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        benchmarks = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/11",
+            title: "Benchmarks",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        iso1km = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/12",
+            title: "Isotherms at 1km depth",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        iso2km = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/13",
+            title: "Isotherms at 2km depth",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        iso3km = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/14",
+            title: "Isotherms at 3km depth",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        iso4km = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/15",
+            title: "Isotherms at 4km depth",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        heatflow = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/16",
+            title: "Heat Flow Isotherms",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        shallowWells = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
+            title: "Shallow Well Temperatures",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        intermediateWells = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
+            title: "Intermediate Well Temperatures",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+       deepWells = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
+            title: "Deep Well Temperatures",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
+        thermalData = new GroupLayer ({
+            title: "Thermal Data",
+            visible: false,
+            layers: [iso1km, iso2km, iso3km, iso4km, heatflow, shallowWells, intermediateWells, deepWells]
+        });
+
+            geography = new GroupLayer ({
+                title: "Geography",
+                layers: [roads, plss, landownership]
+            });
+
+            infrastructure = new GroupLayer ({
+                title: "FORGE Infrastructure",
+                layers: [power, office, boundary]
+            });
+
+            seismicData = new GroupLayer ({
+                title: "Seismic Data",
+                visible: false,
+                layers: [seismoms, seismicity]
+            });
+
+
+            geologicUnits = new MapImageLayer ({
+                url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+                title: "Geologic Units",
+                listMode: "hide-children",
+                sublayers: [
+                    {
+                        id: 4,
+                        //title: "Geologic Units"
+                    }
+                ]
+
+            });
+
+            geologicLines = new MapImageLayer ({
+                url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+                title: "Geologic Lines",
+                listMode: "hide-children",
+                sublayers: [
+                    {
+                        id: 3,
+                        //title: "Geologic Units"
+                    }
+                ]
+
+            });
+
+            geologicLabels = new MapImageLayer ({
+                url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+                title: "Geologic Labels",
+                listMode: "hide-children",
+                sublayers: [
+                    {
+                        id: 0,
+                        //title: "Geologic Units"
+                    },
+                    {
+                        id: 0,
+
+                    }
+                ]
+
+            });
+
+            geologicSymbols = new MapImageLayer ({
+                url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+                title: "Geologic Symbols",
+                listMode: "hide-children",
+                sublayers: [
+                    {
+                        id: 2,
+                        //title: "Geologic Units"
+                    }
+                ]
+
+            });
+
+            geology = new GroupLayer ({
+                title: "Geology",
+                layers: [geologicUnits, geologicLines, geologicSymbols, geologicLabels]
+            });
+
+            water = new GroupLayer ({
+                title: "Groundwater",
+                visible: false,
+                layers: [waterLevel, waterChemistry]
+            });
+
+            subSurface = new GroupLayer ({
+                title: "Subsurface Gelogic Data",
+                visible: false,
+                layers: [bedrockSymbology]
+            });
+
+            // Search - add to navbar
       var searchWidget = new Search({
         container: "searchWidgetDiv",
-        view: mapView
+        view: mapView,
+        allPlaceholder: "Search Layers",
+        activeMenu: "source",
+        locationEnabled: false,
+        includeDefaultSources: false,
+        sources: [
+            {
+              layer: landownership,
+              name: "Land Owner Agency",
+              searchFields: ["agency"],
+              displayField: "agency",
+              exactMatch: false,
+              outFields: ["*"],
+              name: "Land Owner",
+              placeholder: "example: BLM"
+            },
+            {   
+              layer: roads,
+              name: "Roads",
+              searchFields: ["fullname"],
+              displayField: "fullname",
+              exactMatch: false,
+              outFields: ["*"],
+              name: "Road",
+              //placeholder: "example: 3708"
+            }   
+        ]
       });
+
       CalciteMapArcGISSupport.setSearchExpandEvents(searchWidget);
       // Map widgets
       var home = new Home({
@@ -142,311 +452,12 @@ mapView.ui.add(locateWidget, "top-left");
 
 
 
-        bedrockSymbology = new SceneLayer ({
-            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/ExtrudeBetweenTest_WSL1/SceneServer",
-            title: "Subsurface Bedrock",
-            opacity: 0.4,
-            // elevationInfo: [{
-            //     mode: "on-the-ground"
-            // }],
-        });
-
-
-
-            landownership = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/0",
-                title: "Land Ownership",
-                opacity: .3,
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }],
-
-
-            });
-
-            boundary = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/3",
-                title: "FORGE Boundary",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }],
-            });
-
-            wells = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/4",
-                title: "Wells",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            roads = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/1",
-                title: "Roads",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            plss = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/2",
-                title: "PLSS",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-                labelsVisible: false,
-            });
-
-            office = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/5",
-                title: "Field Office",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            power = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/6",
-                title: "Power Line",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            waterLevel = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/7",
-                title: "Water Levels",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            waterChemistry = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/8",
-                title: "Water Chemistry",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            seismoms = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/9",
-                title: "Seismometers",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            seismicity = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/10",
-                title: "Seismicity 1850 to 2016",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            benchmarks = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/11",
-                title: "Benchmarks",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            iso1km = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/12",
-                title: "Isotherms at 1km depth",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            iso2km = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/13",
-                title: "Isotherms at 2km depth",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            iso3km = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/14",
-                title: "Isotherms at 3km depth",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            iso4km = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/15",
-                title: "Isotherms at 4km depth",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            heatflow = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/16",
-                title: "Heat Flow Isotherms",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            shallowWells = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
-                title: "Shallow Well Temperatures",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            intermediateWells = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
-                title: "Intermediate Well Temperatures",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-           deepWells = new FeatureLayer ({
-                url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
-                title: "Deep Well Temperatures",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-            });
-
-            thermalData = new GroupLayer ({
-                title: "Thermal Data",
-                visible: false,
-                layers: [iso1km, iso2km, iso3km, iso4km, heatflow, shallowWells, intermediateWells, deepWells]
-            });
-
-                geography = new GroupLayer ({
-                    title: "Geography",
-                    layers: [roads, plss, landownership]
-                });
-
-                infrastructure = new GroupLayer ({
-                    title: "FORGE Infrastructure",
-                    layers: [power, office, boundary]
-                });
-
-                seismicData = new GroupLayer ({
-                    title: "Seismic Data",
-                    visible: false,
-                    layers: [seismoms, seismicity]
-                });
-
-                // geology = new MapImageLayer ({
-                //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_2020/MapServer",
-                //     title: "Geology",
-                //     sublayers: [
-                //         {
-                //             id: 0,
-                //             title: "Labels",
-                //             listMode: "hide-children"
-                //         },
-                //         {
-                //             id: 12,
-                //             title: "Geologic Unit Labels",
-                //             listMode: "hide-children"
-                //         },
-                //         {
-                //             id: 14,
-                //             title: "Geologic Symbols"
-                //         },
-                //         {
-                //             id: 15,
-                //             title: "Geologic Lines"
-                //         },
-                //         {
-                //             id: 16,
-                //             title: "Geologic Units"
-                //         }
-                //     ]
-
-                // });
-
-                geologicUnits = new MapImageLayer ({
-                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-                    title: "Geologic Units",
-                    listMode: "hide-children",
-                    sublayers: [
-                        {
-                            id: 4,
-                            //title: "Geologic Units"
-                        }
-                    ]
-
-                });
-
-                geologicLines = new MapImageLayer ({
-                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-                    title: "Geologic Lines",
-                    listMode: "hide-children",
-                    sublayers: [
-                        {
-                            id: 3,
-                            //title: "Geologic Units"
-                        }
-                    ]
-
-                });
-
-                geologicLabels = new MapImageLayer ({
-                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-                    title: "Geologic Labels",
-                    listMode: "hide-children",
-                    sublayers: [
-                        {
-                            id: 0,
-                            //title: "Geologic Units"
-                        },
-                        {
-                            id: 0,
-
-                        }
-                    ]
-
-                });
-
-                geologicSymbols = new MapImageLayer ({
-                    url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-                    title: "Geologic Symbols",
-                    listMode: "hide-children",
-                    sublayers: [
-                        {
-                            id: 2,
-                            //title: "Geologic Units"
-                        }
-                    ]
-
-                });
-
-                geology = new GroupLayer ({
-                    title: "Geology",
-                    layers: [geologicUnits, geologicLines, geologicSymbols, geologicLabels]
-                });
-
-                water = new GroupLayer ({
-                    title: "Groundwater",
-                    visible: false,
-                    layers: [waterLevel, waterChemistry]
-                });
-
-                subSurface = new GroupLayer ({
-                    title: "Subsurface Gelogic Data",
-                    visible: false,
-                    layers: [bedrockSymbology]
-                });
      
             mapView.map.add(water);
             mapView.map.add(seismicData);    
             mapView.map.add(thermalData);
             mapView.map.add(geography);
-            //mapView.map.add(subSurface);
+            mapView.map.add(subSurface);
             //mapView.map.ground.layers.add(bedrockElevation);
             mapView.map.add(geology);
             mapView.map.add(infrastructure);
