@@ -460,6 +460,7 @@
 
             geology = new GroupLayer ({
                 title: "Geology",
+                visible: false,
                 layers: [geologicUnits, geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
             });
 
@@ -562,7 +563,7 @@
                 layer: geoPhysBenchmarks,
                 name: "Benchmarks",
                 searchFields: ["point_id"],
-                displayField: "Point ID",
+                displayField: "point_id",
                 outFields: ["*"],
 
                 //placeholder: "example: BLM"
@@ -570,8 +571,8 @@
             {
                 layer: shallowWells,
                 name: "Shallow Wells",
-                searchFields: ["nwell_ame"],
-                displayField: "name",
+                searchFields: ["well_name"],
+                displayField: "well_name",
                 outFields: ["*"],
 
                 //placeholder: "example: BLM"
@@ -580,7 +581,7 @@
                 layer: intermediateWells,
                 name: "Intermediate Wells",
                 searchFields: ["well_name"],
-                displayField: "name",
+                displayField: "well_name",
                 outFields: ["*"],
 
                 //placeholder: "example: BLM"
@@ -589,7 +590,7 @@
                 layer: deepWells,
                 name: "Deep Wells",
                 searchFields: ["well_name"],
-                displayField: "name",
+                displayField: "well_name",
                 outFields: ["*"],
 
                 //placeholder: "example: BLM"
