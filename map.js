@@ -294,6 +294,14 @@
             }], 
         });
 
+        wellPads = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/21",
+            title: "Well Pads",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
         thermalData = new GroupLayer ({
             title: "Thermal Data",
             visible: false,
@@ -307,7 +315,7 @@
 
             infrastructure = new GroupLayer ({
                 title: "FORGE Infrastructure",
-                layers: [power, office, boundary]
+                layers: [wellPads, power, office, boundary]
             });
 
             seismicData = new GroupLayer ({
@@ -320,6 +328,8 @@
             geologicUnits = new MapImageLayer ({
                 url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
                 title: "Geologic Units",
+                //listMode: "show",
+                legendEnabled: true,
                 listMode: "hide-children",
                 sublayers: [
                     {
@@ -345,16 +355,25 @@
 
             geologicLabels = new MapImageLayer ({
                 url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-                title: "Geologic Labels",
-                listMode: "hide-children",
+                title: "Geologic Feature Labels",
+                listMode: "hide",
                 sublayers: [
                     {
                         id: 0,
                         //title: "Geologic Units"
-                    },
-                    {
-                        id: 0,
+                    }
+                ]
 
+            });
+
+            geologicUnitLabels = new MapImageLayer ({
+                url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+                title: "Geologic Unit Labels",
+                listMode: "hide",
+                sublayers: [
+                    {
+                        id: 1,
+                        //title: "Geologic Units"
                     }
                 ]
 
@@ -375,7 +394,7 @@
 
             geology = new GroupLayer ({
                 title: "Geology",
-                layers: [geologicUnits, geologicLines, geologicSymbols, geologicLabels]
+                layers: [geologicUnits, geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
             });
 
             water = new GroupLayer ({
@@ -385,7 +404,7 @@
             });
 
             subSurface = new GroupLayer ({
-                title: "Subsurface Gelogic Data",
+                title: "Subsurface Geologic Data",
                 visible: false,
                 layers: [bedrockSymbology]
             });
@@ -418,7 +437,107 @@
               outFields: ["*"],
               name: "Road",
               //placeholder: "example: 3708"
-            }   
+            },
+            {
+                layer: wells,
+                name: "Wells",
+                searchFields: ["label"],
+                displayField: "label",
+                outFields: ["*"],
+                name: "Well Name",
+                //placeholder: "example: BLM"
+            },
+            {
+                layer: wells,
+                name: "Wells",
+                searchFields: ["label"],
+                displayField: "label",
+                outFields: ["*"],
+                name: "Well Name",
+                //placeholder: "example: BLM"
+            }, 
+            {
+                layer: wellPads,
+                name: "Well Pads",
+                searchFields: ["name"],
+                displayField: "name",
+                outFields: ["*"],
+                name: "Well Pads",
+                //placeholder: "example: BLM"
+            }, 
+            {
+                layer: geologicUnits,
+                name: "Geologic Units",
+                searchFields: ["unitsymbol, unitname, description"],
+                displayField: "unitname",
+                outFields: ["*"],
+                name: "Geologic Units",
+                //placeholder: "example: BLM"
+            }, 
+            {
+                layer: geologicLines,
+                name: "Geologic Lines",
+                searchFields: ["feature, featurename"],
+                displayField: "featurename",
+                outFields: ["*"],
+                name: "Geologic Lines",
+                //placeholder: "example: BLM"
+            }, 
+            {
+                layer: wellPads,
+                name: "Well Pads",
+                searchFields: ["name"],
+                displayField: "name",
+                outFields: ["*"],
+                name: "Well Pads",
+                //placeholder: "example: BLM"
+            }, 
+            {
+                layer: wellPads,
+                name: "Well Pads",
+                searchFields: ["name"],
+                displayField: "name",
+                outFields: ["*"],
+                name: "Well Pads",
+                //placeholder: "example: BLM"
+            }, 
+            {
+                layer: wellPads,
+                name: "Well Pads",
+                searchFields: ["name"],
+                displayField: "name",
+                outFields: ["*"],
+                name: "Well Pads",
+                //placeholder: "example: BLM"
+            }, 
+            {
+                layer: wellPads,
+                name: "Well Pads",
+                searchFields: ["name"],
+                displayField: "name",
+                outFields: ["*"],
+                name: "Well Pads",
+                //placeholder: "example: BLM"
+            }, 
+            {
+                layer: wellPads,
+                name: "Well Pads",
+                searchFields: ["name"],
+                displayField: "name",
+                outFields: ["*"],
+                name: "Well Pads",
+                //placeholder: "example: BLM"
+            }, 
+            {
+                layer: wellPads,
+                name: "Well Pads",
+                searchFields: ["name"],
+                displayField: "name",
+                outFields: ["*"],
+                name: "Well Pads",
+                //placeholder: "example: BLM"
+            }
+
         ]
       });
 
@@ -466,7 +585,7 @@ mapView.ui.add(locateWidget, "top-left");
 
             layerList = new LayerList({
                 view: mapView,
-                container: "legendDiv",
+                //container: "legendDiv",
                 listItemCreatedFunction: function(event) {
                     const item = event.item;
                     //console.log(item);
