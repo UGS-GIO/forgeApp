@@ -111,7 +111,7 @@
 
 //layers
       bedrockSymbology = new SceneLayer ({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Bedrock_1mExtrusion/SceneServer",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Extrusion_SubsurfaceOnly/SceneServer",
         title: "Subsurface Bedrock",
         opacity: 0.4,
         // elevationInfo: [{
@@ -302,10 +302,24 @@
             }], 
         });
 
+        geoPhysBenchmarks = new FeatureLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/11",
+            title: "Geophysical Benchmarks",
+            elevationInfo: [{
+                mode: "on-the-ground"
+            }], 
+        });
+
         thermalData = new GroupLayer ({
             title: "Thermal Data",
             visible: false,
             layers: [iso1km, iso2km, iso3km, iso4km, heatflow, shallowWells, intermediateWells, deepWells]
+        });
+
+        geoPhysData = new GroupLayer ({
+            title: "Geophysical Data",
+            visible: false,
+            layers: [geoPhysBenchmarks]
         });
 
             geography = new GroupLayer ({
@@ -325,9 +339,61 @@
             });
 
 
+            geologicUnitsSearch = new FeatureLayer ({
+                url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/FeatureServer/4",
+                title: "Geologic Units",
+                elevationInfo: [{
+                    mode: "on-the-ground"
+                }], 
+                visible: false,
+                //listMode: "show",
+                // legendEnabled: true,
+                // listMode: "hide-children",
+                // sublayers: [
+                //     {
+                //         id: 4,
+                //         //title: "Geologic Units"
+                //     }
+                // ]
+
+            });
+
+            // geology = new MapImageLayer ({
+            //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+            //     title: "Geologic Units",
+            //     outFields: ["*"],
+            //     //listMode: "show",
+            //     legendEnabled: true,
+            //     listMode: "hide-children",
+            //     sublayers: [
+            //         {
+            //             id: 0,
+            //             title: "Geologic Feature Labels"
+            //         },
+            //         {
+            //             id: 1,
+            //             title: "Geologic Unit Labels"
+            //         },
+            //         {
+            //             id: 2,
+            //             title: "Geologic Symbols"
+            //         },
+            //         {
+            //             id: 3,
+            //             title: "Geologic Lines"
+            //         },
+            //         {
+            //             id: 4,
+            //             title: "Geologic Units"
+            //         },
+            //     ]
+
+            // });
+
             geologicUnits = new MapImageLayer ({
                 url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
                 title: "Geologic Units",
+                outFields: ["*"],
                 //listMode: "show",
                 legendEnabled: true,
                 listMode: "hide-children",
@@ -425,7 +491,7 @@
               displayField: "agency",
               exactMatch: false,
               outFields: ["*"],
-              name: "Land Owner",
+
               placeholder: "example: BLM"
             },
             {   
@@ -435,7 +501,7 @@
               displayField: "fullname",
               exactMatch: false,
               outFields: ["*"],
-              name: "Road",
+
               //placeholder: "example: 3708"
             },
             {
@@ -444,97 +510,88 @@
                 searchFields: ["label"],
                 displayField: "label",
                 outFields: ["*"],
-                name: "Well Name",
+
                 //placeholder: "example: BLM"
             },
             {
-                layer: wells,
-                name: "Wells",
-                searchFields: ["label"],
-                displayField: "label",
-                outFields: ["*"],
-                name: "Well Name",
-                //placeholder: "example: BLM"
-            }, 
-            {
                 layer: wellPads,
                 name: "Well Pads",
                 searchFields: ["name"],
                 displayField: "name",
                 outFields: ["*"],
-                name: "Well Pads",
+
                 //placeholder: "example: BLM"
             }, 
             {
-                layer: geologicUnits,
+                layer: geologicUnitsSearch,
                 name: "Geologic Units",
-                searchFields: ["unitsymbol, unitname, description"],
+                searchFields: ["description"],
                 displayField: "unitname",
                 outFields: ["*"],
-                name: "Geologic Units",
+
                 //placeholder: "example: BLM"
             }, 
+            // {
+            //     layer: geologicLines,
+            //     name: "Geologic Lines",
+            //     searchFields: ["feature", "featurename"],
+            //     displayField: "featurename",
+            //     outFields: ["*"],
+
+            //     //placeholder: "example: BLM"
+            // }, 
             {
-                layer: geologicLines,
-                name: "Geologic Lines",
-                searchFields: ["feature, featurename"],
-                displayField: "featurename",
-                outFields: ["*"],
-                name: "Geologic Lines",
-                //placeholder: "example: BLM"
-            }, 
-            {
-                layer: wellPads,
-                name: "Well Pads",
-                searchFields: ["name"],
+                layer: waterLevel,
+                name: "Water Level",
+                searchFields: ["name", "label"],
                 displayField: "name",
                 outFields: ["*"],
-                name: "Well Pads",
+
                 //placeholder: "example: BLM"
             }, 
             {
-                layer: wellPads,
-                name: "Well Pads",
-                searchFields: ["name"],
-                displayField: "name",
+                layer: waterChemistry,
+                name: "Water Chemistry",
+                searchFields: ["labelfield"],
+                displayField: "labelfield",
                 outFields: ["*"],
-                name: "Well Pads",
+ 
                 //placeholder: "example: BLM"
             }, 
             {
-                layer: wellPads,
-                name: "Well Pads",
-                searchFields: ["name"],
-                displayField: "name",
+                layer: geoPhysBenchmarks,
+                name: "Benchmarks",
+                searchFields: ["point_id"],
+                displayField: "Point ID",
                 outFields: ["*"],
-                name: "Well Pads",
+
                 //placeholder: "example: BLM"
             }, 
             {
-                layer: wellPads,
-                name: "Well Pads",
-                searchFields: ["name"],
+                layer: shallowWells,
+                name: "Shallow Wells",
+                searchFields: ["nwell_ame"],
                 displayField: "name",
                 outFields: ["*"],
-                name: "Well Pads",
+
                 //placeholder: "example: BLM"
             }, 
             {
-                layer: wellPads,
-                name: "Well Pads",
-                searchFields: ["name"],
+                layer: intermediateWells,
+                name: "Intermediate Wells",
+                searchFields: ["well_name"],
                 displayField: "name",
                 outFields: ["*"],
-                name: "Well Pads",
+
                 //placeholder: "example: BLM"
             }, 
             {
-                layer: wellPads,
-                name: "Well Pads",
-                searchFields: ["name"],
+                layer: deepWells,
+                name: "Deep Wells",
+                searchFields: ["well_name"],
                 displayField: "name",
                 outFields: ["*"],
-                name: "Well Pads",
+
                 //placeholder: "example: BLM"
             }
 
@@ -573,6 +630,7 @@ mapView.ui.add(locateWidget, "top-left");
 
      
             mapView.map.add(water);
+            mapView.map.add(geoPhysData);
             mapView.map.add(seismicData);    
             mapView.map.add(thermalData);
             mapView.map.add(geography);
