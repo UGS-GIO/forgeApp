@@ -107,6 +107,44 @@
       mapView.when(function(){
         CalciteMapArcGISSupport.setPopupPanelSync(mapView);
       });
+
+      unitsPopup = function(feature) {
+        var content = "";
+
+
+        if (feature.graphic.attributes.unitsymbol) {
+            content += "<span class='bold' title='Longitude'><b>Unit: </b></span>{unitsymbol}<br/>";
+        }
+        if (feature.graphic.attributes.unitname) {
+            content += "<span class='bold' title='Longitude'><b>Unit Name: </b></span>{unitname}<br/>";
+        }
+        if (feature.graphic.attributes.age_strat) {
+            content += "<span class='bold' title='Longitude'><b>Age: </b></span>{age_strat}<br/>";
+        }
+        if (feature.graphic.attributes.description) {
+            content += "<span class='bold' title='Longitude'><b>Unit Description: </b></span>{description}<br/>";
+        }
+        return content;
+    }
+
+    unitsPopup = function(feature) {
+        var content = "";
+
+
+        if (feature.graphic.attributes.unitsymbol) {
+            content += "<span class='bold' title='Longitude'><b>Unit: </b></span>{unitsymbol}<br/>";
+        }
+        if (feature.graphic.attributes.unitname) {
+            content += "<span class='bold' title='Longitude'><b>Unit Name: </b></span>{unitname}<br/>";
+        }
+        if (feature.graphic.attributes.age_strat) {
+            content += "<span class='bold' title='Longitude'><b>Age: </b></span>{age_strat}<br/>";
+        }
+        if (feature.graphic.attributes.description) {
+            content += "<span class='bold' title='Longitude'><b>Unit Description: </b></span>{description}<br/>";
+        }
+        return content;
+    }
       
 
 //layers
@@ -400,6 +438,11 @@
                 sublayers: [
                     {
                         id: 4,
+                        popupTemplate: {
+                            outFields: ["*"],
+                            title: "<b>Geologic Units</b>",
+                            content: unitsPopup
+                        },
                         //title: "Geologic Units"
                     }
                 ]
