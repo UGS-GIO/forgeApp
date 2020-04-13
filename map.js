@@ -127,22 +127,54 @@
         return content;
     }
 
-    unitsPopup = function(feature) {
+    wellsPopup = function(feature) {
         var content = "";
 
 
-        if (feature.graphic.attributes.unitsymbol) {
-            content += "<span class='bold' title='Longitude'><b>Unit: </b></span>{unitsymbol}<br/>";
+        if (feature.graphic.attributes.id) {
+            content += "<span class='bold' title='Longitude'><b>ID: </b></span>{id}<br/>";
         }
-        if (feature.graphic.attributes.unitname) {
-            content += "<span class='bold' title='Longitude'><b>Unit Name: </b></span>{unitname}<br/>";
+        if (feature.graphic.attributes.label) {
+            content += "<span class='bold' title='Longitude'><b>Label: </b></span>{label}<br/>";
         }
-        if (feature.graphic.attributes.age_strat) {
-            content += "<span class='bold' title='Longitude'><b>Age: </b></span>{age_strat}<br/>";
+        if (feature.graphic.attributes.type) {
+            content += "<span class='bold' title='Longitude'><b>Type: </b></span>{type}<br/>";
         }
-        if (feature.graphic.attributes.description) {
-            content += "<span class='bold' title='Longitude'><b>Unit Description: </b></span>{description}<br/>";
+
+        return content;
+    }
+
+    waterLevelPopup = function(feature) {
+        var content = "";
+
+
+        if (feature.graphic.attributes.name) {
+            content += "<span class='bold' title='Longitude'><b>Name: </b></span>{name}<br/>";
         }
+        if (feature.graphic.attributes.watereleva) {
+            content += "<span class='bold' title='Longitude'><b>Water Level: </b></span>{watereleva}<br/>";
+        }
+        if (feature.graphic.attributes.datemeasur) {
+            content += "<span class='bold' title='Longitude'><b>Date Measured: </b></span>{datemeasur}<br/>";
+        }
+
+        return content;
+    }
+
+    waterChemPopup = function(feature) {
+        var content = "";
+
+
+        if (feature.graphic.attributes.station) {
+            content += "<span class='bold' title='Longitude'><b>Station: </b></span>{station}<br/>";
+        }
+        if (feature.graphic.attributes.temp) {
+            content += "<span class='bold' title='Longitude'><b>Temperature: </b></span>{temp}<br/>";
+        }
+        if (feature.graphic.attributes.sampledate) {
+            content += "<span class='bold' title='Longitude'><b>Sample Date: </b></span>{sampledate}<br/>";
+        }
+
         return content;
     }
       
@@ -193,6 +225,11 @@
             elevationInfo: [{
                 mode: "on-the-ground"
             }], 
+            popupTemplate: {
+                outFields: ["*"],
+                title: "<b>FORGE Wells</b>",
+                content: wellsPopup
+            },
         });
 
         roads = new FeatureLayer ({
@@ -234,6 +271,11 @@
             elevationInfo: [{
                 mode: "on-the-ground"
             }], 
+            popupTemplate: {
+                outFields: ["*"],
+                title: "<b>Water Level</b>",
+                content: waterLevelPopup
+            },
         });
 
         waterChemistry = new FeatureLayer ({
@@ -242,6 +284,11 @@
             elevationInfo: [{
                 mode: "on-the-ground"
             }], 
+            popupTemplate: {
+                outFields: ["*"],
+                title: "<b>Water Chemistry</b>",
+                content: waterChemPopup
+            },
         });
 
         seismoms = new FeatureLayer ({
@@ -367,7 +414,7 @@
 
             infrastructure = new GroupLayer ({
                 title: "FORGE Infrastructure",
-                layers: [wellPads, power, office, boundary]
+                layers: [wells, wellPads, power, office, boundary]
             });
 
             seismicData = new GroupLayer ({
