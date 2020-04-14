@@ -36,6 +36,7 @@
       "esri/tasks/support/FeatureSet",
       "esri/tasks/support/Query",
       "esri/tasks/QueryTask",
+      "esri/popup/content/AttachmentsContent",
       //DGrid
       "dstore/Memory",
       "dojo/data/ObjectStore",
@@ -54,7 +55,7 @@
       "calcite-maps/calcitemaps-arcgis-support-v0.10",
       "dojo/query",
       "dojo/domReady!"
-    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, Selection, List, Collapse, Dropdown, CalciteMaps, CalciteMapArcGISSupport, query) {
+    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, Selection, List, Collapse, Dropdown, CalciteMaps, CalciteMapArcGISSupport, query) {
       /******************************************************************
        *
        * Create the map, view and widgets
@@ -178,6 +179,63 @@
         return content;
     }
       
+    shallowWellPopup = function(feature) {
+        var content = "";
+
+
+        if (feature.graphic.attributes.well_name) {
+            content += "<span class='bold' title='Longitude'><b>Well Name: </b></span>{well_name}<br/>";
+        }
+        if (feature.graphic.attributes.depth_m) {
+            content += "<span class='bold' title='Longitude'><b>Depth (m): </b></span>{depth_m}<br/>";
+        }
+        // if (feature.graphic.attributes.sampledate) {
+        //     content += "<span class='bold' title='Longitude'><b>Sample Date: </b></span>{sampledate}<br/>";
+        // }
+
+        return content;
+    }
+
+    deepWellPopup = function(feature) {
+        console.log(feature);
+        var content = "";
+
+
+        if (feature.graphic.attributes.well_name) {
+            content += "<span class='bold' title='Longitude'><b>Well Name: </b></span>{well_name}<br/>";
+        }
+        if (feature.graphic.attributes.depth_m) {
+            content += "<span class='bold' title='Longitude'><b>Depth (m): </b></span>{depth_m}<br/>";
+        }
+        // if (feature.graphic.attributes.sampledate) {
+        //     content += "<span class='bold' title='Longitude'><b>Sample Date: </b></span>{sampledate}<br/>";
+        // }
+
+        const attachmentsElement = new AttachmentsContent({
+            displayType: "list"
+          });
+
+
+
+        return content;
+    }
+
+    intermediateWellPopup = function(feature) {
+        var content = "";
+
+
+        if (feature.graphic.attributes.well_name) {
+            content += "<span class='bold' title='Longitude'><b>Well Name: </b></span>{well_name}<br/>";
+        }
+        if (feature.graphic.attributes.depth_m) {
+            content += "<span class='bold' title='Longitude'><b>Depth (m): </b></span>{depth_m}<br/>";
+        }
+        // if (feature.graphic.attributes.sampledate) {
+        //     content += "<span class='bold' title='Longitude'><b>Sample Date: </b></span>{sampledate}<br/>";
+        // }
+
+        return content;
+    }
 
 //layers
       bedrockSymbology = new SceneLayer ({
@@ -361,6 +419,20 @@
             elevationInfo: [{
                 mode: "on-the-ground"
             }], 
+            popupTemplate: {
+                outFields: ["*"],
+                title: "<b>Shallow Well</b>",
+                content: [
+
+                    {
+                    type: "text",
+                    text: "<b>Well Name: </b>{well_name}<br><b>Depth (m): </b>{depth_m}<br>"
+                },
+                {
+                    type: "attachments"
+                }
+                ]
+            },
         });
 
         intermediateWells = new FeatureLayer ({
@@ -369,6 +441,20 @@
             elevationInfo: [{
                 mode: "on-the-ground"
             }], 
+            popupTemplate: {
+                outFields: ["*"],
+                title: "<b>Intermediate Well</b>",
+                content: [
+
+                    {
+                    type: "text",
+                    text: "<b>Well Name: </b>{well_name}<br><b>Depth (m): </b>{depth_m}<br>"
+                },
+                {
+                    type: "attachments"
+                }
+                ]
+            },
         });
 
        deepWells = new FeatureLayer ({
@@ -377,6 +463,20 @@
             elevationInfo: [{
                 mode: "on-the-ground"
             }], 
+            popupTemplate: {
+                outFields: ["*"],
+                title: "<b>Deep Well</b>",
+                content: [
+
+                    {
+                    type: "text",
+                    text: "<b>Well Name: </b>{well_name}<br><b>Depth (m): </b>{depth_m}<br>"
+                },
+                {
+                    type: "attachments"
+                }
+                ]
+            },
         });
 
         wellPads = new FeatureLayer ({
