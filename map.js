@@ -276,19 +276,32 @@
                 mode: "on-the-ground"
             }],
         });
-
-        wells = new FeatureLayer ({
-            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/4",
+        
+        wells = new SceneLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/testBuffer/SceneServer",
             title: "Wells",
-            elevationInfo: [{
-                mode: "on-the-ground"
-            }], 
+            // elevationInfo: [{
+            //     mode: "on-the-ground"
+            // }], 
             popupTemplate: {
                 outFields: ["*"],
                 title: "<b>FORGE Wells</b>",
                 content: wellsPopup
             },
         });
+
+        // wells = new FeatureLayer ({
+        //     url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/4",
+        //     title: "Wells",
+        //     elevationInfo: [{
+        //         mode: "on-the-ground"
+        //     }], 
+        //     popupTemplate: {
+        //         outFields: ["*"],
+        //         title: "<b>FORGE Wells</b>",
+        //         content: wellsPopup
+        //     },
+        // });
 
         roads = new FeatureLayer ({
             url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/1",
