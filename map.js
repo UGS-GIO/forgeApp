@@ -278,7 +278,7 @@
         });
         
         wells = new SceneLayer ({
-            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/testBuffer/SceneServer",
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Inf_Wells_3d/SceneServer",
             title: "Wells",
             // elevationInfo: [{
             //     mode: "on-the-ground"
@@ -426,12 +426,12 @@
             }], 
         });
 
-        shallowWells = new FeatureLayer ({
-            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
+        shallowWells = new SceneLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Shallow_Wells_3d/SceneServer",
             title: "Shallow Well Temperatures",
-            elevationInfo: [{
-                mode: "on-the-ground"
-            }], 
+            // elevationInfo: [{
+            //     mode: "on-the-ground"
+            // }], 
             popupTemplate: {
                 outFields: ["*"],
                 title: "<b>Shallow Well</b>",
@@ -448,12 +448,12 @@
             },
         });
 
-        intermediateWells = new FeatureLayer ({
-            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
+        intermediateWells = new SceneLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Intermediate_Wells_3d/SceneServer",
             title: "Intermediate Well Temperatures",
-            elevationInfo: [{
-                mode: "on-the-ground"
-            }], 
+            // elevationInfo: [{
+            //     mode: "on-the-ground"
+            // }], 
             popupTemplate: {
                 outFields: ["*"],
                 title: "<b>Intermediate Well</b>",
@@ -470,12 +470,12 @@
             },
         });
 
-       deepWells = new FeatureLayer ({
-            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
+       deepWells = new SceneLayer ({
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Deep_Wells_3d/SceneServer",
             title: "Deep Well Temperatures",
-            elevationInfo: [{
-                mode: "on-the-ground"
-            }], 
+            // elevationInfo: [{
+            //     mode: "on-the-ground"
+            // }], 
             popupTemplate: {
                 outFields: ["*"],
                 title: "<b>Deep Well</b>",
