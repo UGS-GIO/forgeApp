@@ -278,7 +278,8 @@
         });
         
         wells = new SceneLayer ({
-            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Inf_Wells_3d/SceneServer",
+            url:"https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Infrastructure_Wells_3d/SceneServer",
+            //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Inf_Wells_3d/SceneServer",
             title: "Wells",
             // elevationInfo: [{
             //     mode: "on-the-ground"
@@ -661,10 +662,17 @@
 
             });
 
+            geologicUnits.when(function(){
+                const unitsSub = geologicUnits.findSubLayerById(4);
+                const unitsFeature = unitsSub.createFeatureLayer();
+                mapView.add(unitsFeature);
+
+            })
+
             geology = new GroupLayer ({
                 title: "Geology",
                 visible: false,
-                layers: [geologicUnits, geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
+                layers: [geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
             });
 
             water = new GroupLayer ({
