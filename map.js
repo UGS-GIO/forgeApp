@@ -48,6 +48,7 @@
       // Bootstrap
       "bootstrap/Collapse",
       "bootstrap/Dropdown",
+      "share-Widget/Share",
       // Calcite Maps
       "calcite-maps/calcitemaps-v0.10",
       
@@ -55,7 +56,7 @@
       "calcite-maps/calcitemaps-arcgis-support-v0.10",
       "dojo/query",
       "dojo/domReady!"
-    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, Selection, List, Collapse, Dropdown, CalciteMaps, CalciteMapArcGISSupport, query) {
+    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, Selection, List, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, query) {
       /******************************************************************
        *
        * Create the map, view and widgets
@@ -1252,6 +1253,13 @@ function setLegendMobile(isMobile) {
   mapView.ui.remove(toRemove);
   mapView.ui.add(toAdd, "top-left");
 }
+
+const share = new Share({
+    mapView,
+    container: "shareDiv",
+});
+
+console.log(share);
 
 
     });
