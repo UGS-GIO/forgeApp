@@ -11,6 +11,6 @@
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true
   },
-  "include": ["./app/*"],
+  "include": ["./*"],
   "exclude": ["node_modules"]
 }

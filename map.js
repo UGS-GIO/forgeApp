@@ -41,10 +41,12 @@
       "dstore/Memory",
       "dojo/data/ObjectStore",
       "dojo/data/ItemFileReadStore",
+      "dstore/legacy/StoreAdapter",
       "dojox/grid/DataGrid",
       "dgrid/OnDemandGrid",
       "dgrid/Selection",
       "dgrid/List",
+      "dojo/_base/declare",
       // Bootstrap
       "bootstrap/Collapse",
       "bootstrap/Dropdown",
@@ -56,12 +58,20 @@
       "calcite-maps/calcitemaps-arcgis-support-v0.10",
       "dojo/query",
       "dojo/domReady!"
-    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, Selection, List, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, query) {
-      /******************************************************************
-       *
-       * Create the map, view and widgets
-       * 
-       ******************************************************************/
+    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, Memory, ObjectStore, ItemFileReadStore, StoreAdapter, DataGrid, OnDemandGrid, Selection, List, declare, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, query) {
+
+//************** grid initial setup
+    let grid;
+
+    // create a new datastore for the on demandgrid
+    // will be used to display attributes of selected features
+    let dataStore = new StoreAdapter({
+        objectStore: new Memory({
+            idProperty: "objectid"
+        })
+    });
+
+    const gridDis = document.getElementById("gridDisplay");
 
       var worldElevation = ElevationLayer({
         url: "//elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
@@ -109,6 +119,13 @@
       mapView.when(function(){
         CalciteMapArcGISSupport.setPopupPanelSync(mapView);
       });
+
+      const share = new Share({
+        view: mapView,
+        container: "shareDiv"
+    });
+
+    
 
       unitsPopup = function(feature) {
         var content = "";
@@ -539,24 +556,24 @@
             });
 
 
-            geologicUnitsSearch = new FeatureLayer ({
-                url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/FeatureServer/4",
-                title: "Geologic Units",
-                elevationInfo: [{
-                    mode: "on-the-ground"
-                }], 
-                visible: false,
-                //listMode: "show",
-                // legendEnabled: true,
-                // listMode: "hide-children",
-                // sublayers: [
-                //     {
-                //         id: 4,
-                //         //title: "Geologic Units"
-                //     }
-                // ]
+            // geologicUnitsSearch = new FeatureLayer ({
+            //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/FeatureServer/4",
+            //     title: "Geologic Units",
+            //     elevationInfo: [{
+            //         mode: "on-the-ground"
+            //     }], 
+            //     visible: false,
+            //     //listMode: "show",
+            //     // legendEnabled: true,
+            //     // listMode: "hide-children",
+            //     // sublayers: [
+            //     //     {
+            //     //         id: 4,
+            //     //         //title: "Geologic Units"
+            //     //     }
+            //     // ]
 
-            });
+            // });
 
             // geology = new MapImageLayer ({
             //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
@@ -663,17 +680,11 @@
 
             });
 
-            geologicUnits.when(function(){
-                const unitsSub = geologicUnits.findSubLayerById(4);
-                const unitsFeature = unitsSub.createFeatureLayer();
-                mapView.add(unitsFeature);
-
-            })
 
             geology = new GroupLayer ({
                 title: "Geology",
                 visible: false,
-                layers: [geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
+                layers: [geologicUnits, geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
             });
 
             water = new GroupLayer ({
@@ -687,6 +698,158 @@
                 visible: false,
                 layers: [bedrockSymbology]
             });
+
+//**********************   GRID CODE ****************
+
+    // create grid
+    function createGrid(d) {
+        console.log("creating grid");
+        console.log(d.fields);
+        console.log(gridFields);
+        var dFields = d.fields;
+
+        var columns = dFields.filter(function(field, i) {
+            if (gridFields.indexOf(field.name) >= -1) {
+                return field;
+            }
+        }).map(function(field) {
+            //console.log(field);
+            if (field.name == "objectid") {
+                console.log("HIDE COLUMN " + field.name);
+                return {
+                    field: field.name,
+                    label: field.alias,
+                    //sortable: true,
+                    hidden: true
+                };
+            } else {
+                console.log("SHOW COLUMN");
+                return {
+                    field: field.name,
+                    label: field.alias,
+                    sortable: true
+                };
+            }
+
+
+        });
+
+        console.log(columns);
+
+        // create a new onDemandGrid with its selection and columnhider
+        // extensions. Set the columns of the grid to display attributes
+        // the hurricanes cvslayer
+        grid = new(declare([OnDemandGrid, Selection]))({
+            columns: columns
+        }, "grid");
+
+        // add a row-click listener on the grid. This will be used
+        // to highlight the corresponding feature on the view
+        grid.on("dgrid-select", selectFeatureFromGrid);
+        console.log(grid.columns[0].field);
+
+       
+        
+    }
+
+    function selectFeatureFromGrid(event) {
+        console.log(event);
+        mapView.popup.close();
+        mapView.graphics.removeAll();
+        var row = event.rows[0]
+        console.log(row);
+        var id = row.data.objectid;
+        console.log(id);
+
+        // setup a query by specifying objectids
+        //   var query = {
+        //     objectids: [parseInt(id)],
+        //     outFields: ["*"],
+        //     returnGeometry: true
+        //   };
+
+        var query = plantSites.createQuery();
+
+        query.where = "objectid = '" + id + "'";
+        query.returnGeometry = true;
+        query.outFields = ["*"],
+
+            // query the palntLayerView using the query set above
+            plantSites.queryFeatures(query).then(function(results) {
+                console.log(results);
+                var graphics = results.features;
+                console.log(graphics);
+                var item = graphics[0];
+
+              //  //checks to see if site is confidential or not
+                //if (item.attributes.confidential != 1) {
+                //    console.log("public");
+                    var cntr = [];
+                    cntr.push(item.geometry.longitude);
+                    cntr.push(item.geometry.latitude);
+                    console.log(item.geometry);
+                    mapView.goTo({
+                        center: cntr, // position:
+                        zoom: 13
+                    });
+
+                    mapView.graphics.removeAll();
+                    var selectedGraphic = new Graphic({
+
+                        geometry: item.geometry,
+                        symbol: new SimpleMarkerSymbol({
+                            //color: [0,255,255],
+                            style: "circle",
+                            //size: "8px",
+                            outline: {
+                                color: [255, 255, 0],
+                                width: 3
+                            }
+                        })
+                    });
+
+                    mapView.graphics.add(selectedGraphic);
+
+                    mapView.popup.open({
+                        features: [item],
+                        location: item.geometry
+                    });
+
+            })
+    }
+
+
+    function layerTable(response) {
+        console.log("Table Generating");
+        console.log(response);
+
+
+        createGrid(response);
+
+        let graphics = response.features;
+        var data = graphics.map(function(feature, i) {
+            return Object.keys(feature.attributes)
+                .filter(function(key) {
+                    // get fields that exist in the grid
+                    return (gridFields.indexOf(key) !== -1);
+                })
+                // need to create key value pairs from the feature
+                // attributes so that info can be displayed in the grid
+                .reduce((obj, key) => {
+                    obj[key] = feature.attributes[key];
+                    return obj;
+                }, {});
+        });
+
+        
+        // set the datastore for the grid using the
+        // attributes we got for the query results
+        dataStore.objectStore.data = data;
+        console.log(dataStore.objectStore.data);
+        grid.set("collection", dataStore); 
+
+    }
+
 
             // Search - add to navbar
       var searchWidget = new Search({
@@ -735,15 +898,15 @@
 
                 //placeholder: "example: BLM"
             }, 
-            {
-                layer: geologicUnitsSearch,
-                name: "Geologic Units",
-                searchFields: ["description"],
-                displayField: "unitname",
-                outFields: ["*"],
+            // {
+            //     layer: geologicUnitsSearch,
+            //     name: "Geologic Units",
+            //     searchFields: ["description"],
+            //     displayField: "unitname",
+            //     outFields: ["*"],
 
-                //placeholder: "example: BLM"
-            }, 
+            //     //placeholder: "example: BLM"
+            // }, 
             // {
             //     layer: geologicLines,
             //     name: "Geologic Lines",
@@ -866,11 +1029,11 @@ mapView.ui.add(locateWidget, "top-left");
                             open: true
                         }
                         item.actionsSections = [
-                            // [{
-                            //     title: "Layer information",
-                            //     className: "esri-icon-description",
-                            //     id: "information"
-                            // }],
+                            [{
+                                title: "Data Table",
+                                className: "esri-icon-table",
+                                id: "table"
+                            }],
                             [{
                                 title: "Increase opacity",
                                 className: "esri-icon-up",
@@ -967,13 +1130,62 @@ expanded: true
                                 }
 
 
-                if (id === "information") {
+                if (id === "table") {
+
+
                 
-                  // if the information action is triggered, then
-                  // open the item details page of the service layer
-                  //window.open(title.url);
+                  if (title == "Geologic Units") {
+                      var sublayer = geologicUnits.findSublayerById(4);
+                    var query = sublayer.createQuery();
+                    query.outfields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
+                  sublayer.queryFeatures(query).then(function(e){
+                    console.log(e);
+
+
+                    resultsArray = e["features"];
+                    console.log(resultsArray);
+                    // put our attributes in an object the datagrid can ingest.
+                    var srch = {
+                        "items": []
+                    };
+                    resultsArray.forEach(function(ftrs) {
+        
+                        var att = ftrs.attributes;
+        
+                        srch.items.push(att);
+                    });
+                    gridFields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
+                    var fieldArray = [
+                        //{alias: 'objectid', name: 'objectid'}, 
+                        {
+                            alias: 'Unit Symbol',
+                            name: 'unitsymbol'
+                        },
+                        {
+                            alias: 'Unit Name',
+                            name: 'unitname'
+                        },
+                        {
+                            alias: 'grouping',
+                            name: 'grouping'
+                        },
+                        {
+                            alias: 'age_strat',
+                            name: 'age_strat'
+                        },
+                        {
+                            alias: 'description',
+                            name: 'description'
+                        }
+                    ];
+
+                    e.fields = fieldArray;
+            console.log(e);
+                    layerTable(e);
+                  
+                })
+            }
                 
-                layerInformation(title);
                 
                 
                 
@@ -1254,12 +1466,9 @@ function setLegendMobile(isMobile) {
   mapView.ui.add(toAdd, "top-left");
 }
 
-const share = new Share({
-    mapView,
-    container: "shareDiv",
-});
 
-console.log(share);
+
+
 
 
     });
