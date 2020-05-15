@@ -38,15 +38,21 @@
       "esri/tasks/QueryTask",
       "esri/popup/content/AttachmentsContent",
       //DGrid
-      "dstore/Memory",
+      "dojo/query",
+      "dojo/store/Memory",
       "dojo/data/ObjectStore",
       "dojo/data/ItemFileReadStore",
-      "dstore/legacy/StoreAdapter",
       "dojox/grid/DataGrid",
       "dgrid/OnDemandGrid",
+      "dgrid/extensions/ColumnHider",
       "dgrid/Selection",
+      "dstore/legacy/StoreAdapter",
       "dgrid/List",
       "dojo/_base/declare",
+      "dojo/parser",
+      "dojo/aspect",
+      "dojo/request",
+      "dojo/mouse",
       // Bootstrap
       "bootstrap/Collapse",
       "bootstrap/Dropdown",
@@ -56,9 +62,13 @@
       
       // Calcite Maps ArcGIS Support
       "calcite-maps/calcitemaps-arcgis-support-v0.10",
-      "dojo/query",
+      "dojo/on",
+      "dojo/_base/array",
+      "dojo/dom",
+      "dojo/dom-class",
+      "dojo/dom-construct",
       "dojo/domReady!"
-    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, Memory, ObjectStore, ItemFileReadStore, StoreAdapter, DataGrid, OnDemandGrid, Selection, List, declare, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, query) {
+    ], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
 //************** grid initial setup
     let grid;
@@ -823,6 +833,8 @@
         console.log("Table Generating");
         console.log(response);
 
+        gridDis.style.display = 'block';
+        domClass.add("mapViewDiv");
 
         createGrid(response);
 
@@ -1135,8 +1147,19 @@ expanded: true
 
                 
                   if (title == "Geologic Units") {
+                    gridFields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
                       var sublayer = geologicUnits.findSublayerById(4);
-                    var query = sublayer.createQuery();
+                      console.log(sublayer);
+                      sublayer.createFeatureLayer()
+  .then(function(featureLayer){
+    return featureLayer.load();
+  })
+  .then(generateTable);
+
+  function generateTable (featureLayer){
+                    var query = featureLayer.createQuery();
+
+                    query.where = "1=1";
                     query.outfields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
                   sublayer.queryFeatures(query).then(function(e){
                     console.log(e);
@@ -1149,11 +1172,12 @@ expanded: true
                         "items": []
                     };
                     resultsArray.forEach(function(ftrs) {
-        
+        console.log(ftrs);
                         var att = ftrs.attributes;
         
                         srch.items.push(att);
                     });
+                    console.log(srch);
                     gridFields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
                     var fieldArray = [
                         //{alias: 'objectid', name: 'objectid'}, 
@@ -1183,7 +1207,8 @@ expanded: true
             console.log(e);
                     layerTable(e);
                   
-                })
+                });
+  }
             }
                 
                 
@@ -1466,6 +1491,47 @@ function setLegendMobile(isMobile) {
   mapView.ui.add(toAdd, "top-left");
 }
 
+
+//testing resizing grid
+
+var isResizing = false,
+    lastDownX = 0;
+
+$(function () {
+    var container = $('#cont');
+    var top = $('mapViewDiv');
+    var bottom = $('#gridDisplay');
+    //var gridHeight = $('dgrid');
+    var handle = $('#drag');
+
+    handle.on('mousedown', function (e) {
+        isResizing = true;
+        lastDownX = e.clientY;
+    });
+
+    $(document).on('mousemove', function (e) {
+        // we don't want to do anything if we aren't resizing.
+        if (!isResizing) 
+            return;
+        console.log("e.clientY ", e.clientY, container.offset().top)
+        var offsetRight = container.height() - (e.clientY - container.offset().top);
+        console.log(offsetRight);
+
+        top.css('bottom', offsetRight);
+        bottom.css('height', offsetRight);
+        //gridHeight.css('height', offsetRight);
+
+        let root = document.documentElement;
+
+        root.addEventListener("mousemove", e => {
+            root.style.setProperty('--gridHeight', offsetRight + "px");
+        })
+
+    }).on('mouseup', function (e) {
+        // stop resizing
+        isResizing = false;
+    });
+});
 
 
 
