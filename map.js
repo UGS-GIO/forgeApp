@@ -1081,6 +1081,8 @@ require([
 
         var title = event.item.title;
 
+        console.log(title);
+
         if (title === "FORGE Boundary") {
             layer = boundary;
         } else if (title === "Land Ownership") {
@@ -1134,10 +1136,11 @@ require([
         //*********** TABLE CODE  ***********/
 
         if (id === "table") {
-
+            console.log("Table Action CLicked");
 
             // Geo Unit Table code
             if (title == "Geologic Units") {
+                console.log("GeoUnits Table");
                 gridFields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
                 var sublayer = geologicUnits.findSublayerById(4);
                 console.log(sublayer);
@@ -1204,6 +1207,476 @@ require([
                     });
                 }
             }
+            // Wells Table code
+            else if (title == "Wells") {
+                console.log("Wells Table");
+                gridFields = ["label", "type", "depth"];
+                var wellsLayer =  new FeatureLayer({
+                    url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Infrastructure_Wells_3d/FeatureServer/0",
+                    outFields: ["*"],
+                })
+                console.log(wellsLayer);
+                wellsLayer.load().then(attributesReady);
+                // var sublayer = geologicUnits.findSublayerById(4);
+                // console.log(sublayer);
+                // sublayer.createFeatureLayer()
+                //     .then(function(featureLayer) {
+                //         return featureLayer.load();
+                //     })
+                //     .then(generateTable);
+
+                function attributesReady() {
+                    
+                    var query = wellsLayer.createQuery();
+                    // add table close x to right hand corner
+                    document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+                    document.getElementById("removeX").setAttribute("style", "float: right;");
+
+                    console.log(query);
+                    query.where = "1=1";
+                    query.outfields = ["OBJECTID", "label", "type", "depth"];
+                    wellsLayer.queryFeatures(query).then(function(e) {
+                        console.log(e);
+
+
+                        resultsArray = e["features"];
+                        console.log(resultsArray);
+                        // put our attributes in an object the datagrid can ingest.
+                        var srch = {
+                            "items": []
+                        };
+                        resultsArray.forEach(function(ftrs) {
+                            console.log(ftrs);
+                            var att = ftrs.attributes;
+
+                            srch.items.push(att);
+                        });
+                        console.log(srch);
+                        gridFields = ["OBJECTID", "label", "type", "depth"];
+                        var fieldArray = [
+                            //{alias: 'objectid', name: 'objectid'}, 
+                            {
+                                alias: 'Name',
+                                name: 'label'
+                            },
+                            {
+                                alias: 'Type',
+                                name: 'type'
+                            },
+                            {
+                                alias: 'Depth',
+                                name: 'depth'
+                            }
+                            
+                        ];
+
+                        e.fields = fieldArray;
+                        console.log(e);
+                        layerTable(e);
+
+                    });
+                }
+            }
+                        // Water Levels code
+                        else if (title == "Water Levels") {
+                            
+                            gridFields = ["name", "watereleva", "datemeasur"];
+                                
+                                var query = waterLevel.createQuery();
+                                // add table close x to right hand corner
+                                document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+                                document.getElementById("removeX").setAttribute("style", "float: right;");
+            
+                                console.log(query);
+                                query.where = "1=1";
+                                query.outfields = ["OBJECTID", "name", "watereleva", "datemeasur"];
+                                waterLevel.queryFeatures(query).then(function(e) {
+                                    console.log(e);
+            
+            
+                                    resultsArray = e["features"];
+                                    console.log(resultsArray);
+                                    // put our attributes in an object the datagrid can ingest.
+                                    var srch = {
+                                        "items": []
+                                    };
+                                    resultsArray.forEach(function(ftrs) {
+                                        console.log(ftrs);
+                                        var att = ftrs.attributes;
+            
+                                        srch.items.push(att);
+                                    });
+                                    console.log(srch);
+                                    gridFields = ["OBJECTID", "name", "watereleva", "datemeasur"];
+                                    var fieldArray = [
+                                        //{alias: 'objectid', name: 'objectid'}, 
+                                        {
+                                            alias: 'Name',
+                                            name: 'name'
+                                        },
+                                        {
+                                            alias: 'Water Elevation',
+                                            name: 'watereleva'
+                                        },
+                                        {
+                                            alias: 'Date Measured',
+                                            name: 'datemeasur'
+                                        }
+                                        
+                                    ];
+            
+                                    e.fields = fieldArray;
+                                    console.log(e);
+                                    layerTable(e);
+            
+                                });
+                            
+                        }
+                        // Water chemistry
+                        else if (title == "Water Chemistry") {
+                            
+                            gridFields = ["station", "temp", "sampledate"];
+                                
+                                var query = waterChemistry.createQuery();
+                                // add table close x to right hand corner
+                                document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+                                document.getElementById("removeX").setAttribute("style", "float: right;");
+            
+                                console.log(query);
+                                query.where = "1=1";
+                                query.outfields = ["OBJECTID", "station", "temp", "sampledate"];
+                                waterChemistry.queryFeatures(query).then(function(e) {
+                                    console.log(e);
+            
+            
+                                    resultsArray = e["features"];
+                                    console.log(resultsArray);
+                                    // put our attributes in an object the datagrid can ingest.
+                                    var srch = {
+                                        "items": []
+                                    };
+                                    resultsArray.forEach(function(ftrs) {
+                                        console.log(ftrs);
+                                        var att = ftrs.attributes;
+            
+                                        srch.items.push(att);
+                                    });
+                                    console.log(srch);
+                                    gridFields = ["OBJECTID", "station", "temp", "sampledate"];
+                                    var fieldArray = [
+                                        //{alias: 'objectid', name: 'objectid'}, 
+                                        {
+                                            alias: 'Station',
+                                            name: 'station'
+                                        },
+                                        {
+                                            alias: 'Temperature',
+                                            name: 'temp'
+                                        },
+                                        {
+                                            alias: 'Sample Date',
+                                            name: 'sampledate'
+                                        }
+                                        
+                                    ];
+            
+                                    e.fields = fieldArray;
+                                    console.log(e);
+                                    layerTable(e);
+            
+                                });
+                            
+                        }
+// sesimoms
+else if (title == "Seismometers") {
+                            
+    gridFields = ["name", "network"];
+        
+        var query = seismoms.createQuery();
+        // add table close x to right hand corner
+        document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+        document.getElementById("removeX").setAttribute("style", "float: right;");
+
+        console.log(query);
+        query.where = "1=1";
+        query.outfields = ["objectid", "name", "network"];
+        seismoms.queryFeatures(query).then(function(e) {
+            console.log(e);
+
+
+            resultsArray = e["features"];
+            console.log(resultsArray);
+            // put our attributes in an object the datagrid can ingest.
+            var srch = {
+                "items": []
+            };
+            resultsArray.forEach(function(ftrs) {
+                console.log(ftrs);
+                var att = ftrs.attributes;
+
+                srch.items.push(att);
+            });
+            console.log(srch);
+            gridFields = ["objectid", "name", "network"];
+            var fieldArray = [
+                //{alias: 'objectid', name: 'objectid'}, 
+                {
+                    alias: 'Name',
+                    name: 'name'
+                },
+                {
+                    alias: 'Network',
+                    name: 'network'
+                }
+                
+            ];
+
+            e.fields = fieldArray;
+            console.log(e);
+            layerTable(e);
+
+        });
+    
+}
+// sesimicity
+else if (title == "Seismicity 1850 to 2016") {
+                            
+    gridFields = ["mag", "depth", "day", "month", "year"];
+        
+        var query = seismicity.createQuery();
+        // add table close x to right hand corner
+        document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+        document.getElementById("removeX").setAttribute("style", "float: right;");
+
+        console.log(query);
+        query.where = "1=1";
+        query.outfields = ["objectid", "mag", "depth", "day", "month", "year"];
+        seismicity.queryFeatures(query).then(function(e) {
+            console.log(e);
+
+
+            resultsArray = e["features"];
+            console.log(resultsArray);
+            // put our attributes in an object the datagrid can ingest.
+            var srch = {
+                "items": []
+            };
+            resultsArray.forEach(function(ftrs) {
+                console.log(ftrs);
+                var att = ftrs.attributes;
+
+                srch.items.push(att);
+            });
+            console.log(srch);
+            gridFields = ["objectid", "mag", "depth", "day", "month", "year"];
+            var fieldArray = [
+                //{alias: 'objectid', name: 'objectid'}, 
+                {
+                    alias: 'Magnitude',
+                    name: 'mag'
+                },
+                {
+                    alias: 'Depth',
+                    name: 'depth'
+                },
+                {
+                    alias: 'Day',
+                    name: 'day'
+                },
+                {
+                    alias: 'Month',
+                    name: 'month'
+                },
+                {
+                    alias: 'Year',
+                    name: 'year'
+                }
+                
+            ];
+
+            e.fields = fieldArray;
+            console.log(e);
+            layerTable(e);
+
+        });
+    
+}
+// shallow wells
+else if (title == "Shallow Well Temperatures") {
+    gridFields = ["well_name", "depth_m"];
+    var shallowWellsLayer =  new FeatureLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
+        outFields: ["*"],
+    })
+
+    shallowWellsLayer.load().then(attributesReady);
+
+    function attributesReady() {
+        
+        var query = shallowWellsLayer.createQuery();
+        // add table close x to right hand corner
+        document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+        document.getElementById("removeX").setAttribute("style", "float: right;");
+
+        console.log(query);
+        query.where = "1=1";
+        query.outfields = ["OBJECTID", "well_name", "depth_m"];
+        shallowWellsLayer.queryFeatures(query).then(function(e) {
+            console.log(e);
+
+
+            resultsArray = e["features"];
+            console.log(resultsArray);
+            // put our attributes in an object the datagrid can ingest.
+            var srch = {
+                "items": []
+            };
+            resultsArray.forEach(function(ftrs) {
+                console.log(ftrs);
+                var att = ftrs.attributes;
+
+                srch.items.push(att);
+            });
+            console.log(srch);
+            gridFields = ["OBJECTID", "well_name", "depth_m"];
+            var fieldArray = [
+                //{alias: 'objectid', name: 'objectid'}, 
+                {
+                    alias: 'Well Name',
+                    name: 'well_name'
+                },
+                {
+                    alias: 'Depth (m)',
+                    name: 'depth_m'
+                }
+                
+            ];
+
+            e.fields = fieldArray;
+            console.log(e);
+            layerTable(e);
+
+        });
+    }
+}
+// intermediate wells
+else if (title == "Intermediate Well Temperatures") {
+    gridFields = ["well_name", "depth_m"];
+    var intWellsLayer =  new FeatureLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
+        outFields: ["*"],
+    })
+
+    intWellsLayer.load().then(attributesReady);
+
+    function attributesReady() {
+        
+        var query = intWellsLayer.createQuery();
+        // add table close x to right hand corner
+        document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+        document.getElementById("removeX").setAttribute("style", "float: right;");
+
+        console.log(query);
+        query.where = "1=1";
+        query.outfields = ["OBJECTID", "well_name", "depth_m"];
+        intWellsLayer.queryFeatures(query).then(function(e) {
+            console.log(e);
+
+
+            resultsArray = e["features"];
+            console.log(resultsArray);
+            // put our attributes in an object the datagrid can ingest.
+            var srch = {
+                "items": []
+            };
+            resultsArray.forEach(function(ftrs) {
+                console.log(ftrs);
+                var att = ftrs.attributes;
+
+                srch.items.push(att);
+            });
+            console.log(srch);
+            gridFields = ["OBJECTID", "well_name", "depth_m"];
+            var fieldArray = [
+                //{alias: 'objectid', name: 'objectid'}, 
+                {
+                    alias: 'Well Name',
+                    name: 'well_name'
+                },
+                {
+                    alias: 'Depth (m)',
+                    name: 'depth_m'
+                }
+                
+            ];
+
+            e.fields = fieldArray;
+            console.log(e);
+            layerTable(e);
+
+        });
+    }
+}
+// deep wells
+else if (title == "Deep Well Temperatures") {
+    gridFields = ["well_name", "depth_m"];
+    var deepWellsLayer =  new FeatureLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
+        outFields: ["*"],
+    })
+
+    deepWellsLayer.load().then(attributesReady);
+
+    function attributesReady() {
+        
+        var query = deepWellsLayer.createQuery();
+        // add table close x to right hand corner
+        document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+        document.getElementById("removeX").setAttribute("style", "float: right;");
+
+        console.log(query);
+        query.where = "1=1";
+        query.outfields = ["OBJECTID", "well_name", "depth_m"];
+        deepWellsLayer.queryFeatures(query).then(function(e) {
+            console.log(e);
+
+
+            resultsArray = e["features"];
+            console.log(resultsArray);
+            // put our attributes in an object the datagrid can ingest.
+            var srch = {
+                "items": []
+            };
+            resultsArray.forEach(function(ftrs) {
+                console.log(ftrs);
+                var att = ftrs.attributes;
+
+                srch.items.push(att);
+            });
+            console.log(srch);
+            gridFields = ["OBJECTID", "well_name", "depth_m"];
+            var fieldArray = [
+                //{alias: 'objectid', name: 'objectid'}, 
+                {
+                    alias: 'Well Name',
+                    name: 'well_name'
+                },
+                {
+                    alias: 'Depth (m)',
+                    name: 'depth_m'
+                }
+                
+            ];
+
+            e.fields = fieldArray;
+            console.log(e);
+            layerTable(e);
+
+        });
+    }
+}
+            
+    
 
 
 
@@ -1485,7 +1958,6 @@ require([
         var bottom = $('#gridDisplay');
         //var gridHeight = $('dgrid');
         var handle = $('#drag');
-        console.log(top, container, bottom);
 
         handle.on('mousedown', function (e) {
             isResizing = true;
