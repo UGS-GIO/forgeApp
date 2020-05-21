@@ -743,79 +743,83 @@ require([
 
         // add a row-click listener on the grid. This will be used
         // to highlight the corresponding feature on the view
-        grid.on("dgrid-select", selectFeatureFromGrid);
-        console.log(grid.columns[0].field);
+            //grid.on("dgrid-select", selectFeatureFromGrid);
+            //console.log(grid.columns[0].field);
 
 
 
     }
 
-    function selectFeatureFromGrid(event) {
-        console.log(event);
-        mapView.popup.close();
-        mapView.graphics.removeAll();
-        var row = event.rows[0]
-        console.log(row);
-        var id = row.data.objectid;
-        console.log(id);
+//     function selectFeatureFromGrid(event) {
+//         console.log(event);
+//         mapView.popup.close();
+//         mapView.graphics.removeAll();
+//         var row = event.rows[0]
+//         console.log(row);
+//         var id = row.data.objectid;
+//         console.log(id);
 
-        // setup a query by specifying objectids
-        //   var query = {
-        //     objectids: [parseInt(id)],
-        //     outFields: ["*"],
-        //     returnGeometry: true
-        //   };
+//         var sublayer = geologicUnits.findSublayerById(4);
+//         console.log(sublayer);
+//         sublayer.createFeatureLayer()
+//             .then(function(featureLayer) {
+//                 return featureLayer.load();
+//             })
+//             .then(continueSelect);
 
-        var query = plantSites.createQuery();
+// function continueSelect (){
+//         var query = sublayer.createQuery();
 
-        query.where = "objectid = '" + id + "'";
-        query.returnGeometry = true;
-        query.outFields = ["*"],
+//         query.where = "objectid = '" + id + "'";
+//         query.returnGeometry = true;
+//         query.outFields = ["*"],
 
-            // query the palntLayerView using the query set above
-            plantSites.queryFeatures(query).then(function(results) {
-                console.log(results);
-                var graphics = results.features;
-                console.log(graphics);
-                var item = graphics[0];
+//             // query the palntLayerView using the query set above
+//             sublayer.queryFeatures(query).then(function(results) {
+//                 console.log(results);
+//                 var graphics = results.features;
+//                 console.log(graphics);
+//                 var item = graphics[0];
 
-                //  //checks to see if site is confidential or not
-                //if (item.attributes.confidential != 1) {
-                //    console.log("public");
-                var cntr = [];
-                cntr.push(item.geometry.longitude);
-                cntr.push(item.geometry.latitude);
-                console.log(item.geometry);
-                mapView.goTo({
-                    center: cntr, // position:
-                    zoom: 13
-                });
+//                 //  //checks to see if site is confidential or not
+//                 //if (item.attributes.confidential != 1) {
+//                 //    console.log("public");
+//                 var cntr = [];
+//                 cntr.push(item.geometry.longitude);
+//                 cntr.push(item.geometry.latitude);
+//                 console.log(item.geometry);
+//                 mapView.goTo({
+//                     center: cntr, // position:
+//                     zoom: 13
+//                 });
 
-                mapView.graphics.removeAll();
-                var selectedGraphic = new Graphic({
+//                 console.log(mapView.graphics);
 
-                    geometry: item.geometry,
-                    symbol: new SimpleMarkerSymbol({
-                        //color: [0,255,255],
-                        style: "circle",
-                        //size: "8px",
-                        outline: {
-                            color: [255, 255, 0],
-                            width: 3
-                        }
-                    })
-                });
+//                 mapView.graphics.removeAll();
+//                 var selectedGraphic = new Graphic({
 
-                mapView.graphics.add(selectedGraphic);
+//                     geometry: item.geometry,
+//                     symbol: new SimpleFillSymbol({
+//                         //color: [0,255,255],
+//                         //style: "circle",
+//                         //size: "8px",
+//                         outline: {
+//                             color: [255, 255, 0],
+//                             width: 3
+//                         }
+//                     })
+//                 });
 
-                mapView.popup.open({
-                    features: [item],
-                    location: item.geometry
-                });
+//                 mapView.graphics.add(selectedGraphic);
 
-            })
-    }
+//                 mapView.popup.open({
+//                     features: [item],
+//                     location: item.geometry
+//                 });
 
+//             })
+//     }
+//     }
 
     function layerTable(response) {
         console.log("Table Generating");
@@ -1223,6 +1227,19 @@ require([
         }
     });
 
+    function doGridClear() {
+        console.log("doGridClear");
+        //mapView.popup.close();
+        sitesCount = 0
+        if (grid) {
+            dataStore.objectStore.data = {};
+            grid.set("collection", dataStore);
+        }
+        gridDis.style.display = 'none';
+        domClass.remove("mapViewDiv", 'withGrid');
+
+    }
+
 
     // Basemap events
     query("#selectBasemapPanel").on("change", function(e) {
@@ -1452,7 +1469,7 @@ require([
         document.getElementById("removeX").addEventListener("click", function(evt) {
             // mapView.popup.close();
             // mapView.graphics.removeAll();
-            // doClear();
+            doGridClear();
     
         })
 
