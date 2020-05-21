@@ -8,6 +8,8 @@
   <meta name="description" content="Utah FORGE">
  
   <title>Utah FORGE</title>
+  
+  <link rel="stylesheet"href="https://js.arcgis.com/4.15/dgrid/css/dgrid.css"/>
 
   <!-- Calcite Maps Bootstrap -->
   <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-bootstrap.min-v0.10.css">
@@ -22,11 +24,13 @@
 
   <style>
     html,
-    body {
+    body,
+    #mapViewDiv {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
+      overflow: hidden;
     }
 
     #screenshotDiv {
@@ -156,6 +160,74 @@ div.esri-legend__message {
         display: none;
       }
 
+
+      .dgrid {
+      height: var(--gridHeight, 250px);
+  }
+
+  #mapViewDiv.withGrid {
+      height: 65%;
+    }  
+
+
+
+#drag {
+    position: absolute;
+    left: 0;
+    top: -4px;
+    right: 0;
+    height: 8px;
+    cursor: n-resize;
+}
+
+    #gridDisplay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: auto;
+      background-color: white;
+      border-color: grey;
+      width: 100%;
+      font-family: "Avenir Next W00", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      display: none;
+    }
+
+    #gridDisplay {
+      z-index: 80;
+    }
+
+
+    .info {
+        line-height: 20px;
+      padding-left: 5px ! important;
+      z-index: 90;
+      font-size: 16px;
+      padding-left: 20px;
+    }
+
+    .dgrid-header,
+    .dgrid-header-row {
+      background-color: #eee;
+      color: #57585A;
+    }
+
+    .dgrid-row-even {
+      background-color: #F7F8F8;
+    }
+
+    .dgrid-row-odd {
+      background-color: #EFEFEF;
+    }
+
+    .dgrid-selected {
+      background: #B4DAF5;
+    }
+
+    .dgrid-row {
+      border: none
+    }
+
   </style>
 
 </head>
@@ -181,10 +253,10 @@ div.esri-legend__message {
         <!-- <li><a role="menuitem" tabindex="0" href="#" data-target="#panelLegend" aria-haspopup="true"><span class="glyphicon glyphicon-list-alt"></span> Legend</a></li> -->
         <li><a role="menuitem" tabindex="0" href="#" data-target="#panelBasemaps" aria-haspopup="true"><span class="esri-icon-basemap"></span> Basemaps</a></li>
         <li><a role="menuitem" tabindex="0" href="#" data-target="#panelScreenshot" aria-haspopup="true"><span class="esri-icon-documentation"></span> Screenshot</a></li>
-        <!-- <li><a role="menuitem" tabindex="0" data-target="#panelDisclaimer" aria-haspopup="true"><span class="glyphicon glyphicon-warning-sign"></span> Geologic</a></li> -->
-        <!-- <li><a role="menuitem" tabindex="0" data-target="#panelDatabase" aria-haspopup="true"><span class="glyphicon glyphicon-list-alt"></span> Database Contents</a></li>
-        <li><a role="menuitem" tabindex="0" data-target="#panelAcknowledgments" aria-haspopup="true"><span class="glyphicon glyphicon-user"></span> Acknowledgments</a></li>
-        <li><a role="menuitem" tabindex="0" data-target="#panelReferences" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> References</a></li> -->
+        <!-- <li><a role="menuitem" tabindex="0" data-target="#panelDisclaimer" aria-haspopup="true"><span class="glyphicon glyphicon-warning-sign"></span> Geologic</a></li> 
+        <li><a role="menuitem" tabindex="0" data-target="#panelDatabase" aria-haspopup="true"><span class="glyphicon glyphicon-list-alt"></span> Database Contents</a></li>
+        <li><a role="menuitem" tabindex="0" data-target="#panelAcknowledgments" aria-haspopup="true"><span class="glyphicon glyphicon-user"></span> Acknowledgments</a></li> -->
+        <li><a role="menuitem" tabindex="0" data-target="#panelReferences" aria-haspopup="true"><span class="glyphicon glyphicon-tasks"></span> Share</a></li>
         
       </ul>
     </div>
@@ -208,10 +280,29 @@ div.esri-legend__message {
 
   <!-- Map  -->
 
-  <div class="calcite-map calcite-map-absolute">
-    <div id="mapViewDiv"></div>
-  </div>
+  <div class="calcite-map calcite-map-absolute" id="cont">
+    <div id="mapViewDiv">  
+    
 
+        <div id="gridDisplay">
+          <div id="drag"></div>
+          
+            <span class="info" id="featureCount"></span>
+            <div id="downloadX"></div>
+            <!-- <span class="downloadX" id ="downloadCSV"></span> -->
+            <div id='removeX'></div>
+            <div id="grid"></div>
+          </div>
+        </div>
+        <div
+        id="select-by-polygon"
+        class="esri-widget esri-widget--button esri-widget esri-interactive"
+        title="Select features by polygon"
+      >
+        <span class="esri-icon-checkbox-unchecked"></span>
+      </div>
+    
+  </div>
   <!-- /calcite-map ******************************************** test ************************************************** -->
 
   <!-- Panels -->
@@ -362,26 +453,13 @@ div.esri-legend__message {
                   <div id="panelReferences" class="panel collapse">
                     <div id="headingReferences" class="panel-heading" role="tab">
                       <div class="panel-title">
-                        <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseReferences"  aria-expanded="true" aria-controls="collapseReferences"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span><span class="panel-label">References</span></a> 
+                        <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseReferences"  aria-expanded="true" aria-controls="collapseReferences"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span><span class="panel-label">Share</span></a> 
                         <a class="panel-close" role="button" data-toggle="collapse" tabindex="0" href="#panelReferences"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
                       </div>
                     </div>
                     <div id="collapseReferences" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingReferences">
                       <div class="panel-body">
-                        <p><span style="font-weight: 400;">Beukelman, G.S., Erickson, B.E., and Giraud, R.E., 2015, Landslide inventory map of the Sixmile Canyon and North Hollow area, Sanpete County, Utah: Utah Geological Survey Map 273DM, scale 1:24,000.</span></p>
-                        <p><span style="font-weight: 400;">Castleton</span><strong>,</strong><span style="font-weight: 400;"> J.J., Elliott, A.H., and McDonald, G.N., 2011, Geologic hazards of the Magna quadrangle, Salt Lake County, Utah: Utah Geological Survey Special Study 137, 73 p., 10 plates, scale 1:24,000, CD.</span></p>
-                        <p><span style="font-weight: 400;">Castleton, J.J., Elliott, A.H., and McDonald, G.N., 2014, Geologic hazards of the Copperton quadrangle, Salt Lake County, Utah: Utah Geological Survey Special Study 152, 24 p., 10 plates, scale 1:24,000, CD.</span></p>
-                        <p><span style="font-weight: 400;">Castleton, J.J., Erickson, B.A., and Kleber, E.J., 2018, Radon hazard potential of Davis County, Utah: Utah Geological Survey Open-file Report 655, 1 plate, scale 1:24,000</span></p>
-                        <p><span style="font-weight: 400;">Castleton, Jessica J., Erickson, Ben A., and Kleber, Emily J., 2018, Geologic hazards of the Moab quadrangle, Grand County, Utah: Utah Geological Survey Special Study 162, 33 p., 13 pl.,scale 1:24,000.</span></p>
-                        <p><span style="font-weight: 400;">Castleton, J.J., Erickson, B.A., McDonald, G.N., and Beukelman, G.S., 2018, Geologic Hazards of the Tickville Spring quadrangle, Salt Lake and Utah Counties, Utah: Utah Geological Survey Special Study 163, 25 p., 10 pl., scale 1:24,000.</span></p>
-                        <p><span style="font-weight: 400;">Giraud, R.E., and McDonald, G.N., 2017, Landslide inventory map of the Ferron Creek area, Sanpete and Emery Counties, Utah:&nbsp; Utah Geological Survey Special Study xxx, scale 1:24,000.&nbsp;&nbsp;</span></p>
-                        <p><span style="font-weight: 400;">Knudsen, T.R., and Lund, W.R., 2014, Geologic hazards of the State Route 9 Corridor, La Verkin City to Town of Springdale, Washington County, Utah: Utah Geological Survey Special Study 148, 13 p., 9 plates, GIS data, DVD.</span></p>
-                        <p><span style="font-weight: 400;">Lund, W.R., Knudsen, T.R., Shaw, L.M., 2008, Geologic hazards and adverse construction conditions, St. George metropolitan area, Washington County, Utah, Utah Geological Survey Special Study 127, 105 p.</span></p>
-                        <p><span style="font-weight: 400;">Lund, W.R., Knudsen, T.R., and Sharrow, D.L., 2010, Geologic hazards of the Zion National Park geologic-hazard study area, Washington and Kane Counties, Utah: Utah Geological Survey Special Study 133, 95 p., 9 plates, GIS data, DVD.</span></p>
-                        <p><span style="font-weight: 400;">McDonald, G.N., and Giraud, R.E., 2011, Landslide inventory map of Twelvemile Canyon, Sanpete County, Utah:&nbsp; Utah Geological Survey Map 247DM, scale 1:24,000.&nbsp;&nbsp;</span></p>
-                        <p><span style="font-weight: 400;">McDonald, G.N., and Giraud, R.E., 2014, Landslide inventory map of the 2012 Seeley fire area, Carbon and Emery Counties, Utah:&nbsp; Utah Geological Survey Special Study 153, scale 1:24,000.&nbsp;&nbsp;</span></p>
-                        <p><span style="font-weight: 400;">McDonald, G.N., and Giraud, R.E., 2015, Landslide inventory map for the Upper Muddy Creek area, Sanpete and Sevier Counties, Utah:&nbsp; Utah Geological Survey Special Study 155, scale 1:24,000.&nbsp;&nbsp;</span></p>
-                        <p>&nbsp;</p>
+<div id="shareDiv"></div>
                       </div>
                    </div>
                   </div>
@@ -402,13 +480,18 @@ div.esri-legend__message {
         name: "calcite-maps",
         location: "https://esri.github.io/calcite-maps/dist/js/dojo"
         
-      }]
+      },
+    {
+      name: "share-Widget",
+      location: "https://geology.utah.gov/apps/jay/tests/forge"
+    }]
     };
   </script>
 
   <!-- ArcGIS JS 4 -->
   <script src="https://js.arcgis.com/4.15/"></script>
   <script src="map.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
   
 
