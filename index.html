@@ -203,7 +203,7 @@ div.esri-legend__message {
       font-size: 16px;
       padding-left: 20px;
     }
-    
+
     .dgrid-header,
     .dgrid-header-row {
       background-color: #eee;
@@ -278,16 +278,29 @@ div.esri-legend__message {
 
   <!-- Map  -->
 
-  <div class="calcite-map calcite-map-absolute">
-    <div id="mapViewDiv">
-      <div id="gridDisplay">
-        <div id="drag"></div>
-        
-          <div id="grid"></div>
-        </div>
-    </div>
-  </div>
+  <div class="calcite-map calcite-map-absolute" id="cont">
+    <div id="mapViewDiv">  
+    
 
+        <div id="gridDisplay">
+          <div id="drag"></div>
+          
+            <span class="info" id="featureCount"></span>
+            <div id="downloadX"></div>
+            <!-- <span class="downloadX" id ="downloadCSV"></span> -->
+            <div id='removeX'></div>
+            <div id="grid"></div>
+          </div>
+        </div>
+        <div
+        id="select-by-polygon"
+        class="esri-widget esri-widget--button esri-widget esri-interactive"
+        title="Select features by polygon"
+      >
+        <span class="esri-icon-checkbox-unchecked"></span>
+      </div>
+    
+  </div>
   <!-- /calcite-map ******************************************** test ************************************************** -->
 
   <!-- Panels -->
