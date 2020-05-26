@@ -845,6 +845,23 @@ require([
                 }, {});
         });
 
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].sampledate) {
+                console.log("Found Survey Date");
+                for (var i = 0; i < data.length; i++) {
+                    var dateString = moment(data[i].sampledate).format('YYYY-MM-DD');
+                    data[i].sampledate = dateString;
+
+                }
+            } else if (data[i].datemeasur) {
+                console.log("Found Survey Date");
+                for (var i = 0; i < data.length; i++) {
+                    var dateString = moment(data[i].datemeasur).format('YYYY-MM-DD');
+                    data[i].datemeasur = dateString;
+
+                }
+            }
+        }
 
         // set the datastore for the grid using the
         // attributes we got for the query results
@@ -1140,6 +1157,7 @@ require([
 
             // Geo Unit Table code
             if (title == "Geologic Units") {
+                doGridClear()
                 console.log("GeoUnits Table");
                 gridFields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
                 var sublayer = geologicUnits.findSublayerById(4);
@@ -1209,6 +1227,7 @@ require([
             }
             // Wells Table code
             else if (title == "Wells") {
+                doGridClear()
                 console.log("Wells Table");
                 gridFields = ["label", "type", "depth"];
                 var wellsLayer =  new FeatureLayer({
@@ -1279,6 +1298,7 @@ require([
             }
                         // Water Levels code
                         else if (title == "Water Levels") {
+                            doGridClear()
                             
                             gridFields = ["name", "watereleva", "datemeasur"];
                                 
@@ -1334,6 +1354,7 @@ require([
                         }
                         // Water chemistry
                         else if (title == "Water Chemistry") {
+                            doGridClear()
                             
                             gridFields = ["station", "temp", "sampledate"];
                                 
@@ -1389,6 +1410,7 @@ require([
                         }
 // sesimoms
 else if (title == "Seismometers") {
+    doGridClear()
                             
     gridFields = ["name", "network"];
         
@@ -1440,6 +1462,7 @@ else if (title == "Seismometers") {
 }
 // sesimicity
 else if (title == "Seismicity 1850 to 2016") {
+    doGridClear()
                             
     gridFields = ["mag", "depth", "day", "month", "year"];
         
@@ -1503,6 +1526,7 @@ else if (title == "Seismicity 1850 to 2016") {
 }
 // shallow wells
 else if (title == "Shallow Well Temperatures") {
+    doGridClear()
     gridFields = ["well_name", "depth_m"];
     var shallowWellsLayer =  new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
@@ -1561,6 +1585,7 @@ else if (title == "Shallow Well Temperatures") {
 }
 // intermediate wells
 else if (title == "Intermediate Well Temperatures") {
+    doGridClear()
     gridFields = ["well_name", "depth_m"];
     var intWellsLayer =  new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
@@ -1619,6 +1644,7 @@ else if (title == "Intermediate Well Temperatures") {
 }
 // deep wells
 else if (title == "Deep Well Temperatures") {
+    doGridClear()
     gridFields = ["well_name", "depth_m"];
     var deepWellsLayer =  new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
