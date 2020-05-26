@@ -561,37 +561,7 @@ require([
     })
 
 
-    thermalData = new GroupLayer({
-        title: "Thermal Data",
-        visible: false,
-        layers: [iso1km, iso2km, iso3km, iso4km, heatflow, shallowWells, intermediateWells, deepWells]
-    });
-
-    geoPhysData = new GroupLayer({
-        title: "Geophysical Data",
-        visible: false,
-        layers: [geoPhysBenchmarks, bougerGravity, gravityPoints]
-    });
-
-    geography = new GroupLayer({
-        title: "Geography",
-        layers: [roads, plss, landownership],
-        visible: false,
-    });
-
-    infrastructure = new GroupLayer({
-        title: "FORGE Infrastructure",
-        layers: [wells, wellPads, power, office, boundary],
-        
-    });
-
-    seismicData = new GroupLayer({
-        title: "Seismic Data",
-        visible: false,
-        layers: [seismoms, seismicity]
-    });
-
-
+   
     // geologicUnitsSearch = new FeatureLayer ({
     //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/FeatureServer/4",
     //     title: "Geologic Units",
@@ -707,6 +677,15 @@ require([
 
     });
 
+    bougerFeatures = new FeatureLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/23",
+        title: "Bouger Gravity Anomaly",
+        elevationInfo: [{
+            mode: "on-the-ground"
+        }],
+
+    })
+
 
     geology = new GroupLayer({
         title: "Geology",
@@ -724,6 +703,38 @@ require([
         visible: false,
         layers: [bedrockSymbology, milValleySubSymbology]
     });
+
+    thermalData = new GroupLayer({
+        title: "Thermal Data",
+        visible: false,
+        layers: [iso1km, iso2km, iso3km, iso4km, heatflow, shallowWells, intermediateWells, deepWells]
+    });
+
+    geoPhysData = new GroupLayer({
+        title: "Geophysical Data",
+        visible: false,
+        layers: [geoPhysBenchmarks, bougerGravity, gravityPoints, bougerFeatures]
+    });
+
+    geography = new GroupLayer({
+        title: "Geography",
+        layers: [roads, plss, landownership],
+        visible: false,
+    });
+
+    infrastructure = new GroupLayer({
+        title: "FORGE Infrastructure",
+        layers: [wells, wellPads, power, office, boundary],
+        
+    });
+
+    seismicData = new GroupLayer({
+        title: "Seismic Data",
+        visible: false,
+        layers: [seismoms, seismicity]
+    });
+
+
 
     //**********************   GRID CODE ****************
 
