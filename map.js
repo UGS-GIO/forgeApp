@@ -549,12 +549,14 @@ require([
 
     geography = new GroupLayer({
         title: "Geography",
-        layers: [roads, plss, landownership]
+        layers: [roads, plss, landownership],
+        visible: false,
     });
 
     infrastructure = new GroupLayer({
         title: "FORGE Infrastructure",
-        layers: [wells, wellPads, power, office, boundary]
+        layers: [wells, wellPads, power, office, boundary],
+        
     });
 
     seismicData = new GroupLayer({
@@ -622,6 +624,7 @@ require([
         //listMode: "show",
         legendEnabled: true,
         listMode: "hide-children",
+        opacity: 0.7,
         sublayers: [{
             id: 4,
             popupTemplate: {
@@ -681,7 +684,6 @@ require([
 
     geology = new GroupLayer({
         title: "Geology",
-        visible: false,
         layers: [geologicUnits, geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
     });
 
@@ -1700,7 +1702,13 @@ else if (title == "Deep Well Temperatures") {
 
         });
     }
+
+} else {
+    
+        alert("Table Not Available For This Layer.");
+      
 }
+
             
     
 
