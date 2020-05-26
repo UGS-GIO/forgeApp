@@ -90,6 +90,10 @@ require([
         url: "https://tiles.arcgis.com/tiles/ZzrwjTRez6FJiOq4/arcgis/rest/services/ForgeRasterFromTin/ImageServer"
     });
 
+    milValleyBedrock = new ElevationLayer({
+        url: "https://tiles.arcgis.com/tiles/ZzrwjTRez6FJiOq4/arcgis/rest/services/p2raster/ImageServer"
+    })
+
     // Map
     var map = new Map({
         basemap: "topo",
@@ -271,6 +275,12 @@ require([
         // elevationInfo: [{
         //     mode: "on-the-ground"
         // }],
+    });
+
+    milValleySubSymbology = new SceneLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/p2extrude/SceneServer",
+        title: "Milford Valley Subsurface Bedrock",
+        opacity: 0.4,
     });
 
     // bedrockSymbology = new SceneLayer ({
@@ -535,6 +545,22 @@ require([
         }],
     });
 
+    bougerGravity = new ImageryLayer({
+        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/Bouger_Gravity_Anomaly/ImageServer",
+        title: "Bouger Gravity Anomaly",
+        opacity: 0.5,
+
+    });
+
+    gravityPoints = new FeatureLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/22",
+        title: "FORGE Gravity Points",
+        elevationInfo: [{
+            mode: "on-the-ground"
+        }],
+    })
+
+
     thermalData = new GroupLayer({
         title: "Thermal Data",
         visible: false,
@@ -544,7 +570,7 @@ require([
     geoPhysData = new GroupLayer({
         title: "Geophysical Data",
         visible: false,
-        layers: [geoPhysBenchmarks]
+        layers: [geoPhysBenchmarks, bougerGravity, gravityPoints]
     });
 
     geography = new GroupLayer({
@@ -696,7 +722,7 @@ require([
     subSurface = new GroupLayer({
         title: "Subsurface Geologic Data",
         visible: false,
-        layers: [bedrockSymbology]
+        layers: [bedrockSymbology, milValleySubSymbology]
     });
 
     //**********************   GRID CODE ****************
