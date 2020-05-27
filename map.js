@@ -314,8 +314,8 @@ require([
     });
 
     wells = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Infrastructure_Wells_3d/SceneServer",
-        //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Inf_Wells_3d/SceneServer",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Infrastructure_Wells_3d_drop25m/SceneServer", 
+        //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Inf_Wells_3d/SceneServer",  old old
         title: "Wells",
         // elevationInfo: [{
         //     mode: "on-the-ground"
@@ -379,16 +379,16 @@ var waterLevelRenderer = {
     defaultSymbol: {
         type: "picture-marker",
         url: "/FORGE_WellSymbol.png",
-        width: "64px",
-        height: "64px"
+        width: "30px",
+        height: "40px"
       },
     uniqueValueInfos: [{ 
         value: "Spring",
         symbol: {
           type: "picture-marker",
           url: "/FORGE_SpringSymbol.png",
-          width: "64px",
-          height: "64px"
+          width: "24px",
+          height: "30px"
         }
       }]
 };
@@ -484,12 +484,12 @@ var waterLevelRenderer = {
         }],
     });
 
-    shallowWells = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Shallow_Wells_3d/SceneServer",
+    shallowWellsFeature =  new FeatureLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
         title: "Shallow Well Temperatures",
-        // elevationInfo: [{
-        //     mode: "on-the-ground"
-        // }], 
+        elevationInfo: [{
+            mode: "on-the-ground"
+        }], 
         popupTemplate: {
             outFields: ["*"],
             title: "<b>Shallow Well</b>",
@@ -506,12 +506,61 @@ var waterLevelRenderer = {
         },
     });
 
+    shallowWells = new SceneLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Shallow_Wells_25mDrop/SceneServer",
+        title: "Shallow Well Temperatures",
+        // elevationInfo: [{
+        //     mode: "on-the-ground"
+        // }], 
+        //visible: false,
+        listMode: "hide",
+        popupTemplate: {
+            outFields: ["*"],
+            title: "<b>Shallow Well</b>",
+            content: [
+
+                {
+                    type: "text",
+                    text: "<b>Well Name: </b>{well_name}<br><b>Depth (m): </b>{depth_m}<br>"
+                },
+                {
+                    type: "attachments"
+                }
+            ]
+        },
+    });
+
+    intWellsFeature =  new FeatureLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
+        title: "Intermediate Well Temperatures",
+        elevationInfo: [{
+            mode: "on-the-ground"
+        }], 
+        popupTemplate: {
+            outFields: ["*"],
+            title: "<b>Shallow Well</b>",
+            content: [
+
+                {
+                    type: "text",
+                    text: "<b>Well Name: </b>{well_name}<br><b>Depth (m): </b>{depth_m}<br>"
+                },
+                {
+                    type: "attachments"
+                }
+            ]
+        },
+    });
+
+    
+
     intermediateWells = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Intermediate_Wells_3d/SceneServer",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Intermediate_Wells_25mDrop/SceneServer",
         title: "Intermediate Well Temperatures",
         // elevationInfo: [{
         //     mode: "on-the-ground"
         // }], 
+        listMode: "hide",
         popupTemplate: {
             outFields: ["*"],
             title: "<b>Intermediate Well</b>",
@@ -528,12 +577,35 @@ var waterLevelRenderer = {
         },
     });
 
+    deepWellsFeature =  new FeatureLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
+        title: "Deep Well Temperatures",
+        elevationInfo: [{
+            mode: "on-the-ground"
+        }], 
+        popupTemplate: {
+            outFields: ["*"],
+            title: "<b>Shallow Well</b>",
+            content: [
+
+                {
+                    type: "text",
+                    text: "<b>Well Name: </b>{well_name}<br><b>Depth (m): </b>{depth_m}<br>"
+                },
+                {
+                    type: "attachments"
+                }
+            ]
+        },
+    });
+
     deepWells = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Deep_Wells_3d/SceneServer",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Deep_Wells_25mDrop/SceneServer",
         title: "Deep Well Temperatures",
         // elevationInfo: [{
         //     mode: "on-the-ground"
         // }], 
+        listMode: "hide",
         popupTemplate: {
             outFields: ["*"],
             title: "<b>Deep Well</b>",
@@ -728,7 +800,7 @@ var waterLevelRenderer = {
     thermalData = new GroupLayer({
         title: "Thermal Data",
         visible: false,
-        layers: [iso1km, iso2km, iso3km, iso4km, heatflow, shallowWells, intermediateWells, deepWells]
+        layers: [iso1km, iso2km, iso3km, iso4km, heatflow, shallowWellsFeature, intWellsFeature, deepWellsFeature]
     });
 
     geoPhysData = new GroupLayer({
@@ -754,6 +826,7 @@ var waterLevelRenderer = {
         visible: false,
         layers: [seismoms, seismicity]
     });
+
 
 
 
@@ -2118,7 +2191,47 @@ else if (title == "Deep Well Temperatures") {
         mapView.ui.add(toAdd, "top-left");
     }
 
+    watchUtils.watch(shallowWellsFeature, 'visible', function(e) {
+        if (e == true) {
+            mapView.map.add(shallowWells);
+        }
+        if (e == false) {
+            mapView.map.remove(shallowWells);
+        };
+    });
 
+    watchUtils.watch(intWellsFeature, 'visible', function(e) {
+        if (e == true) {
+            mapView.map.add(intermediateWells);
+        }
+        if (e == false) {
+            mapView.map.remove(intermediateWells);
+        };
+    });
+
+    watchUtils.watch(deepWellsFeature, 'visible', function(e) {
+        if (e == true) {
+            mapView.map.add(deepWells);
+        }
+        if (e == false) {
+            mapView.map.remove(deepWells);
+        };
+    });
+
+    watchUtils.watch(thermalData, 'visible', function(e) {
+    if (e == true) {
+        mapView.map.add(shallowWells);
+        mapView.map.add(intermediateWells);
+        mapView.map.add(deepWells);
+        }
+        if (e == false) {
+            mapView.map.remove(shallowWells);
+            mapView.map.add(intermediateWells);
+            mapView.map.add(deepWells);
+        };
+
+    
+});
 
 
 });
