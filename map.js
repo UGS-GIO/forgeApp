@@ -373,9 +373,30 @@ require([
         }],
     });
 
+var waterLevelRenderer = {
+    type: "unique-value",
+    field: "source",
+    defaultSymbol: {
+        type: "picture-marker",
+        url: "/FORGE_WellSymbol.png",
+        width: "64px",
+        height: "64px"
+      },
+    uniqueValueInfos: [{ 
+        value: "Spring",
+        symbol: {
+          type: "picture-marker",
+          url: "/FORGE_SpringSymbol.png",
+          width: "64px",
+          height: "64px"
+        }
+      }]
+};
+
     waterLevel = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/7",
         title: "Water Levels",
+        renderer: waterLevelRenderer,
         elevationInfo: [{
             mode: "on-the-ground"
         }],
