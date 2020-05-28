@@ -320,6 +320,8 @@ require([
         // elevationInfo: [{
         //     mode: "on-the-ground"
         // }], 
+        //visible: "true",
+        listMode: "hide",
         popupTemplate: {
             outFields: ["*"],
             title: "<b>FORGE Wells</b>",
@@ -327,18 +329,18 @@ require([
         },
     });
 
-    // wells = new FeatureLayer ({
-    //     url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/4",
-    //     title: "Wells",
-    //     elevationInfo: [{
-    //         mode: "on-the-ground"
-    //     }], 
-    //     popupTemplate: {
-    //         outFields: ["*"],
-    //         title: "<b>FORGE Wells</b>",
-    //         content: wellsPopup
-    //     },
-    // });
+    wellsFeature = new FeatureLayer ({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/4",
+        title: "Wells",
+        elevationInfo: [{
+            mode: "on-the-ground"
+        }], 
+        popupTemplate: {
+            outFields: ["*"],
+            title: "<b>FORGE Wells</b>",
+            content: wellsPopup
+        },
+    });
 
     roads = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/1",
@@ -817,8 +819,8 @@ var waterLevelRenderer = {
 
     infrastructure = new GroupLayer({
         title: "FORGE Infrastructure",
-        layers: [wells, wellPads, power, office, boundary],
-        
+        layers: [wellsFeature, wellPads, power, office, boundary],
+        //visible: true,
     });
 
     seismicData = new GroupLayer({
@@ -2218,6 +2220,15 @@ else if (title == "Deep Well Temperatures") {
         };
     });
 
+    watchUtils.watch(wellsFeature, 'visible', function(e) {
+        if (e == true) {
+            mapView.map.add(wells);
+        }
+        if (e == false) {
+            mapView.map.remove(wells);
+        };
+    });
+
     watchUtils.watch(thermalData, 'visible', function(e) {
     if (e == true) {
         mapView.map.add(shallowWells);
@@ -2226,12 +2237,23 @@ else if (title == "Deep Well Temperatures") {
         }
         if (e == false) {
             mapView.map.remove(shallowWells);
-            mapView.map.add(intermediateWells);
-            mapView.map.add(deepWells);
+            mapView.map.remove(intermediateWells);
+            mapView.map.remove(deepWells);
         };
 
     
 });
 
+watchUtils.watch(infrastructure, 'visible', function(e) {
+    if (e == true) {
+        mapView.map.add(wells);
+        }
+        if (e == false) {
+            mapView.map.remove(wells);
+        };
+
+    
+});
+mapView.map.add(wells);
 
 });
