@@ -6,6 +6,7 @@ require([
     "esri/layers/FeatureLayer",
     "esri/layers/SceneLayer",
     "esri/layers/ElevationLayer",
+    "esri/layers/TileLayer",
     "esri/layers/ImageryLayer",
     "esri/layers/MapImageLayer",
     "esri/layers/SceneLayer",
@@ -66,7 +67,7 @@ require([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
+], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
     //************** grid initial setup
     let grid;
@@ -712,10 +713,10 @@ var waterLevelRenderer = {
         url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
         title: "Geologic Units",
         outFields: ["*"],
-        //listMode: "show",
-        legendEnabled: true,
-        listMode: "hide-children",
-        opacity: 0.7,
+        listMode: "hide",
+        legendEnabled: false,
+        //listMode: "hide-children",
+        opacity: 1,
         sublayers: [{
             id: 4,
             popupTemplate: {
@@ -725,6 +726,26 @@ var waterLevelRenderer = {
             },
             //title: "Geologic Units"
         }]
+
+    });
+
+    geologicUnitsTile = new TileLayer({
+        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+        title: "Geology",
+        outFields: ["*"],
+        //listMode: "show",
+        legendEnabled: true,
+        //listMode: "hide-children",
+        //opacity: 0.7,
+        // sublayers: [{
+        //     id: 4,
+        //     popupTemplate: {
+        //         outFields: ["*"],
+        //         title: "<b>Geologic Units</b>",
+        //         content: unitsPopup
+        //     },
+        //     //title: "Geologic Units"
+        // }]
 
     });
 
@@ -784,7 +805,8 @@ var waterLevelRenderer = {
 
     geology = new GroupLayer({
         title: "Geology",
-        layers: [geologicUnits, geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
+        layers: [geologicUnitsTile, geologicUnits]
+        //layers: [geologicUnitsTile, geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
     });
 
     water = new GroupLayer({
