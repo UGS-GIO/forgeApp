@@ -714,6 +714,7 @@ var waterLevelRenderer = {
         title: "Geologic Units",
         outFields: ["*"],
         listMode: "hide",
+        //visible: false,
         legendEnabled: false,
         //listMode: "hide-children",
         opacity: 1,
@@ -735,7 +736,7 @@ var waterLevelRenderer = {
         outFields: ["*"],
         //listMode: "show",
         legendEnabled: true,
-        //listMode: "hide-children",
+        listMode: "hide-children",
         //opacity: 0.7,
         // sublayers: [{
         //     id: 4,
@@ -749,49 +750,49 @@ var waterLevelRenderer = {
 
     });
 
-    geologicLines = new MapImageLayer({
-        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-        title: "Geologic Lines",
-        listMode: "hide-children",
-        sublayers: [{
-            id: 3,
-            //title: "Geologic Units"
-        }]
+    // geologicLines = new MapImageLayer({
+    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+    //     title: "Geologic Lines",
+    //     listMode: "hide",
+    //     sublayers: [{
+    //         id: 3,
+    //         //title: "Geologic Units"
+    //     }]
 
-    });
+    // });
 
-    geologicLabels = new MapImageLayer({
-        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-        title: "Geologic Feature Labels",
-        listMode: "hide",
-        sublayers: [{
-            id: 0,
-            //title: "Geologic Units"
-        }]
+    // geologicLabels = new MapImageLayer({
+    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+    //     title: "Geologic Feature Labels",
+    //     listMode: "hide",
+    //     sublayers: [{
+    //         id: 0,
+    //         //title: "Geologic Units"
+    //     }]
 
-    });
+    // });
 
-    geologicUnitLabels = new MapImageLayer({
-        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-        title: "Geologic Unit Labels",
-        listMode: "hide",
-        sublayers: [{
-            id: 1,
-            //title: "Geologic Units"
-        }]
+    // geologicUnitLabels = new MapImageLayer({
+    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+    //     title: "Geologic Unit Labels",
+    //     listMode: "hide",
+    //     sublayers: [{
+    //         id: 1,
+    //         //title: "Geologic Units"
+    //     }]
 
-    });
+    // });
 
-    geologicSymbols = new MapImageLayer({
-        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-        title: "Geologic Symbols",
-        listMode: "hide-children",
-        sublayers: [{
-            id: 2,
-            //title: "Geologic Units"
-        }]
+    // geologicSymbols = new MapImageLayer({
+    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+    //     title: "Geologic Symbols",
+    //     listMode: "hide-children",
+    //     sublayers: [{
+    //         id: 2,
+    //         //title: "Geologic Units"
+    //     }]
 
-    });
+    // });
 
     bougerFeatures = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/23",
@@ -805,7 +806,7 @@ var waterLevelRenderer = {
 
     geology = new GroupLayer({
         title: "Geology",
-        layers: [geologicUnitsTile, geologicUnits]
+        layers: [geologicUnitsTile]
         //layers: [geologicUnitsTile, geologicLines, geologicSymbols, geologicLabels, geologicUnitLabels]
     });
 
