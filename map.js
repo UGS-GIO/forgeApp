@@ -112,7 +112,7 @@ require([
         container: "mapViewDiv",
         map: map,
         center: [-112.884, 38.502],
-        zoom: 14.5,
+        zoom: 12.5,
         padding: {
             top: 50,
             bottom: 0
@@ -282,6 +282,7 @@ require([
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/p2extrude/SceneServer",
         title: "Milford Valley Subsurface Bedrock",
         opacity: 0.4,
+        visible: false
     });
 
     // bedrockSymbology = new SceneLayer ({
@@ -366,6 +367,7 @@ require([
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        visible: false
     });
 
     power = new FeatureLayer({
@@ -374,6 +376,7 @@ require([
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        visible: false,
     });
 
 var waterLevelRenderer = {
@@ -453,6 +456,7 @@ var waterLevelRenderer = {
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        visible: false,
     });
 
     iso2km = new FeatureLayer({
@@ -461,6 +465,7 @@ var waterLevelRenderer = {
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        visible: false,
     });
 
     iso3km = new FeatureLayer({
@@ -469,6 +474,7 @@ var waterLevelRenderer = {
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        visible: false,
     });
 
     iso4km = new FeatureLayer({
@@ -477,6 +483,7 @@ var waterLevelRenderer = {
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        visible: false,
     });
 
     heatflow = new FeatureLayer({
@@ -485,6 +492,7 @@ var waterLevelRenderer = {
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        visible: false,
     });
 
     shallowWellsFeature =  new FeatureLayer({
@@ -507,6 +515,7 @@ var waterLevelRenderer = {
                 }
             ]
         },
+        visible: false,
     });
 
     shallowWells = new SceneLayer({
@@ -531,6 +540,7 @@ var waterLevelRenderer = {
                 }
             ]
         },
+        visible: false,
     });
 
     intWellsFeature =  new FeatureLayer({
@@ -553,6 +563,7 @@ var waterLevelRenderer = {
                 }
             ]
         },
+        visible: false,
     });
 
     
@@ -578,6 +589,7 @@ var waterLevelRenderer = {
                 }
             ]
         },
+        visible: false,
     });
 
     deepWellsFeature =  new FeatureLayer({
@@ -631,6 +643,7 @@ var waterLevelRenderer = {
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        visible: false
     });
 
     geoPhysBenchmarks = new FeatureLayer({
@@ -709,26 +722,26 @@ var waterLevelRenderer = {
 
     // });
 
-    geologicUnits = new MapImageLayer({
-        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-        title: "Geologic Units",
-        outFields: ["*"],
-        listMode: "hide",
-        //visible: false,
-        legendEnabled: false,
-        //listMode: "hide-children",
-        opacity: 1,
-        sublayers: [{
-            id: 4,
-            popupTemplate: {
-                outFields: ["*"],
-                title: "<b>Geologic Units</b>",
-                content: unitsPopup
-            },
-            //title: "Geologic Units"
-        }]
+    // geologicUnits = new MapImageLayer({
+    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+    //     title: "Geologic Units",
+    //     outFields: ["*"],
+    //     listMode: "hide",
+    //     //visible: false,
+    //     legendEnabled: false,
+    //     //listMode: "hide-children",
+    //     opacity: 1,
+    //     sublayers: [{
+    //         id: 4,
+    //         popupTemplate: {
+    //             outFields: ["*"],
+    //             title: "<b>Geologic Units</b>",
+    //             content: unitsPopup
+    //         },
+    //         //title: "Geologic Units"
+    //     }]
 
-    });
+    // });
 
     geologicUnitsTile = new TileLayer({
         url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
