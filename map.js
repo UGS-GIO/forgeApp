@@ -9,6 +9,7 @@ require([
     "esri/layers/TileLayer",
     "esri/layers/ImageryLayer",
     "esri/layers/MapImageLayer",
+    "esri/renderers/RasterStretchRenderer",
     "esri/layers/SceneLayer",
     "esri/layers/GroupLayer",
     "esri/Ground",
@@ -67,7 +68,7 @@ require([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
+], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
     //************** grid initial setup
     let grid;
@@ -654,10 +655,12 @@ var waterLevelRenderer = {
         }],
     });
 
+
+
     bougerGravity = new ImageryLayer({
         url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/Bouger_Gravity_Anomaly/ImageServer",
         title: "Bouger Gravity Anomaly",
-        opacity: 0.5,
+        opacity: 0.8,
 
     });
 
@@ -807,14 +810,14 @@ var waterLevelRenderer = {
 
     // });
 
-    bougerFeatures = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/23",
-        title: "Bouger Gravity Anomaly",
-        elevationInfo: [{
-            mode: "on-the-ground"
-        }],
+    // bougerFeatures = new FeatureLayer({
+    //     url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/23",
+    //     title: "Bouger Gravity Anomaly",
+    //     elevationInfo: [{
+    //         mode: "on-the-ground"
+    //     }],
 
-    })
+    // })
 
 
     geology = new GroupLayer({
@@ -844,7 +847,7 @@ var waterLevelRenderer = {
     geoPhysData = new GroupLayer({
         title: "Geophysical Data",
         visible: false,
-        layers: [geoPhysBenchmarks, bougerGravity, gravityPoints, bougerFeatures]
+        layers: [geoPhysBenchmarks, bougerGravity, gravityPoints]
     });
 
     geography = new GroupLayer({
