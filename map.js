@@ -677,24 +677,23 @@ var waterLevelRenderer = {
 
 
    
-    // geologicUnitsSearch = new FeatureLayer ({
-    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/FeatureServer/4",
-    //     title: "Geologic Units",
-    //     elevationInfo: [{
-    //         mode: "on-the-ground"
-    //     }], 
-    //     visible: false,
-    //     //listMode: "show",
-    //     // legendEnabled: true,
-    //     // listMode: "hide-children",
-    //     // sublayers: [
-    //     //     {
-    //     //         id: 4,
-    //     //         //title: "Geologic Units"
-    //     //     }
-    //     // ]
+    geologicUnits = new FeatureLayer ({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank/FeatureServer/0",
+        title: "Geologic Units",
+        outFields: ["*"],
+        elevationInfo: [{
+            mode: "on-the-ground"
+        }], 
+        //visible: false,
+        legendEnabled: false,
+        listMode: "hide",
+        popupTemplate: {
+                        outFields: ["*"],
+                        title: "<b>Geologic Units</b>",
+                        content: unitsPopup
+                    },
 
-    // });
+    });
 
     // geology = new MapImageLayer ({
     //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
@@ -728,26 +727,26 @@ var waterLevelRenderer = {
 
     // });
 
-    geologicUnits = new MapImageLayer({
-        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-        title: "Geologic Units",
-        outFields: ["*"],
-        listMode: "hide",
-        //visible: false,
-        legendEnabled: false,
-        //listMode: "hide-children",
-        opacity: 0,
-        sublayers: [{
-            id: 4,
-            popupTemplate: {
-                outFields: ["*"],
-                title: "<b>Geologic Units</b>",
-                content: unitsPopup
-            },
-            //title: "Geologic Units"
-        }]
+    // geologicUnits = new MapImageLayer({
+    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer/4",
+    //     title: "Geologic Units",
+    //     outFields: ["*"],
+    //     listMode: "hide",
+    //     //visible: false,
+    //     legendEnabled: false,
+    //     //listMode: "hide-children",
+    //     opacity: 0,
+    //     sublayers: [{
+    //         id: 4,
+    //         popupTemplate: {
+    //             outFields: ["*"],
+    //             title: "<b>Geologic Units</b>",
+    //             content: unitsPopup
+    //         },
+    //         //title: "Geologic Units"
+    //     }]
 
-    });
+    // });
 
     geologicUnitsTile = new TileLayer({
         url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
@@ -1095,15 +1094,15 @@ var waterLevelRenderer = {
 
                 //placeholder: "example: BLM"
             },
-            // {
-            //     layer: geologicUnitsSearch,
-            //     name: "Geologic Units",
-            //     searchFields: ["description"],
-            //     displayField: "unitname",
-            //     outFields: ["*"],
+            {
+                layer: geologicUnits,
+                name: "Geologic Units",
+                searchFields: ["description", "unitsymbol", "unitname"],
+                displayField: "unitname",
+                outFields: ["*"],
 
-            //     //placeholder: "example: BLM"
-            // }, 
+                //placeholder: "example: BLM"
+            }, 
             // {
             //     layer: geologicLines,
             //     name: "Geologic Lines",
@@ -1171,7 +1170,7 @@ var waterLevelRenderer = {
         ]
     });
 
-    CalciteMapArcGISSupport.setSearchExpandEvents(searchWidget);
+    //CalciteMapArcGISSupport.setSearchExpandEvents(searchWidget);
     // Map widgets
     var home = new Home({
         view: mapView
@@ -1197,6 +1196,11 @@ var waterLevelRenderer = {
     });
 
     mapView.ui.add(locateWidget, "top-left");
+
+    mapView.ui.add(searchWidget, {
+        position: "bottom-right",
+        index: 1
+      });
 
 
 
