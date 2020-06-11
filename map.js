@@ -21,6 +21,7 @@ require([
     "esri/widgets/Zoom",
     "esri/widgets/Compass",
     "esri/widgets/Search",
+    "esri/widgets/DirectLineMeasurement3D",
     "esri/widgets/Legend",
     "esri/widgets/Expand",
     "esri/widgets/Sketch/SketchViewModel",
@@ -68,7 +69,7 @@ require([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
+], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
     //************** grid initial setup
     let grid;
@@ -673,6 +674,8 @@ var waterLevelRenderer = {
     })
 
 
+
+
    
     // geologicUnitsSearch = new FeatureLayer ({
     //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/FeatureServer/4",
@@ -725,26 +728,26 @@ var waterLevelRenderer = {
 
     // });
 
-    // geologicUnits = new MapImageLayer({
-    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-    //     title: "Geologic Units",
-    //     outFields: ["*"],
-    //     listMode: "hide",
-    //     //visible: false,
-    //     legendEnabled: false,
-    //     //listMode: "hide-children",
-    //     opacity: 1,
-    //     sublayers: [{
-    //         id: 4,
-    //         popupTemplate: {
-    //             outFields: ["*"],
-    //             title: "<b>Geologic Units</b>",
-    //             content: unitsPopup
-    //         },
-    //         //title: "Geologic Units"
-    //     }]
+    geologicUnits = new MapImageLayer({
+        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+        title: "Geologic Units",
+        outFields: ["*"],
+        listMode: "hide",
+        //visible: false,
+        legendEnabled: false,
+        //listMode: "hide-children",
+        opacity: 0,
+        sublayers: [{
+            id: 4,
+            popupTemplate: {
+                outFields: ["*"],
+                title: "<b>Geologic Units</b>",
+                content: unitsPopup
+            },
+            //title: "Geologic Units"
+        }]
 
-    // });
+    });
 
     geologicUnitsTile = new TileLayer({
         url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
@@ -1207,6 +1210,7 @@ var waterLevelRenderer = {
     //mapView.map.ground.layers.add(bedrockElevation);
     mapView.map.add(geology);
     mapView.map.add(infrastructure);
+    mapView.map.add(geologicUnits);
 
 
 
@@ -1280,7 +1284,7 @@ var waterLevelRenderer = {
             layer = landownership;
         } else if (title === "Wells") {
             layer = wells;
-        } else if (title === "Geologic Units") {
+        } else if (title === "Geology") {
             layer = geologicUnits;
         } else if (title === "Roads") {
             layer = roads;
@@ -1330,7 +1334,7 @@ var waterLevelRenderer = {
             console.log("Table Action CLicked");
 
             // Geo Unit Table code
-            if (title == "Geologic Units") {
+            if (title == "Geology") {
                 doGridClear()
                 console.log("GeoUnits Table");
                 gridFields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
@@ -1379,15 +1383,15 @@ var waterLevelRenderer = {
                                 name: 'unitname'
                             },
                             {
-                                alias: 'grouping',
+                                alias: 'Grouping',
                                 name: 'grouping'
                             },
                             {
-                                alias: 'age_strat',
+                                alias: 'Stratigraphic Age',
                                 name: 'age_strat'
                             },
                             {
-                                alias: 'description',
+                                alias: 'Description of Unit',
                                 name: 'description'
                             }
                         ];
@@ -2294,5 +2298,23 @@ watchUtils.watch(infrastructure, 'visible', function(e) {
     
 });
 mapView.map.add(wells);
+
+var measurementWidget = new DirectLineMeasurement3D({
+    view: mapView,
+    container: measureWidg
+  });
+  
+     //watches when geoUnitsImagery is turned to also turn geoUnitsFeatures
+
+     watchUtils.watch(geologicUnitsTile, 'visible', function(e) {
+        if (e == true) {
+            mapView.map.add(geologicUnits);
+            console.log(map.layers.items);
+        }
+        if (e == false) {
+            console.log(map.layers.items);
+            mapView.map.remove(geologicUnits);
+        };
+    });
 
 });
