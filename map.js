@@ -146,17 +146,17 @@ require([
         var content = "";
 
 
-        if (feature.graphic.attributes.unitsymbol) {
-            content += "<span class='bold' title='Longitude'><b>Unit: </b></span>{unitsymbol}<br/>";
+        if (feature.graphic.attributes.UnitSymbol) {
+            content += "<span class='bold' title='Longitude'><b>Unit: </b></span>{UnitSymbol}<br/>";
         }
-        if (feature.graphic.attributes.unitname) {
-            content += "<span class='bold' title='Longitude'><b>Unit Name: </b></span>{unitname}<br/>";
+        if (feature.graphic.attributes.UnitName) {
+            content += "<span class='bold' title='Longitude'><b>Unit Name: </b></span>{UnitName}<br/>";
         }
         if (feature.graphic.attributes.age_strat) {
             content += "<span class='bold' title='Longitude'><b>Age: </b></span>{age_strat}<br/>";
         }
-        if (feature.graphic.attributes.description) {
-            content += "<span class='bold' title='Longitude'><b>Unit Description: </b></span>{description}<br/>";
+        if (feature.graphic.attributes.Description) {
+            content += "<span class='bold' title='Longitude'><b>Unit Description: </b></span>{Description}<br/>";
         }
         return content;
     }
@@ -185,8 +185,14 @@ require([
         if (feature.graphic.attributes.name) {
             content += "<span class='bold' title='Longitude'><b>Name: </b></span>{name}<br/>";
         }
+        if (feature.graphic.attributes.label) {
+            content += "<span class='bold' title='Longitude'><b>Label: </b></span>{label}<br/>";
+        }
         if (feature.graphic.attributes.watereleva) {
             content += "<span class='bold' title='Longitude'><b>Water Level: </b></span>{watereleva}<br/>";
+        }
+        if (feature.graphic.attributes.dtw) {
+            content += "<span class='bold' title='Longitude'><b>Depth to Water: </b></span>{dtw}<br/>";
         }
         if (feature.graphic.attributes.datemeasur) {
             content += "<span class='bold' title='Longitude'><b>Date Measured: </b></span>{datemeasur}<br/>";
@@ -203,11 +209,69 @@ require([
             content += "<span class='bold' title='Longitude'><b>Station: </b></span>{station}<br/>";
         }
         if (feature.graphic.attributes.temp) {
+            content += "<span class='bold' title='Longitude'><b>Name: </b></span>{labelfield}<br/>";
+        }
+        if (feature.graphic.attributes.sampledate) {
+            content += "<span class='bold' title='Longitude'><b>pH: </b></span>{ph}<br/>";
+        }
+        if (feature.graphic.attributes.k) {
+            content += "<span class='bold' title='Longitude'><b>K: </b></span>{k}<br/>";
+        }
+        if (feature.graphic.attributes.na) {
+            content += "<span class='bold' title='Longitude'><b>Na: </b></span>{na}<br/>";
+        }
+        if (feature.graphic.attributes.ca) {
+            content += "<span class='bold' title='Longitude'><b>CA: </b></span>{ca}<br/>";
+        }
+        if (feature.graphic.attributes.mg) {
+            content += "<span class='bold' title='Longitude'><b>MG: </b></span>{mg}<br/>";
+        }
+        if (feature.graphic.attributes.br) {
+            content += "<span class='bold' title='Longitude'><b>BR: </b></span>{br}<br/>";
+        }
+        if (feature.graphic.attributes.cl) {
+            content += "<span class='bold' title='Longitude'><b>Cl: </b></span>{cl}<br/>";
+        }
+        if (feature.graphic.attributes.f) {
+            content += "<span class='bold' title='Longitude'><b>F: </b></span>{f}<br/>";
+        }
+        if (feature.graphic.attributes.so4) {
+            content += "<span class='bold' title='Longitude'><b>SO<sub>4</sub>: </b></span>{so4}<br/>";
+        }
+        if (feature.graphic.attributes.hco3) {
+            content += "<span class='bold' title='Longitude'><b>HCO<sub>3</sub>: </b></span>{hco3}<br/>";
+        }
+        if (feature.graphic.attributes.hco3) {
+            content += "<span class='bold' title='Longitude'><b><sub>18</sub>O: </b></span>{18o}<br/>";
+        }
+        if (feature.graphic.attributes.hco3) {
+            content += "<span class='bold' title='Longitude'><b><sub>2</sub>H: </b></span>{2h}<br/>";
+        }
+        if (feature.graphic.attributes.temp) {
             content += "<span class='bold' title='Longitude'><b>Temperature: </b></span>{temp}<br/>";
+        }
+        if (feature.graphic.attributes.b) {
+            content += "<span class='bold' title='Longitude'><b>B: </b></span>{b}<br/>";
+        }
+        if (feature.graphic.attributes.si) {
+            content += "<span class='bold' title='Longitude'><b>Si: </b></span>{si}<br/>";
+        }
+        if (feature.graphic.attributes.source) {
+            content += "<span class='bold' title='Longitude'><b>Source: </b></span>{source}<br/>";
+        }
+        if (feature.graphic.attributes.as_) {
+            content += "<span class='bold' title='Longitude'><b>As_: </b></span>{as_}<br/>";
+        }
+        if (feature.graphic.attributes.tds) {
+            content += "<span class='bold' title='Longitude'><b>TDS: </b></span>{tds}<br/>";
         }
         if (feature.graphic.attributes.sampledate) {
             content += "<span class='bold' title='Longitude'><b>Sample Date: </b></span>{sampledate}<br/>";
         }
+        if (feature.graphic.attributes.watertype) {
+            content += "<span class='bold' title='Longitude'><b>Water Type: </b></span>{watertype}<br/>";
+        }
+
 
         return content;
     }
@@ -677,24 +741,23 @@ var waterLevelRenderer = {
 
 
    
-    // geologicUnitsSearch = new FeatureLayer ({
-    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/FeatureServer/4",
-    //     title: "Geologic Units",
-    //     elevationInfo: [{
-    //         mode: "on-the-ground"
-    //     }], 
-    //     visible: false,
-    //     //listMode: "show",
-    //     // legendEnabled: true,
-    //     // listMode: "hide-children",
-    //     // sublayers: [
-    //     //     {
-    //     //         id: 4,
-    //     //         //title: "Geologic Units"
-    //     //     }
-    //     // ]
+    geologicUnits = new FeatureLayer ({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank/FeatureServer/0",
+        title: "Geologic Units",
+        outFields: ["*"],
+        elevationInfo: [{
+            mode: "on-the-ground"
+        }], 
+        //visible: false,
+        legendEnabled: false,
+        listMode: "hide",
+        popupTemplate: {
+                        outFields: ["*"],
+                        title: "<b>Geologic Units</b>",
+                        content: unitsPopup
+                    },
 
-    // });
+    });
 
     // geology = new MapImageLayer ({
     //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
@@ -728,26 +791,26 @@ var waterLevelRenderer = {
 
     // });
 
-    geologicUnits = new MapImageLayer({
-        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-        title: "Geologic Units",
-        outFields: ["*"],
-        listMode: "hide",
-        //visible: false,
-        legendEnabled: false,
-        //listMode: "hide-children",
-        opacity: 0,
-        sublayers: [{
-            id: 4,
-            popupTemplate: {
-                outFields: ["*"],
-                title: "<b>Geologic Units</b>",
-                content: unitsPopup
-            },
-            //title: "Geologic Units"
-        }]
+    // geologicUnits = new MapImageLayer({
+    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer/4",
+    //     title: "Geologic Units",
+    //     outFields: ["*"],
+    //     listMode: "hide",
+    //     //visible: false,
+    //     legendEnabled: false,
+    //     //listMode: "hide-children",
+    //     opacity: 0,
+    //     sublayers: [{
+    //         id: 4,
+    //         popupTemplate: {
+    //             outFields: ["*"],
+    //             title: "<b>Geologic Units</b>",
+    //             content: unitsPopup
+    //         },
+    //         //title: "Geologic Units"
+    //     }]
 
-    });
+    // });
 
     geologicUnitsTile = new TileLayer({
         url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
@@ -1054,7 +1117,7 @@ var waterLevelRenderer = {
         container: "searchWidgetDiv",
         view: mapView,
         allPlaceholder: "Search Layers",
-        activeMenu: "source",
+        activeMenu: "none",
         locationEnabled: false,
         includeDefaultSources: false,
         sources: [{
@@ -1095,15 +1158,15 @@ var waterLevelRenderer = {
 
                 //placeholder: "example: BLM"
             },
-            // {
-            //     layer: geologicUnitsSearch,
-            //     name: "Geologic Units",
-            //     searchFields: ["description"],
-            //     displayField: "unitname",
-            //     outFields: ["*"],
+            {
+                layer: geologicUnits,
+                name: "Geologic Units",
+                searchFields: ["Description", "UnitSymbol", "UnitName"],
+                displayField: "UnitName",
+                outFields: ["*"],
 
-            //     //placeholder: "example: BLM"
-            // }, 
+                //placeholder: "example: BLM"
+            }, 
             // {
             //     layer: geologicLines,
             //     name: "Geologic Lines",
@@ -1171,7 +1234,7 @@ var waterLevelRenderer = {
         ]
     });
 
-    CalciteMapArcGISSupport.setSearchExpandEvents(searchWidget);
+    //CalciteMapArcGISSupport.setSearchExpandEvents(searchWidget);
     // Map widgets
     var home = new Home({
         view: mapView
@@ -1197,6 +1260,11 @@ var waterLevelRenderer = {
     });
 
     mapView.ui.add(locateWidget, "top-left");
+
+    mapView.ui.add(searchWidget, {
+        position: "bottom-right",
+        index: 1
+      });
 
 
 
@@ -1326,6 +1394,8 @@ var waterLevelRenderer = {
             layer = geologicLabels;
         } else if (title === "Geologic Symbols") {
             layer = geologicSymbols;
+        } else if (title === "Geophysical Benchmarks") {
+            layer = geoPhysBenchmarks;
         }
 
         //*********** TABLE CODE  ***********/
@@ -1879,7 +1949,59 @@ else if (title == "Deep Well Temperatures") {
         });
     }
 
-} else {
+} // geophysical benchmarks
+else if (title == "Geophysical Benchmarks") {
+    doGridClear()
+                            
+    gridFields = ["point_id", "elevation"];
+        
+        var query = geoPhysBenchmarks.createQuery();
+        // add table close x to right hand corner
+        document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+        document.getElementById("removeX").setAttribute("style", "float: right;");
+
+        console.log(query);
+        query.where = "1=1";
+        query.outfields = ["objectid", "point_id", "elevation"];
+        geoPhysBenchmarks.queryFeatures(query).then(function(e) {
+            console.log(e);
+
+
+            resultsArray = e["features"];
+            console.log(resultsArray);
+            // put our attributes in an object the datagrid can ingest.
+            var srch = {
+                "items": []
+            };
+            resultsArray.forEach(function(ftrs) {
+                console.log(ftrs);
+                var att = ftrs.attributes;
+
+                srch.items.push(att);
+            });
+            console.log(srch);
+            gridFields = ["objectid", "point_id", "elevation"];
+            var fieldArray = [
+                //{alias: 'objectid', name: 'objectid'}, 
+                {
+                    alias: 'Point ID',
+                    name: 'point_id'
+                },
+                {
+                    alias: 'Elevation',
+                    name: 'elevation'
+                }
+                
+            ];
+
+            e.fields = fieldArray;
+            console.log(e);
+            layerTable(e);
+
+        });
+}
+
+else {
     
         alert("Table Not Available For This Layer.");
       
@@ -2305,8 +2427,21 @@ var measurementWidget = new DirectLineMeasurement3D({
   });
   
      //watches when geoUnitsImagery is turned to also turn geoUnitsFeatures
+     watchUtils.watch(geology, 'visible', function(ee) {
+         console.log(ee);
+         if (ee == true) {
+            mapView.map.add(geologicUnits);
+            console.log(map.layers.items);
+        }
+         if (ee == false) {
+            console.log(map.layers.items);
+            mapView.map.remove(geologicUnits);
+        };
+    });
 
      watchUtils.watch(geologicUnitsTile, 'visible', function(e) {
+         console.log(e);
+         
         if (e == true) {
             mapView.map.add(geologicUnits);
             console.log(map.layers.items);
@@ -2316,5 +2451,6 @@ var measurementWidget = new DirectLineMeasurement3D({
             mapView.map.remove(geologicUnits);
         };
     });
+
 
 });
