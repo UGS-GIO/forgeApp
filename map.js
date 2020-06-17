@@ -982,6 +982,8 @@ var waterLevelRenderer = {
             columns: columns
         }, "grid");
 
+        grid.on("dgrid-select", selectFeatureFromGrid);
+
         // add a row-click listener on the grid. This will be used
         // to highlight the corresponding feature on the view
             //grid.on("dgrid-select", selectFeatureFromGrid);
@@ -1355,7 +1357,7 @@ var waterLevelRenderer = {
         } else if (title === "Wells") {
             layer = wells;
         } else if (title === "Geology") {
-            layer = geologicUnits;
+            layer = geologicUnitsTile;
         } else if (title === "Roads") {
             layer = roads;
         } else if (title === "PLSS") {
@@ -1407,26 +1409,29 @@ var waterLevelRenderer = {
 
             // Geo Unit Table code
             if (title == "Geology") {
+                
                 doGridClear()
                 console.log("GeoUnits Table");
-                gridFields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
-                var sublayer = geologicUnits.findSublayerById(4);
-                console.log(sublayer);
-                sublayer.createFeatureLayer()
-                    .then(function(featureLayer) {
-                        return featureLayer.load();
-                    })
-                    .then(generateTable);
+                gridFields = ["OBJECTID", "UnitSymbol", "UnitName", "grouping", "age_strat", "Description"];
+                //var sublayer = geologicUnits.findSublayerById(4);
+                var geoUnitsLayer =  new FeatureLayer({
+                    url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank/FeatureServer/0",
+                    outFields: ["*"],
+                })
 
-                function generateTable(featureLayer) {
-                    var query = featureLayer.createQuery();
+                layer = geoUnitsLayer;
+                
+                geoUnitsLayer.load().then(attributesReady);
+
+                function attributesReady() {
+                    var query = geoUnitsLayer.createQuery();
                     // add table close x to right hand corner
                     document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
                     document.getElementById("removeX").setAttribute("style", "float: right;");
 
                     query.where = "1=1";
-                    query.outfields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
-                    sublayer.queryFeatures(query).then(function(e) {
+                    query.outfields = ["OBJECTID", "UnitSymbol", "UnitName", "grouping", "age_strat", "Description"];
+                    geoUnitsLayer.queryFeatures(query).then(function(e) {
                         console.log(e);
 
 
@@ -1443,16 +1448,16 @@ var waterLevelRenderer = {
                             srch.items.push(att);
                         });
                         console.log(srch);
-                        gridFields = ["objectid", "unitsymbol", "unitname", "grouping", "age_strat", "description"];
+                        gridFields = ["OBJECTID", "UnitSymbol", "UnitName", "grouping", "age_strat", "Description"];
                         var fieldArray = [
                             //{alias: 'objectid', name: 'objectid'}, 
                             {
                                 alias: 'Unit Symbol',
-                                name: 'unitsymbol'
+                                name: 'UnitSymbol'
                             },
                             {
                                 alias: 'Unit Name',
-                                name: 'unitname'
+                                name: 'UnitName'
                             },
                             {
                                 alias: 'Grouping',
@@ -1464,7 +1469,7 @@ var waterLevelRenderer = {
                             },
                             {
                                 alias: 'Description of Unit',
-                                name: 'description'
+                                name: 'Description'
                             }
                         ];
 
@@ -1550,7 +1555,7 @@ var waterLevelRenderer = {
                         else if (title == "Water Levels") {
                             doGridClear()
                             
-                            gridFields = ["name", "watereleva", "datemeasur"];
+                            gridFields = ["objectid", "name", "watereleva", "datemeasur"];
                                 
                                 var query = waterLevel.createQuery();
                                 // add table close x to right hand corner
@@ -1559,7 +1564,7 @@ var waterLevelRenderer = {
             
                                 console.log(query);
                                 query.where = "1=1";
-                                query.outfields = ["OBJECTID", "name", "watereleva", "datemeasur"];
+                                query.outfields = ["objectid", "name", "watereleva", "datemeasur"];
                                 waterLevel.queryFeatures(query).then(function(e) {
                                     console.log(e);
             
@@ -1577,7 +1582,7 @@ var waterLevelRenderer = {
                                         srch.items.push(att);
                                     });
                                     console.log(srch);
-                                    gridFields = ["OBJECTID", "name", "watereleva", "datemeasur"];
+                                    gridFields = ["objectid", "name", "watereleva", "datemeasur"];
                                     var fieldArray = [
                                         //{alias: 'objectid', name: 'objectid'}, 
                                         {
@@ -1606,7 +1611,7 @@ var waterLevelRenderer = {
                         else if (title == "Water Chemistry") {
                             doGridClear()
                             
-                            gridFields = ["station", "temp", "sampledate"];
+                            gridFields = ["objectid", "station", "temp", "sampledate"];
                                 
                                 var query = waterChemistry.createQuery();
                                 // add table close x to right hand corner
@@ -1615,7 +1620,7 @@ var waterLevelRenderer = {
             
                                 console.log(query);
                                 query.where = "1=1";
-                                query.outfields = ["OBJECTID", "station", "temp", "sampledate"];
+                                query.outfields = ["objectid", "station", "temp", "sampledate"];
                                 waterChemistry.queryFeatures(query).then(function(e) {
                                     console.log(e);
             
@@ -1633,7 +1638,7 @@ var waterLevelRenderer = {
                                         srch.items.push(att);
                                     });
                                     console.log(srch);
-                                    gridFields = ["OBJECTID", "station", "temp", "sampledate"];
+                                    gridFields = ["objectid", "station", "temp", "sampledate"];
                                     var fieldArray = [
                                         //{alias: 'objectid', name: 'objectid'}, 
                                         {
@@ -1777,7 +1782,7 @@ else if (title == "Seismicity 1850 to 2016") {
 // shallow wells
 else if (title == "Shallow Well Temperatures") {
     doGridClear()
-    gridFields = ["well_name", "depth_m"];
+    gridFields = ["objectid","well_name", "depth_m"];
     var shallowWellsLayer =  new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
         outFields: ["*"],
@@ -1794,7 +1799,7 @@ else if (title == "Shallow Well Temperatures") {
 
         console.log(query);
         query.where = "1=1";
-        query.outfields = ["OBJECTID", "well_name", "depth_m"];
+        query.outfields = ["objectid", "well_name", "depth_m"];
         shallowWellsLayer.queryFeatures(query).then(function(e) {
             console.log(e);
 
@@ -1812,7 +1817,7 @@ else if (title == "Shallow Well Temperatures") {
                 srch.items.push(att);
             });
             console.log(srch);
-            gridFields = ["OBJECTID", "well_name", "depth_m"];
+            gridFields = ["objectid", "well_name", "depth_m"];
             var fieldArray = [
                 //{alias: 'objectid', name: 'objectid'}, 
                 {
@@ -1836,7 +1841,7 @@ else if (title == "Shallow Well Temperatures") {
 // intermediate wells
 else if (title == "Intermediate Well Temperatures") {
     doGridClear()
-    gridFields = ["well_name", "depth_m"];
+    gridFields = ["objectid", "well_name", "depth_m"];
     var intWellsLayer =  new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
         outFields: ["*"],
@@ -1853,7 +1858,7 @@ else if (title == "Intermediate Well Temperatures") {
 
         console.log(query);
         query.where = "1=1";
-        query.outfields = ["OBJECTID", "well_name", "depth_m"];
+        query.outfields = ["objectid", "well_name", "depth_m"];
         intWellsLayer.queryFeatures(query).then(function(e) {
             console.log(e);
 
@@ -1871,7 +1876,7 @@ else if (title == "Intermediate Well Temperatures") {
                 srch.items.push(att);
             });
             console.log(srch);
-            gridFields = ["OBJECTID", "well_name", "depth_m"];
+            gridFields = ["objectid", "well_name", "depth_m"];
             var fieldArray = [
                 //{alias: 'objectid', name: 'objectid'}, 
                 {
@@ -1895,7 +1900,7 @@ else if (title == "Intermediate Well Temperatures") {
 // deep wells
 else if (title == "Deep Well Temperatures") {
     doGridClear()
-    gridFields = ["well_name", "depth_m"];
+    gridFields = ["objectid", "well_name", "depth_m"];
     var deepWellsLayer =  new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
         outFields: ["*"],
@@ -1912,7 +1917,7 @@ else if (title == "Deep Well Temperatures") {
 
         console.log(query);
         query.where = "1=1";
-        query.outfields = ["OBJECTID", "well_name", "depth_m"];
+        query.outfields = ["objectid", "well_name", "depth_m"];
         deepWellsLayer.queryFeatures(query).then(function(e) {
             console.log(e);
 
@@ -1930,7 +1935,7 @@ else if (title == "Deep Well Temperatures") {
                 srch.items.push(att);
             });
             console.log(srch);
-            gridFields = ["OBJECTID", "well_name", "depth_m"];
+            gridFields = ["objectid", "well_name", "depth_m"];
             var fieldArray = [
                 //{alias: 'objectid', name: 'objectid'}, 
                 {
@@ -2279,7 +2284,61 @@ else {
             doGridClear();
     
         })
+//select feature from grid table
+function selectFeatureFromGrid(event) {
+    console.log(event);
+    console.log(layer);
+    mapView.popup.close();
+    mapView.graphics.removeAll();
+    var row = event.rows[0]
+    console.log(row);
+    if (row.data.objectid) {
+    var id = row.data.objectid;
+    } else {
+        var id = row.data.OBJECTID;
+    }
+    console.log(id);
 
+    var query = layer.createQuery();
+
+    query.where = "objectid = '" + id + "'";
+    query.returnGeometry = true;
+    query.outFields = ["*"],
+
+        // query the palntLayerView using the query set above
+        layer.queryFeatures(query).then(function(results) {
+            console.log(results);
+            var graphics = results.features;
+            console.log(graphics);
+            var item = graphics[0];
+                var cntr = [];
+                cntr.push(item.geometry.longitude);
+                cntr.push(item.geometry.latitude);
+                console.log(item.geometry);
+                mapView.goTo({
+                    center: cntr, // position:
+                    zoom: 13
+                });
+                mapView.graphics.removeAll();
+                var selectedGraphic = new Graphic({
+                    geometry: item.geometry,
+                    symbol: new SimpleMarkerSymbol({
+                        //color: [0,255,255],
+                        style: "circle",
+                        //size: "8px",
+                        outline: {
+                            color: [255, 255, 0],
+                            width: 3
+                        }
+                    })
+                });
+                mapView.graphics.add(selectedGraphic);
+                mapView.popup.open({
+                    features: [item],
+                    location: item.geometry
+                });
+        })
+}
 
     //testing resizing grid
 
@@ -2479,5 +2538,7 @@ function showCoordinates(pt) {
 
     showCoordinates(mapView.toMap({ x: evt.x, y: evt.y }));
   });
+
+ 
 
 });
