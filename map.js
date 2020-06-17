@@ -759,6 +759,7 @@ var waterLevelRenderer = {
 
     });
 
+
     // geology = new MapImageLayer ({
     //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
     //     title: "Geologic Units",
@@ -1279,6 +1280,7 @@ var waterLevelRenderer = {
     mapView.map.add(geology);
     mapView.map.add(infrastructure);
     mapView.map.add(geologicUnits);
+
 
 
 
@@ -2451,6 +2453,31 @@ var measurementWidget = new DirectLineMeasurement3D({
             mapView.map.remove(geologicUnits);
         };
     });
+//scale widget
 
+var coordsWidget = document.createElement("div");
+      coordsWidget.id = "coordsWidget";
+      coordsWidget.className = "esri-widget esri-component";
+      coordsWidget.style.padding = "3px 3px 10px";
+      coordsWidget.style.backgroundColor = "#ffffff80";
+
+      mapView.ui.add(coordsWidget, "bottom-left");
+
+function showCoordinates(pt) {
+    if (pt) {
+    var coords = "Lat/Lon " + pt.latitude.toFixed(3) + " " + pt.longitude.toFixed(3) +
+        " | Scale 1:" + Math.round(mapView.scale * 1) / 1;
+    coordsWidget.innerHTML = coords;
+    }
+  }
+
+  mapView.watch("stationary", function(isStationary) {
+    showCoordinates(mapView.center);
+  });
+
+  mapView.on("pointer-move", function(evt) {
+
+    showCoordinates(mapView.toMap({ x: evt.x, y: evt.y }));
+  });
 
 });
