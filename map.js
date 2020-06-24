@@ -33,6 +33,7 @@ require([
     "esri/widgets/NavigationToggle",
     "esri/layers/GraphicsLayer",
     "esri/symbols/SimpleFillSymbol",
+    "esri/symbols/SimpleMarkerSymbol",
     "esri/Graphic",
     "esri/tasks/support/FeatureSet",
     "esri/tasks/support/Query",
@@ -69,7 +70,7 @@ require([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
+], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
     //************** grid initial setup
     let grid;
@@ -78,7 +79,7 @@ require([
     // will be used to display attributes of selected features
     let dataStore = new StoreAdapter({
         objectStore: new Memory({
-            idProperty: "objectid"
+            idProperty: "OBJECTID"
         })
     });
 
@@ -135,15 +136,18 @@ require([
         CalciteMapArcGISSupport.setPopupPanelSync(mapView);
     });
 
-    const share = new Share({
-        view: mapView,
-        container: "shareDiv"
-    });
+    // const share = new Share({
+    //     view: mapView,
+    //     //container: "shareDiv"
+    // });
+
+    // mapView.ui.add(share, "top-left");
 
 
 
     unitsPopup = function(feature) {
-        var content = "";
+        console.log(feature)
+;        var content = "";
 
 
         if (feature.graphic.attributes.UnitSymbol) {
@@ -720,14 +724,19 @@ var waterLevelRenderer = {
         }],
     });
 
-
-
-    bougerGravity = new ImageryLayer({
-        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/Bouger_Gravity_Anomaly/ImageServer",
-        title: "Bouger Gravity Anomaly",
-        opacity: 0.8,
-
+    bougerGravity = new TileLayer({
+        url: "https://tiles.arcgis.com/tiles/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Bouger_Tile/MapServer",
+        title: "Bouger Gravity",
+        opacity: 0.8
     });
+
+
+    // bougerGravity = new ImageryLayer({
+    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/Bouger_Gravity_Anomaly/ImageServer",
+    //     title: "Bouger Gravity Anomaly",
+    //     opacity: 0.8,
+
+    // });
 
     gravityPoints = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/22",
@@ -1414,24 +1423,21 @@ var waterLevelRenderer = {
                 console.log("GeoUnits Table");
                 gridFields = ["OBJECTID", "UnitSymbol", "UnitName", "grouping", "age_strat", "Description"];
                 //var sublayer = geologicUnits.findSublayerById(4);
-                var geoUnitsLayer =  new FeatureLayer({
-                    url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank/FeatureServer/0",
-                    outFields: ["*"],
-                })
 
-                layer = geoUnitsLayer;
+
+                layer = geologicUnits;
                 
-                geoUnitsLayer.load().then(attributesReady);
+                layer.load().then(attributesReady);
 
                 function attributesReady() {
-                    var query = geoUnitsLayer.createQuery();
+                    var query = layer.createQuery();
                     // add table close x to right hand corner
                     document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
                     document.getElementById("removeX").setAttribute("style", "float: right;");
 
                     query.where = "1=1";
                     query.outfields = ["OBJECTID", "UnitSymbol", "UnitName", "grouping", "age_strat", "Description"];
-                    geoUnitsLayer.queryFeatures(query).then(function(e) {
+                    layer.queryFeatures(query).then(function(e) {
                         console.log(e);
 
 
@@ -1484,7 +1490,7 @@ var waterLevelRenderer = {
             else if (title == "Wells") {
                 doGridClear()
                 console.log("Wells Table");
-                gridFields = ["label", "type", "depth"];
+                gridFields = ["OBJECTID", "label", "type", "depth"];
                 var wellsLayer =  new FeatureLayer({
                     url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Infrastructure_Wells_3d/FeatureServer/0",
                     outFields: ["*"],
@@ -2284,61 +2290,151 @@ else {
             doGridClear();
     
         })
-//select feature from grid table
+// //select feature from grid table
+// function selectFeatureFromGrid(event) {
+//     console.log(event);
+//     mapView.popup.close();
+//     mapView.graphics.removeAll();
+//     var row = event.rows[0]
+//     console.log(row);
+//     if (row.data.objectid) {
+//     var id = row.data.objectid;
+//     console.log("no caps");
+//     var whereQuery = "objectid = '" + id + "'";
+//     } else {
+//         var id = row.data.OBJECTID;
+//         console.log("Caps");
+//         var whereQuery = "OBJECTID = '" + id + "'";
+//     }
+//     console.log(id);
+
+//     var query = layer.createQuery();
+
+//     //query.where = "objectid = '" + id + "'";
+//     query.where = whereQuery;
+//     query.returnGeometry = true;
+//     query.outFields = ["*"],
+
+//         // query the palntLayerView using the query set above
+//         layer.queryFeatures(query).then(function(results) {
+//             console.log(results);
+//             var graphics = results.features;
+//             console.log(graphics);
+//             //graphics[0].geometry.type   polygon, 
+//             var item = graphics[0];
+//             if (item.geometry.type == "polygon") {
+//             console.log("polygon");
+//                 var cntr = [];
+//                 cntr.push(item.geometry.centroidlongitude);
+//                 cntr.push(item.geometry.centroid.latitude);
+//                 console.log(item.geometry);
+//                 mapView.goTo({
+//                     center: cntr, // position:
+//                     zoom: 10
+//                 });
+//                 mapView.graphics.removeAll();
+//                 var selectedGraphic = new Graphic({
+//                     geometry: item.geometry,
+//                     symbol: new SimpleMarkerSymbol({
+//                         //color: [0,255,255],
+//                         style: "circle",
+//                         //size: "8px",
+//                         outline: {
+//                             color: [255, 255, 0],
+//                             width: 3
+//                         }
+//                     })
+//                 });
+//                 mapView.graphics.add(selectedGraphic);
+//                 mapView.popup.open({
+//                     features: [item],
+//                     //location: item.geometry
+//                 });
+//             }
+//         })
+// }
+
 function selectFeatureFromGrid(event) {
     console.log(event);
-    console.log(layer);
+    // close view popup if it is open
     mapView.popup.close();
-    mapView.graphics.removeAll();
-    var row = event.rows[0]
+    // get the ObjectID value from the clicked row
+    const row = event.rows[0];
     console.log(row);
-    if (row.data.objectid) {
-    var id = row.data.objectid;
-    } else {
-        var id = row.data.OBJECTID;
-    }
+    const id = row.data.OBJECTID;
     console.log(id);
 
-    var query = layer.createQuery();
+    // setup a query by specifying objectIds
+    const query = {
+      objectIds: [parseInt(id)],
+      outFields: ["*"],
+      returnGeometry: true
+    };
 
-    query.where = "objectid = '" + id + "'";
-    query.returnGeometry = true;
-    query.outFields = ["*"],
+    // query the csvLayerView using the query set above
+    layer
+      .queryFeatures(query)
+      .then(function(results) {
+        console.log(results);
+        const graphics = results.features;
+        var item = graphics[0];
+        console.log(item);
+        var cntr = item.geometry;
+        console.log(mapView);
+        //cntr.push(item.geometry.centroid.longitude);                
+        //cntr.push(item.geometry.centroid.latitude);
 
-        // query the palntLayerView using the query set above
-        layer.queryFeatures(query).then(function(results) {
-            console.log(results);
-            var graphics = results.features;
-            console.log(graphics);
-            var item = graphics[0];
-                var cntr = [];
-                cntr.push(item.geometry.longitude);
-                cntr.push(item.geometry.latitude);
-                console.log(item.geometry);
-                mapView.goTo({
-                    center: cntr, // position:
-                    zoom: 13
-                });
-                mapView.graphics.removeAll();
-                var selectedGraphic = new Graphic({
-                    geometry: item.geometry,
-                    symbol: new SimpleMarkerSymbol({
-                        //color: [0,255,255],
-                        style: "circle",
-                        //size: "8px",
-                        outline: {
-                            color: [255, 255, 0],
-                            width: 3
-                        }
-                    })
-                });
-                mapView.graphics.add(selectedGraphic);
-                mapView.popup.open({
-                    features: [item],
-                    location: item.geometry
-                });
-        })
-}
+                      console.log(cntr);
+                        mapView.goTo({
+                             center: cntr, // position:
+                            zoom: 14
+                        });
+
+        // remove all graphics to make sure no selected graphics
+        mapView.graphics.removeAll();
+
+        // create a new selected graphic
+
+        const selectedGraphic = new Graphic({
+            geometry: graphics[0].geometry,
+            symbol: {
+              type: "simple-fill",
+              style: "solid",
+              //color: "orange",
+              //size: "12px", // pixels
+              outline: {
+                // autocasts as new SimpleLineSymbol()
+                color: [255, 255, 0],
+                width: 2 // points
+              }
+            }
+          });
+console.log(selectedGraphic);
+        // const selectedGraphic = new Graphic({
+        //   geometry: graphics[0].geometry,
+        //   symbol: {
+        //     type: "simple-marker",
+        //     style: "circle",
+        //     color: "orange",
+        //     size: "12px", // pixels
+        //     outline: {
+        //       // autocasts as new SimpleLineSymbol()
+        //       color: [255, 255, 0],
+        //       width: 2 // points
+        //     }
+        //   }
+        // });
+
+        // add the selected graphic to the view
+        // this graphic corresponds to the row that was clicked
+        mapView.graphics.add(selectedGraphic);
+        mapView.popup.open({
+                                features: [item],
+                                //location: item.geometry
+                            });
+      })
+      .catch(errorCallback);
+  }
 
     //testing resizing grid
 
@@ -2539,6 +2635,8 @@ function showCoordinates(pt) {
     showCoordinates(mapView.toMap({ x: evt.x, y: evt.y }));
   });
 
- 
+  function errorCallback(error) {
+    console.log("error:", error);
+  }
 
 });
