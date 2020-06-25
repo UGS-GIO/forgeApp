@@ -343,6 +343,7 @@ require([
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Extrusion_SubsurfaceOnly/SceneServer",
         title: "Subsurface Bedrock",
         opacity: 0.4,
+        popupEnabled: false
         // elevationInfo: [{
         //     mode: "on-the-ground"
         // }],
@@ -352,7 +353,8 @@ require([
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/p2extrude/SceneServer",
         title: "Milford Valley Subsurface Bedrock",
         opacity: 0.4,
-        visible: false
+        visible: false,
+        popupEnabled: false
     });
 
     // bedrockSymbology = new SceneLayer ({
@@ -454,7 +456,7 @@ var waterLevelRenderer = {
     field: "source",
     defaultSymbol: {
         type: "picture-marker",
-        url: "/FORGE_WellSymbol.png",
+        url: "FORGE_WellSymbol.png",
         width: "30px",
         height: "40px"
       },
@@ -462,7 +464,7 @@ var waterLevelRenderer = {
         value: "Spring",
         symbol: {
           type: "picture-marker",
-          url: "/FORGE_SpringSymbol.png",
+          url: "FORGE_SpringSymbol.png",
           width: "24px",
           height: "30px"
         }
@@ -620,7 +622,7 @@ var waterLevelRenderer = {
         }], 
         popupTemplate: {
             outFields: ["*"],
-            title: "<b>Shallow Well</b>",
+            title: "<b>Intermediate Well</b>",
             content: [
 
                 {
@@ -668,7 +670,7 @@ var waterLevelRenderer = {
         }], 
         popupTemplate: {
             outFields: ["*"],
-            title: "<b>Shallow Well</b>",
+            title: "<b>Deep Well</b>",
             content: [
 
                 {
@@ -828,7 +830,7 @@ var waterLevelRenderer = {
         //listMode: "show",
         legendEnabled: true,
         listMode: "hide-children",
-        //opacity: 0.7,
+        opacity: 0.7,
         // sublayers: [{
         //     id: 4,
         //     popupTemplate: {
