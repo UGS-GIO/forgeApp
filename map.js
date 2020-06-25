@@ -585,7 +585,6 @@ var waterLevelRenderer = {
                 }
             ]
         },
-        visible: false,
     });
 
     shallowWells = new SceneLayer({
@@ -610,7 +609,7 @@ var waterLevelRenderer = {
                 }
             ]
         },
-        visible: false,
+
     });
 
     intWellsFeature =  new FeatureLayer({
@@ -633,13 +632,13 @@ var waterLevelRenderer = {
                 }
             ]
         },
-        visible: false,
+
     });
 
     
 
     intermediateWells = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Intermediate_Wells_25mDrop/SceneServer",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Intermediate_Wells_25mDrop/SceneServer/0",
         title: "Intermediate Well Temperatures",
         // elevationInfo: [{
         //     mode: "on-the-ground"
@@ -659,7 +658,6 @@ var waterLevelRenderer = {
                 }
             ]
         },
-        visible: false,
     });
 
     deepWellsFeature =  new FeatureLayer({
@@ -2540,9 +2538,11 @@ console.log(selectedGraphic);
 
     watchUtils.watch(intWellsFeature, 'visible', function(e) {
         if (e == true) {
+            console.log("int wells layer on");
             mapView.map.add(intermediateWells);
         }
         if (e == false) {
+            console.log("int wells layer off");
             mapView.map.remove(intermediateWells);
         };
     });
@@ -2567,11 +2567,13 @@ console.log(selectedGraphic);
 
     watchUtils.watch(thermalData, 'visible', function(e) {
     if (e == true) {
+        console.log("parent thermal layer on");
         mapView.map.add(shallowWells);
         mapView.map.add(intermediateWells);
         mapView.map.add(deepWells);
         }
         if (e == false) {
+            console.log("parent thermal layer off");
             mapView.map.remove(shallowWells);
             mapView.map.remove(intermediateWells);
             mapView.map.remove(deepWells);
@@ -2602,10 +2604,8 @@ var measurementWidget = new DirectLineMeasurement3D({
          console.log(ee);
          if (ee == true) {
             mapView.map.add(geologicUnits);
-            console.log(map.layers.items);
         }
          if (ee == false) {
-            console.log(map.layers.items);
             mapView.map.remove(geologicUnits);
         };
     });
@@ -2615,10 +2615,8 @@ var measurementWidget = new DirectLineMeasurement3D({
          
         if (e == true) {
             mapView.map.add(geologicUnits);
-            console.log(map.layers.items);
         }
         if (e == false) {
-            console.log(map.layers.items);
             mapView.map.remove(geologicUnits);
         };
     });
