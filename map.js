@@ -751,7 +751,8 @@ var waterLevelRenderer = {
 
    
     geologicUnits = new FeatureLayer ({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank/FeatureServer/0",
+            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank_WGS/FeatureServer/0",
+        //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank/FeatureServer/0",
         title: "Geologic Units",
         outFields: ["*"],
         elevationInfo: [{
@@ -1421,6 +1422,7 @@ var waterLevelRenderer = {
                 
                 doGridClear()
                 console.log("GeoUnits Table");
+
                 gridFields = ["OBJECTID", "UnitSymbol", "UnitName", "grouping", "age_strat", "Description"];
                 //var sublayer = geologicUnits.findSublayerById(4);
 
@@ -1560,6 +1562,12 @@ var waterLevelRenderer = {
                         // Water Levels code
                         else if (title == "Water Levels") {
                             doGridClear()
+
+                            dataStore = new StoreAdapter({
+                                objectStore: new Memory({
+                                    idProperty: "objectid"
+                                })
+                            });
                             
                             gridFields = ["objectid", "name", "watereleva", "datemeasur"];
                                 
@@ -1906,6 +1914,7 @@ else if (title == "Intermediate Well Temperatures") {
 // deep wells
 else if (title == "Deep Well Temperatures") {
     doGridClear()
+
     gridFields = ["objectid", "well_name", "depth_m"];
     var deepWellsLayer =  new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
@@ -2356,12 +2365,17 @@ else {
 
 function selectFeatureFromGrid(event) {
     console.log(event);
+    console.log(dataStore);
     // close view popup if it is open
     mapView.popup.close();
     // get the ObjectID value from the clicked row
     const row = event.rows[0];
     console.log(row);
-    const id = row.data.OBJECTID;
+    if (row.data.objectid) {
+        var id = row.data.objectid;
+    } else {
+    var id = row.data.OBJECTID;
+}
     console.log(id);
 
     // setup a query by specifying objectIds
