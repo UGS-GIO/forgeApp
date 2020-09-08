@@ -14,6 +14,7 @@ require([
     "esri/layers/GroupLayer",
     "esri/Ground",
     "esri/core/watchUtils",
+    "esri/core/urlUtils",
     "esri/layers/support/DimensionalDefinition",
     "esri/layers/support/MosaicRule",
     // Widgets
@@ -70,7 +71,7 @@ require([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, SceneLayer, GroupLayer, Ground, watchUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
+], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, SceneLayer, GroupLayer, Ground, watchUtils, urlUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
     //************** grid initial setup
     let grid;
@@ -136,12 +137,12 @@ require([
         CalciteMapArcGISSupport.setPopupPanelSync(mapView);
     });
 
-    // const share = new Share({
-    //     view: mapView,
-    //     //container: "shareDiv"
-    // });
+    const share = new Share({
+        view: mapView,
+        //container: "shareDiv"
+    });
 
-    // mapView.ui.add(share, "top-left");
+    mapView.ui.add(share, "top-left");
 
 
 
@@ -2652,5 +2653,8 @@ function showCoordinates(pt) {
   function errorCallback(error) {
     console.log("error:", error);
   }
+
+
+
 
 });

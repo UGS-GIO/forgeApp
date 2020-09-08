@@ -1,146 +1,85 @@
-# share-widget
+# Configurable App Components
 
-Share widget built for version 4.x of the ArcGIS API for Javascript
+[![npm version][npm-img]][npm-url]
 
-![share-widget](https://github.com/Esri/share-widget/blob/master/images/share-link.png?raw=true)​
+[npm-img]: https://img.shields.io/npm/v/@esri/configurable-app-components.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/@esri/configurable-app-components
 
-## Features:
+Custom 4.x widgets built with the ArcGIS API for JavaScript.
 
-1.  `MapView` and `SceneView` compatability
-2.  Share map via URL
-3.  Embed map with Iframe code
-4.  Share item services, i.e. social media or e-mail
-5.  Client-side projection for non-Web Mercator/non-WGS84 spatial references
-6.  Customizable Share Items
-    - _Default items: Facebook, Twitter, LinkedIn, and Email_
-7.  Customizable Share Features (All features toggled on by default):
-    - Copy URL to clipboard
-    - Share Services, i.e. Social Media or Email
-    - Shorten URL
-    - Embed Map
+## Components
 
-***Note:** Share Widget uses Esri's Calcite CSS Styles.*
+Each component directory contains general instructions on how to use the corresponding component.
 
-Calcite Web Documentation: https://esri.github.io/calcite-web/documentation/
+1. Info: Panel that displays customized string content in a list or paragraph form ([Sample App](https://jsapi.maps.arcgis.com/apps/InteractiveLegend/index.html?appid=c6be720af9cd4fe5a81c9016e3554fea)).
 
-## ShareWidget
+![Info](https://media.giphy.com/media/eJSKNoMxftRTcmAihv/giphy.gif)
 
-### Constructor:
+2. Screenshot: Tool which provides the capability of taking screenshots of the map view/scene view. Optionally, include the legend or pop-up with the map screenshot ([Sample App](https://jsapi.maps.arcgis.com/apps/InteractiveLegend/index.html?appid=c6be720af9cd4fe5a81c9016e3554fea)).
 
-#### new **ShareWidget(_properties?_)**
+![Screenshot](https://media.giphy.com/media/eJe62KUo8cy2LL1GJF/giphy.gif)
 
-##### Property Overview:
+3. Share: Dialogue that provides the capability of sharing a web application of the current map extent across customized social sharing platforms i.e. Facebook, Twitter, LinkedIn, or E-mail ([Sample App](https://jsapi.maps.arcgis.com/apps/Media/index.html?appid=5fd207b452cb454bac9fff9f889bcd3e)).
 
-| Name             | Type                    | Summary                                     |
-| ---------------- | ----------------------- | ------------------------------------------- |
-| iconClass        | String                  | The widget's default CSS icon class.        |
-| label            | String                  | The widget's default label.                 |
-| shareFeatures    | ShareFeatures           | A reference to `ShareFeatures`.             |
-| shareItems       | Collection\<ShareItem\> | Collection of `ShareItem` class.            |
-| shareModalOpened | Boolean                 | Property to toggle share modal              |
-| shareUrl         | String                  | Share URL of web application. `Read-only`   |
-| viewModel        | ShareViewModel          | The view model for this widget.             |
-| view             | MapView \| SceneView    | A reference to the `MapView` or `SceneView` |
+![Share](https://media.giphy.com/media/THI8jLJOXnxkXYk9DH/giphy.gif)
 
-## ShareItem
+## Requirements
 
-### Constructor:
+- ArcGIS API for JavaScript 4.x
+- Node
+- Web browser with access to the Internet
+- Your favorite IDE
 
-#### new **ShareItem(_properties?_)**
+## Install via npm
 
-##### Property Overview:
+`npm i @esri/configurable-app-components`
 
-| Name        | Type   | Summary                                                                                                                                             |
-| ----------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| className   | String | Class name of share item icon.                                                                                                                      |
-| id          | String | Unique ID of share item service i.e. `facebook`, `twitter`, `linkedin`, `email`, etc.                                                               |
-| name        | String | Name of Share Item.                                                                                                                                 |
-| urlTemplate | String | URL template of share item. Consists of share service URL along with URL parameters i.e `"https://pinterest.com/pin/create/bookmarklet?&url={url}"` |
+## Typings
 
-## ShareFeatures
+Include in tsconfig.json:
 
-### Constructor:
+`./node_modules/@esri/configurable-app-components/index.d.ts`
 
-#### new **ShareFeatures(_properties?_)**
-
-##### Property Overview:
-
-| Name            | Type    | Summary                                      |
-| --------------- | ------- | -------------------------------------------- |
-| copyToClipboard | Boolean | Toggles copy share URL to clipboard feature. |
-| embedMap        | Boolean | Toggles embed map feature.                   |
-| shareServices   | Boolean | Toggles share item services feature.         |
-| shortenLink     | Boolean | Toggles shorten URL feature.                 |
-
-**Please note:** Both `copyToClipboard` and `shareServices` properties **cannot** be toggled off concurrently.
-
-## ShareViewModel
-
-### Constructor:
-
-#### new **ShareViewModel(_properties?_)**
-
-##### Property Overview:
-
-| Name             | Type                    | Summary                                     |
-| ---------------- | ----------------------- | ------------------------------------------- |
-| embedCode        | String                  | IFrame Embed Code `Read-only`.              |
-| shareFeatures    | ShareFeatures           | A reference to `ShareFeatures`.             |
-| shareItems       | Collection\<ShareItem\> | Collection of `ShareItem` class.            |
-| shareModalOpened | Boolean                 | Property to toggle share modal              |
-| shareUrl         | String                  | Share URL of web application. `Read-only`   |
-| state            | String                  | Current state of the widget.                |
-| view             | MapView \| SceneView    | A reference to the `MapView` or `SceneView` |
-
-### **Examples:**
-
-##### Default:
+## Dojo config example
 
 ```
-const share = new ShareWidget({
-    view,
-    container: document.createElement("div")
-});
+  const config = {
+    async: true,
+    locale: dojoLocale,
+    packages: [
+      {
+        name: "Components",
+        location: `${appPath}/node_modules/@esri/configurable-app-components`
+      }
+    ]
+  };
 ```
 
-##### Custom:
+## Importing module into project
+
+Naming convention: `Components/[component_name]/[component_name]`
+
+### Example:
 
 ```
-  const PINTEREST_ITEM = new ShareItem({
-    id: "pinterest",
-    name: "pinterest",
-    className: "icon-social-pinterest",
-    urlTemplate:
-      "https://pinterest.com/pin/create/bookmarklet?&url={url}"
-  });
-  const REDDIT_ITEM = new ShareItem({
-    id: "reddit",
-    name: "Reddit",
-    className: "icon-social-share",
-    urlTemplate: "https://reddit.com/submit?url={url}"
-  });
-  const LINKED_IN = new ShareItem({
-    id: "linkedin",
-    name: "LinkedIn",
-    className: "icon-social-linkedin",
-    urlTemplate: "https://linkedin.com/shareArticle?url={url}"
-  });
+import Share = require("Components/Share/Share");
 
-  const shareFeatures = new ShareFeatures({
-    copyToClipboard: false,
-    embedMap: false
-  });
-  const ShareItemCollection = Collection.ofType<ShareItem>(ShareItem);
-  const shareItems = new ShareItemCollection([
-    PINTEREST_ITEM,
-    REDDIT_ITEM,
-    LINKED_IN
-  ]);
-  const share = new ShareWidget({
-    view,
-    shareFeatures,
-    shareItems
-  });
+import ShareItem = require("Components/Share/Share/ShareItem");
+```
+
+### Namespace
+
+After linking the typings file to your tsconfig.json, you can use the `__esriConfigApps` namespace for the types.
+
+### Adding CSS
+
+Don't forget to link to the corresponding CSS file.
+
+`./node_modules/@esri/configurable-app-components/[component_name]/[component_name]/css/[component_name].css`
+
+```
+<link rel="stylesheet"
+    href="./node_modules/@esri/configurable-app-components/Screenshot/Screenshot/css/Screenshot.css">
 ```
 
 ## Resources
@@ -159,7 +98,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 
 ## Licensing
 
-Copyright 2018 Esri
+Copyright 2019 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -173,4 +112,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-A copy of the license is available in the repository's [LICENSE](https://github.com/ArcGIS/share-widget/blob/master/LICENSE) file.
+A copy of the license is available in the repository's [LICENSE](LICENSE) file.

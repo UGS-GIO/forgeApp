@@ -1,16 +1,9 @@
-/// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
-/// <amd-dependency path="esri/core/tsSupport/decorateHelper" name="__decorate" />
-
 // esri.core
 import Accessor = require("esri/core/Accessor");
 import Collection = require("esri/core/Collection");
 
 // esri.core.accessorSupport
-import {
-  subclass,
-  declared,
-  property
-} from "esri/core/accessorSupport/decorators";
+import { subclass, property } from "esri/core/accessorSupport/decorators";
 
 // esri.views
 import MapView = require("esri/views/MapView");
@@ -47,18 +40,18 @@ const ShareItemCollection = Collection.ofType<ShareItem>(ShareItem);
 const FACEBOOK_ITEM = new ShareItem({
   id: "facebook",
   name: "Facebook",
-  urlTemplate: "https://www.facebook.com/sharer/sharer.php?s=100&u={url}"
+  urlTemplate: "https://facebook.com/sharer/sharer.php?s=100&u={url}"
 });
 const TWITTER_ITEM = new ShareItem({
   id: "twitter",
   name: "Twitter",
-  urlTemplate: "https://twitter.com/intent/tweet?text={summary}&url={url}"
+  urlTemplate: "https://twitter.com/intent/tweet?text={title}&url={url}"
 });
 const LINKEDIN_ITEM = new ShareItem({
   id: "linkedin",
   name: "LinkedIn",
   urlTemplate:
-    "https://www.linkedin.com/shareArticle?url={url}&title={title}&summary={summary}"
+    "https://linkedin.com/sharing/share-offsite/?url={url}&title={title}"
 });
 const EMAIL_ITEM = new ShareItem({
   id: "email",
@@ -81,7 +74,7 @@ const SHORTEN_API = "https://arcg.is/prod/shorten";
 type State = "ready" | "loading" | "shortening" | "projecting" | "disabled";
 
 @subclass("ShareViewModel")
-class ShareViewModel extends declared(Accessor) {
+class ShareViewModel extends Accessor {
   //----------------------------------
   //
   //  Lifecycle
