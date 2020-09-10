@@ -142,7 +142,7 @@ require([
         //container: "shareDiv"
     });
 
-    mapView.ui.add(share, "top-left");
+    
 
 
 
@@ -1279,6 +1279,8 @@ var waterLevelRenderer = {
         position: "bottom-right",
         index: 1
       });
+
+      mapView.ui.add(share, "top-left");
 
 
 
