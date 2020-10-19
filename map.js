@@ -137,10 +137,10 @@ require([
         CalciteMapArcGISSupport.setPopupPanelSync(mapView);
     });
 
-    const share = new Share({
-        view: mapView,
-        //container: "shareDiv"
-    });
+    // const share = new Share({
+    //     view: mapView,
+    //     //container: "shareDiv"
+    // });
 
     
 
@@ -1280,7 +1280,7 @@ var waterLevelRenderer = {
         index: 1
       });
 
-      mapView.ui.add(share, "top-left");
+    //   mapView.ui.add(share, "top-left");
 
 
 
