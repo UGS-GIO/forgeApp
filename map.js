@@ -152,16 +152,16 @@ require([
 
 
         if (feature.graphic.attributes.UnitSymbol) {
-            content += "<span class='bold' title='Longitude'><b>Unit: </b></span>{UnitSymbol}<br/>";
+            content += "<span class='bold' ><b>Unit: </b></span>{UnitSymbol}<br/>";
         }
         if (feature.graphic.attributes.UnitName) {
-            content += "<span class='bold' title='Longitude'><b>Unit Name: </b></span>{UnitName}<br/>";
+            content += "<span class='bold' ><b>Unit Name: </b></span>{UnitName}<br/>";
         }
         if (feature.graphic.attributes.age_strat) {
-            content += "<span class='bold' title='Longitude'><b>Age: </b></span>{age_strat}<br/>";
+            content += "<span class='bold' ><b>Age: </b></span>{age_strat}<br/>";
         }
         if (feature.graphic.attributes.Description) {
-            content += "<span class='bold' title='Longitude'><b>Unit Description: </b></span>{Description}<br/>";
+            content += "<span class='bold' ><b>Unit Description: </b></span>{Description}<br/>";
         }
         return content;
     }
@@ -171,13 +171,13 @@ require([
 
 
         if (feature.graphic.attributes.id) {
-            content += "<span class='bold' title='Longitude'><b>ID: </b></span>{id}<br/>";
+            content += "<span class='bold' ><b>ID: </b></span>{id}<br/>";
         }
         if (feature.graphic.attributes.label) {
-            content += "<span class='bold' title='Longitude'><b>Label: </b></span>{label}<br/>";
+            content += "<span class='bold' ><b>Label: </b></span>{label}<br/>";
         }
         if (feature.graphic.attributes.type) {
-            content += "<span class='bold' title='Longitude'><b>Type: </b></span>{type}<br/>";
+            content += "<span class='bold' ><b>Type: </b></span>{type}<br/>";
         }
 
         return content;
@@ -188,19 +188,19 @@ require([
 
 
         if (feature.graphic.attributes.name) {
-            content += "<span class='bold' title='Longitude'><b>Name: </b></span>{name}<br/>";
+            content += "<span class='bold' ><b>Name: </b></span>{name}<br/>";
         }
         if (feature.graphic.attributes.label) {
-            content += "<span class='bold' title='Longitude'><b>Label: </b></span>{label}<br/>";
+            content += "<span class='bold' ><b>Label: </b></span>{label}<br/>";
         }
         if (feature.graphic.attributes.watereleva) {
-            content += "<span class='bold' title='Longitude'><b>Water Level: </b></span>{watereleva}<br/>";
+            content += "<span class='bold' ><b>Water Level: </b></span>{watereleva}<br/>";
         }
         if (feature.graphic.attributes.dtw) {
-            content += "<span class='bold' title='Longitude'><b>Depth to Water: </b></span>{dtw}<br/>";
+            content += "<span class='bold' ><b>Depth to Water: </b></span>{dtw}<br/>";
         }
         if (feature.graphic.attributes.datemeasur) {
-            content += "<span class='bold' title='Longitude'><b>Date Measured: </b></span>{datemeasur}<br/>";
+            content += "<span class='bold' ><b>Date Measured: </b></span>{datemeasur}<br/>";
         }
 
         return content;
@@ -211,70 +211,70 @@ require([
 
 
         if (feature.graphic.attributes.station) {
-            content += "<span class='bold' title='Longitude'><b>Station: </b></span>{station}<br/>";
+            content += "<span class='bold' ><b>Station: </b></span>{station}<br/>";
         }
         if (feature.graphic.attributes.temp) {
-            content += "<span class='bold' title='Longitude'><b>Name: </b></span>{labelfield}<br/>";
+            content += "<span class='bold' ><b>Name: </b></span>{labelfield}<br/>";
         }
         if (feature.graphic.attributes.sampledate) {
-            content += "<span class='bold' title='Longitude'><b>pH: </b></span>{ph}<br/>";
+            content += "<span class='bold' ><b>pH: </b></span>{ph}<br/>";
         }
         if (feature.graphic.attributes.k) {
-            content += "<span class='bold' title='Longitude'><b>K: </b></span>{k}<br/>";
+            content += "<span class='bold' ><b>K: </b></span>{k}<br/>";
         }
         if (feature.graphic.attributes.na) {
-            content += "<span class='bold' title='Longitude'><b>Na: </b></span>{na}<br/>";
+            content += "<span class='bold' ><b>Na: </b></span>{na}<br/>";
         }
         if (feature.graphic.attributes.ca) {
-            content += "<span class='bold' title='Longitude'><b>CA: </b></span>{ca}<br/>";
+            content += "<span class='bold' ><b>CA: </b></span>{ca}<br/>";
         }
         if (feature.graphic.attributes.mg) {
-            content += "<span class='bold' title='Longitude'><b>MG: </b></span>{mg}<br/>";
+            content += "<span class='bold' ><b>MG: </b></span>{mg}<br/>";
         }
         if (feature.graphic.attributes.br) {
-            content += "<span class='bold' title='Longitude'><b>BR: </b></span>{br}<br/>";
+            content += "<span class='bold' ><b>BR: </b></span>{br}<br/>";
         }
         if (feature.graphic.attributes.cl) {
-            content += "<span class='bold' title='Longitude'><b>Cl: </b></span>{cl}<br/>";
+            content += "<span class='bold' ><b>Cl: </b></span>{cl}<br/>";
         }
         if (feature.graphic.attributes.f) {
-            content += "<span class='bold' title='Longitude'><b>F: </b></span>{f}<br/>";
+            content += "<span class='bold' ><b>F: </b></span>{f}<br/>";
         }
         if (feature.graphic.attributes.so4) {
-            content += "<span class='bold' title='Longitude'><b>SO<sub>4</sub>: </b></span>{so4}<br/>";
+            content += "<span class='bold' ><b>SO<sub>4</sub>: </b></span>{so4}<br/>";
         }
         if (feature.graphic.attributes.hco3) {
-            content += "<span class='bold' title='Longitude'><b>HCO<sub>3</sub>: </b></span>{hco3}<br/>";
+            content += "<span class='bold' ><b>HCO<sub>3</sub>: </b></span>{hco3}<br/>";
         }
         if (feature.graphic.attributes.hco3) {
-            content += "<span class='bold' title='Longitude'><b><sub>18</sub>O: </b></span>{18o}<br/>";
+            content += "<span class='bold' ><b><sub>18</sub>O: </b></span>{18o}<br/>";
         }
         if (feature.graphic.attributes.hco3) {
-            content += "<span class='bold' title='Longitude'><b><sub>2</sub>H: </b></span>{2h}<br/>";
+            content += "<span class='bold' ><b><sub>2</sub>H: </b></span>{2h}<br/>";
         }
         if (feature.graphic.attributes.temp) {
-            content += "<span class='bold' title='Longitude'><b>Temperature: </b></span>{temp}<br/>";
+            content += "<span class='bold' ><b>Temperature: </b></span>{temp}<br/>";
         }
         if (feature.graphic.attributes.b) {
-            content += "<span class='bold' title='Longitude'><b>B: </b></span>{b}<br/>";
+            content += "<span class='bold' ><b>B: </b></span>{b}<br/>";
         }
         if (feature.graphic.attributes.si) {
-            content += "<span class='bold' title='Longitude'><b>Si: </b></span>{si}<br/>";
+            content += "<span class='bold' ><b>Si: </b></span>{si}<br/>";
         }
         if (feature.graphic.attributes.source) {
-            content += "<span class='bold' title='Longitude'><b>Source: </b></span>{source}<br/>";
+            content += "<span class='bold' ><b>Source: </b></span>{source}<br/>";
         }
         if (feature.graphic.attributes.as_) {
-            content += "<span class='bold' title='Longitude'><b>As_: </b></span>{as_}<br/>";
+            content += "<span class='bold' ><b>As_: </b></span>{as_}<br/>";
         }
         if (feature.graphic.attributes.tds) {
-            content += "<span class='bold' title='Longitude'><b>TDS: </b></span>{tds}<br/>";
+            content += "<span class='bold' ><b>TDS: </b></span>{tds}<br/>";
         }
         if (feature.graphic.attributes.sampledate) {
-            content += "<span class='bold' title='Longitude'><b>Sample Date: </b></span>{sampledate}<br/>";
+            content += "<span class='bold' ><b>Sample Date: </b></span>{sampledate}<br/>";
         }
         if (feature.graphic.attributes.watertype) {
-            content += "<span class='bold' title='Longitude'><b>Water Type: </b></span>{watertype}<br/>";
+            content += "<span class='bold' ><b>Water Type: </b></span>{watertype}<br/>";
         }
 
 
@@ -286,13 +286,13 @@ require([
 
 
         if (feature.graphic.attributes.well_name) {
-            content += "<span class='bold' title='Longitude'><b>Well Name: </b></span>{well_name}<br/>";
+            content += "<span class='bold' ><b>Well Name: </b></span>{well_name}<br/>";
         }
         if (feature.graphic.attributes.depth_m) {
-            content += "<span class='bold' title='Longitude'><b>Depth (m): </b></span>{depth_m}<br/>";
+            content += "<span class='bold' ><b>Depth (m): </b></span>{depth_m}<br/>";
         }
         // if (feature.graphic.attributes.sampledate) {
-        //     content += "<span class='bold' title='Longitude'><b>Sample Date: </b></span>{sampledate}<br/>";
+        //     content += "<span class='bold' ><b>Sample Date: </b></span>{sampledate}<br/>";
         // }
 
         return content;
@@ -304,13 +304,13 @@ require([
 
 
         if (feature.graphic.attributes.well_name) {
-            content += "<span class='bold' title='Longitude'><b>Well Name: </b></span>{well_name}<br/>";
+            content += "<span class='bold' ><b>Well Name: </b></span>{well_name}<br/>";
         }
         if (feature.graphic.attributes.depth_m) {
-            content += "<span class='bold' title='Longitude'><b>Depth (m): </b></span>{depth_m}<br/>";
+            content += "<span class='bold' ><b>Depth (m): </b></span>{depth_m}<br/>";
         }
         // if (feature.graphic.attributes.sampledate) {
-        //     content += "<span class='bold' title='Longitude'><b>Sample Date: </b></span>{sampledate}<br/>";
+        //     content += "<span class='bold' ><b>Sample Date: </b></span>{sampledate}<br/>";
         // }
 
         const attachmentsElement = new AttachmentsContent({
@@ -327,13 +327,13 @@ require([
 
 
         if (feature.graphic.attributes.well_name) {
-            content += "<span class='bold' title='Longitude'><b>Well Name: </b></span>{well_name}<br/>";
+            content += "<span class='bold' ><b>Well Name: </b></span>{well_name}<br/>";
         }
         if (feature.graphic.attributes.depth_m) {
-            content += "<span class='bold' title='Longitude'><b>Depth (m): </b></span>{depth_m}<br/>";
+            content += "<span class='bold' ><b>Depth (m): </b></span>{depth_m}<br/>";
         }
         // if (feature.graphic.attributes.sampledate) {
-        //     content += "<span class='bold' title='Longitude'><b>Sample Date: </b></span>{sampledate}<br/>";
+        //     content += "<span class='bold' ><b>Sample Date: </b></span>{sampledate}<br/>";
         // }
 
         return content;
@@ -771,59 +771,6 @@ var waterLevelRenderer = {
     });
 
 
-    // geology = new MapImageLayer ({
-    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-    //     title: "Geologic Units",
-    //     outFields: ["*"],
-    //     //listMode: "show",
-    //     legendEnabled: true,
-    //     listMode: "hide-children",
-    //     sublayers: [
-    //         {
-    //             id: 0,
-    //             title: "Geologic Feature Labels"
-    //         },
-    //         {
-    //             id: 1,
-    //             title: "Geologic Unit Labels"
-    //         },
-    //         {
-    //             id: 2,
-    //             title: "Geologic Symbols"
-    //         },
-    //         {
-    //             id: 3,
-    //             title: "Geologic Lines"
-    //         },
-    //         {
-    //             id: 4,
-    //             title: "Geologic Units"
-    //         },
-    //     ]
-
-    // });
-
-    // geologicUnits = new MapImageLayer({
-    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer/4",
-    //     title: "Geologic Units",
-    //     outFields: ["*"],
-    //     listMode: "hide",
-    //     //visible: false,
-    //     legendEnabled: false,
-    //     //listMode: "hide-children",
-    //     opacity: 0,
-    //     sublayers: [{
-    //         id: 4,
-    //         popupTemplate: {
-    //             outFields: ["*"],
-    //             title: "<b>Geologic Units</b>",
-    //             content: unitsPopup
-    //         },
-    //         //title: "Geologic Units"
-    //     }]
-
-    // });
-
     geologicUnitsTile = new TileLayer({
         url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
         title: "Geology",
@@ -843,59 +790,6 @@ var waterLevelRenderer = {
         // }]
 
     });
-
-    // geologicLines = new MapImageLayer({
-    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-    //     title: "Geologic Lines",
-    //     listMode: "hide",
-    //     sublayers: [{
-    //         id: 3,
-    //         //title: "Geologic Units"
-    //     }]
-
-    // });
-
-    // geologicLabels = new MapImageLayer({
-    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-    //     title: "Geologic Feature Labels",
-    //     listMode: "hide",
-    //     sublayers: [{
-    //         id: 0,
-    //         //title: "Geologic Units"
-    //     }]
-
-    // });
-
-    // geologicUnitLabels = new MapImageLayer({
-    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-    //     title: "Geologic Unit Labels",
-    //     listMode: "hide",
-    //     sublayers: [{
-    //         id: 1,
-    //         //title: "Geologic Units"
-    //     }]
-
-    // });
-
-    // geologicSymbols = new MapImageLayer({
-    //     url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-    //     title: "Geologic Symbols",
-    //     listMode: "hide-children",
-    //     sublayers: [{
-    //         id: 2,
-    //         //title: "Geologic Units"
-    //     }]
-
-    // });
-
-    // bougerFeatures = new FeatureLayer({
-    //     url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/23",
-    //     title: "Bouger Gravity Anomaly",
-    //     elevationInfo: [{
-    //         mode: "on-the-ground"
-    //     }],
-
-    // })
 
 
     geology = new GroupLayer({
@@ -1324,6 +1218,11 @@ var waterLevelRenderer = {
                         title: "Decrease opacity",
                         className: "esri-icon-down",
                         id: "decrease-opacity"
+                    }],
+                    [{
+                        title: "Zoom to Layer",
+                        className: "esri-icon-zoom-out-fixed",
+                        id: "zoom-to" 
                     }]
                 ];
             }
@@ -2054,8 +1953,21 @@ else {
             if (layer.opacity > 0) {
                 layer.opacity -= 0.1;
             }
+        }  else if (id === "zoom-to") {
+
+            zoomToLayer(layer);
         }
     });
+
+    function zoomToLayer(layer) {
+        return layer.queryExtent().then(function (response) {
+          mapView.goTo(response.extent).catch(function (error) {
+            if (error.name != "AbortError") {
+              console.error(error);
+            }
+          });
+        });
+      }
 
     function doGridClear() {
         console.log("doGridClear");
