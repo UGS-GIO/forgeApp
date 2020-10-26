@@ -142,7 +142,22 @@ require([
     //     //container: "shareDiv"
     // });
 
-    
+    faultsPopup = function(feature) {
+                var content = "";
+
+
+        if (feature.graphic.attributes.featurename) {
+            content += "<span class='bold' ><b>Name: </b></span>{featurename}<br/>";
+        }
+        if (feature.graphic.attributes.type) {
+            content += "<span class='bold' ><b>Type: </b></span>{type}<br/>";
+        }
+        if (feature.graphic.attributes.subtype) {
+            content += "<span class='bold' ><b>Sub Type: </b></span>{subtype}<br/>";
+        }
+
+        return content;
+    }
 
 
 
@@ -213,62 +228,62 @@ require([
         if (feature.graphic.attributes.station) {
             content += "<span class='bold' ><b>Station: </b></span>{station}<br/>";
         }
-        if (feature.graphic.attributes.temp) {
+        if (feature.graphic.attributes.labelfield) {
             content += "<span class='bold' ><b>Name: </b></span>{labelfield}<br/>";
         }
-        if (feature.graphic.attributes.sampledate) {
+        if (feature.graphic.attributes.ph) {
             content += "<span class='bold' ><b>pH: </b></span>{ph}<br/>";
         }
         if (feature.graphic.attributes.k) {
-            content += "<span class='bold' ><b>K: </b></span>{k}<br/>";
+            content += "<span class='bold' ><b>K: </b></span>{k} mg/L<br/>";
         }
         if (feature.graphic.attributes.na) {
-            content += "<span class='bold' ><b>Na: </b></span>{na}<br/>";
+            content += "<span class='bold' ><b>Na: </b></span>{na} mg/L<br/>";
         }
         if (feature.graphic.attributes.ca) {
-            content += "<span class='bold' ><b>CA: </b></span>{ca}<br/>";
+            content += "<span class='bold' ><b>CA: </b></span>{ca} mg/L<br/>";
         }
         if (feature.graphic.attributes.mg) {
-            content += "<span class='bold' ><b>MG: </b></span>{mg}<br/>";
+            content += "<span class='bold' ><b>MG: </b></span>{mg} mg/L<br/>";
         }
         if (feature.graphic.attributes.br) {
-            content += "<span class='bold' ><b>BR: </b></span>{br}<br/>";
+            content += "<span class='bold' ><b>BR: </b></span>{br} mg/L<br/>";
         }
         if (feature.graphic.attributes.cl) {
-            content += "<span class='bold' ><b>Cl: </b></span>{cl}<br/>";
+            content += "<span class='bold' ><b>Cl: </b></span>{cl} mg/L<br/>";
         }
         if (feature.graphic.attributes.f) {
-            content += "<span class='bold' ><b>F: </b></span>{f}<br/>";
+            content += "<span class='bold' ><b>F: </b></span>{f} mg/L<br/>";
         }
         if (feature.graphic.attributes.so4) {
-            content += "<span class='bold' ><b>SO<sub>4</sub>: </b></span>{so4}<br/>";
+            content += "<span class='bold' ><b>SO<sub>4</sub>: </b></span>{so4} mg/L<br/>";
         }
         if (feature.graphic.attributes.hco3) {
-            content += "<span class='bold' ><b>HCO<sub>3</sub>: </b></span>{hco3}<br/>";
+            content += "<span class='bold' ><b>HCO<sub>3</sub>: </b></span>{hco3} mg/L<br/>";
         }
         if (feature.graphic.attributes.hco3) {
-            content += "<span class='bold' ><b><sub>18</sub>O: </b></span>{18o}<br/>";
+            content += "<span class='bold' ><b><sub>18</sub>O: </b></span>{18o}‰<br/>";
         }
         if (feature.graphic.attributes.hco3) {
-            content += "<span class='bold' ><b><sub>2</sub>H: </b></span>{2h}<br/>";
+            content += "<span class='bold' ><b><sub>2</sub>H: </b></span>{2h}‰<br/>";
         }
         if (feature.graphic.attributes.temp) {
-            content += "<span class='bold' ><b>Temperature: </b></span>{temp}<br/>";
+            content += "<span class='bold' ><b>Temperature: </b></span>{temp}° c<br/>";
         }
         if (feature.graphic.attributes.b) {
-            content += "<span class='bold' ><b>B: </b></span>{b}<br/>";
+            content += "<span class='bold' ><b>B: </b></span>{b} mg/L<br/>";
         }
         if (feature.graphic.attributes.si) {
-            content += "<span class='bold' ><b>Si: </b></span>{si}<br/>";
+            content += "<span class='bold' ><b>Si: </b></span>{si} mg/L<br/>";
         }
         if (feature.graphic.attributes.source) {
             content += "<span class='bold' ><b>Source: </b></span>{source}<br/>";
         }
         if (feature.graphic.attributes.as_) {
-            content += "<span class='bold' ><b>As_: </b></span>{as_}<br/>";
+            content += "<span class='bold' ><b>As_: </b></span>{as_} ug/L<br/>";
         }
         if (feature.graphic.attributes.tds) {
-            content += "<span class='bold' ><b>TDS: </b></span>{tds}<br/>";
+            content += "<span class='bold' ><b>TDS: </b></span>{tds} mg/L<br/>";
         }
         if (feature.graphic.attributes.sampledate) {
             content += "<span class='bold' ><b>Sample Date: </b></span>{sampledate}<br/>";
@@ -338,6 +353,31 @@ require([
 
         return content;
     }
+
+    seismomPopup = function(feature) {
+        var content = "";
+
+
+        if (feature.graphic.attributes.name) {
+            content += "<span class='bold' ><b>Benchmark ID: </b></span>{name}<br/>";
+        }
+
+
+        return content;
+    }
+
+    benchPopup = function(feature) {
+        var content = "";
+
+
+        if (feature.graphic.attributes.point_id) {
+            content += "<span class='bold' ><b>Seismometer Name: </b></span>{point_id}<br/>";
+        }
+
+
+        return content;
+    }
+
 
     //layers
     bedrockSymbology = new SceneLayer({
@@ -505,6 +545,11 @@ var waterLevelRenderer = {
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        popupTemplate: {
+            outFields: ["*"],
+            title: "<b>Seismometers</b>",
+            content: seismomPopup
+        },
     });
 
     seismicity = new FeatureLayer({
@@ -521,6 +566,11 @@ var waterLevelRenderer = {
         elevationInfo: [{
             mode: "on-the-ground"
         }],
+        popupTemplate: {
+            outFields: ["*"],
+            title: "<b>Geophysical Benchmark</b>",
+            content: benchPopup
+        },
     });
 
     iso1km = new FeatureLayer({
@@ -770,10 +820,29 @@ var waterLevelRenderer = {
 
     });
 
+    geologicFaults = new FeatureLayer ({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_Faults_Blank_WGS_View/FeatureServer/0",
+    //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank/FeatureServer/0",
+    title: "Geologic Faults",
+    outFields: ["*"],
+    elevationInfo: [{
+        mode: "on-the-ground"
+    }], 
+    //visible: false,
+    legendEnabled: false,
+    listMode: "hide",
+    popupTemplate: {
+                    outFields: ["*"],
+                    title: "<b>Geologic Faults</b>",
+                    content: faultsPopup
+                },
+
+});
+
 
     geologicUnitsTile = new TileLayer({
         url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
-        title: "Geology",
+        title: "Geology", 
         outFields: ["*"],
         //listMode: "show",
         legendEnabled: true,
@@ -1075,15 +1144,15 @@ var waterLevelRenderer = {
 
                 //placeholder: "example: BLM"
             }, 
-            // {
-            //     layer: geologicLines,
-            //     name: "Geologic Lines",
-            //     searchFields: ["feature", "featurename"],
-            //     displayField: "featurename",
-            //     outFields: ["*"],
+            {
+                layer: geologicFaults,
+                name: "Geologic Faults",
+                searchFields: ["type", "featurename", "subtype"],
+                displayField: "featurename",
+                outFields: ["*"],
 
-            //     //placeholder: "example: BLM"
-            // }, 
+                //placeholder: "example: BLM"
+            }, 
             {
                 layer: waterLevel,
                 name: "Water Level",
@@ -1189,6 +1258,7 @@ var waterLevelRenderer = {
     mapView.map.add(geology);
     mapView.map.add(infrastructure);
     mapView.map.add(geologicUnits);
+    mapView.map.add(geologicFaults);
 
 
 
@@ -2521,9 +2591,11 @@ var measurementWidget = new DirectLineMeasurement3D({
          console.log(ee);
          if (ee == true) {
             mapView.map.add(geologicUnits);
+            mapView.map.add(geologicFaults);
         }
          if (ee == false) {
             mapView.map.remove(geologicUnits);
+            mapView.map.remove(geologicFaults);
         };
     });
 
@@ -2532,9 +2604,11 @@ var measurementWidget = new DirectLineMeasurement3D({
          
         if (e == true) {
             mapView.map.add(geologicUnits);
+            mapView.map.add(geologicFaults);
         }
         if (e == false) {
             mapView.map.remove(geologicUnits);
+            mapView.map.remove(geologicFaults);
         };
     });
 //scale widget
