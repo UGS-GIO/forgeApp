@@ -1062,23 +1062,6 @@ var waterLevelRenderer = {
                 }, {});
         });
 
-        // for (var i = 0; i < data.length; i++) {
-        //     if (data[i].sampledate) {
-        //         console.log("Found Survey Date");
-        //         for (var i = 0; i < data.length; i++) {
-        //             var dateString = moment(data[i].sampledate).format('YYYY-MM-DD');
-        //             data[i].sampledate = dateString;
-
-        //         }
-        //     } else if (data[i].datemeasur) {
-        //         console.log("Found Survey Date");
-        //         for (var i = 0; i < data.length; i++) {
-        //             var dateString = moment(data[i].datemeasur).format('YYYY-MM-DD');
-        //             data[i].datemeasur = dateString;
-
-        //         }
-        //     }
-        // }
 
         // set the datastore for the grid using the
         // attributes we got for the query results
