@@ -382,7 +382,7 @@ require([
     //layers
     bedrockSymbology = new SceneLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Extrusion_SubsurfaceOnly/SceneServer",
-        title: "Subsurface Bedrock",
+        title: "Top of Bedrock Surface",
         opacity: 0.4,
         popupEnabled: false
         // elevationInfo: [{
@@ -392,7 +392,7 @@ require([
 
     milValleySubSymbology = new SceneLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/p2extrude/SceneServer",
-        title: "Milford Valley Subsurface Bedrock",
+        title: "Milford Valley Top of Bedrock Surface",
         opacity: 0.4,
         visible: false,
         popupEnabled: false
@@ -611,7 +611,7 @@ var waterLevelRenderer = {
 
     heatflow = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/16",
-        title: "Heat Flow Isotherms",
+        title: "Heat Flow (W/m²)",
         elevationInfo: [{
             mode: "on-the-ground"
         }],
@@ -641,7 +641,8 @@ var waterLevelRenderer = {
     });
 
     shallowWells = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Shallow_Wells_25mDrop/SceneServer",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Shallow_Wells/SceneServer",
+        //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Shallow_Wells_25mDrop/SceneServer",
         title: "Shallow Well Temperatures",
         // elevationInfo: [{
         //     mode: "on-the-ground"
@@ -1501,7 +1502,7 @@ var waterLevelRenderer = {
                                 name: 'type'
                             },
                             {
-                                alias: 'Depth',
+                                alias: 'Depth (m)',
                                 name: 'depth'
                             }
                             
