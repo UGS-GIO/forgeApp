@@ -641,8 +641,7 @@ var waterLevelRenderer = {
     });
 
     shallowWells = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Shallow_Wells/SceneServer",
-        //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Shallow_Wells_25mDrop/SceneServer",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Thermal_Shallow_Wells_25mDrop/SceneServer",
         title: "Shallow Well Temperatures",
         // elevationInfo: [{
         //     mode: "on-the-ground"
@@ -905,7 +904,7 @@ var waterLevelRenderer = {
     });
 
     seismicData = new GroupLayer({
-        title: "Seismic Data",
+        title: "Seismicity Data",
         visible: false,
         layers: [seismoms, seismicity]
     });
@@ -954,7 +953,13 @@ var waterLevelRenderer = {
         // extensions. Set the columns of the grid to display attributes
         // the hurricanes cvslayer
         grid = new(declare([OnDemandGrid, Selection]))({
-            columns: columns
+            columns: columns,
+            minRowsPerPage: 5000,
+            maxRowsPerPage: 5000,
+            //bufferRows: 5000
+            //pagingMethod: "throttleDelayed",
+            //pagingDelay: 1000,
+            //keepScrollPosition: "true"
         }, "grid");
 
         grid.on("dgrid-select", selectFeatureFromGrid);
@@ -964,9 +969,10 @@ var waterLevelRenderer = {
             //grid.on("dgrid-select", selectFeatureFromGrid);
             //console.log(grid.columns[0].field);
 
-
+            
 
     }
+
 
 //     function selectFeatureFromGrid(event) {
 //         console.log(event);
@@ -1698,7 +1704,7 @@ else if (title == "Seismicity 1850 to 2016") {
 
         console.log(query);
         query.where = "1=1";
-        query.outfields = ["objectid", "mag", "depth", "day", "month", "year"];
+        query.outfields = ["objectid", "mag", "depth", "day", "mo", "year"];
         seismicity.queryFeatures(query).then(function(e) {
             console.log(e);
 
@@ -1716,7 +1722,7 @@ else if (title == "Seismicity 1850 to 2016") {
                 srch.items.push(att);
             });
             console.log(srch);
-            gridFields = ["objectid", "mag", "depth", "day", "month", "year"];
+            gridFields = ["objectid", "mag", "depth", "day", "mo", "year"];
             var fieldArray = [
                 //{alias: 'objectid', name: 'objectid'}, 
                 {
@@ -1724,7 +1730,7 @@ else if (title == "Seismicity 1850 to 2016") {
                     name: 'mag'
                 },
                 {
-                    alias: 'Depth',
+                    alias: 'Depth (km)',
                     name: 'depth'
                 },
                 {
@@ -1733,7 +1739,7 @@ else if (title == "Seismicity 1850 to 2016") {
                 },
                 {
                     alias: 'Month',
-                    name: 'month'
+                    name: 'mo'
                 },
                 {
                     alias: 'Year',
