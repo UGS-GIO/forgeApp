@@ -10,6 +10,7 @@ require([
     "esri/layers/ImageryLayer",
     "esri/layers/MapImageLayer",
     "esri/renderers/RasterStretchRenderer",
+    "esri/layers/support/LabelClass",
     "esri/layers/SceneLayer",
     "esri/layers/GroupLayer",
     "esri/Ground",
@@ -71,7 +72,7 @@ require([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, SceneLayer, GroupLayer, Ground, watchUtils, urlUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
+], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, LabelClass, SceneLayer, GroupLayer, Ground, watchUtils, urlUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
     //************** grid initial setup
     let grid;
@@ -268,7 +269,7 @@ require([
             content += "<span class='bold' ><b><sub>2</sub>H: </b></span>{2h}‰<br/>";
         }
         if (feature.graphic.attributes.temp) {
-            content += "<span class='bold' ><b>Temperature: </b></span>{temp}° c<br/>";
+            content += "<span class='bold' ><b>Temperature: </b></span>{temp}°C<br/>";
         }
         if (feature.graphic.attributes.b) {
             content += "<span class='bold' ><b>B: </b></span>{b} mg/L<br/>";
@@ -554,7 +555,7 @@ var waterLevelRenderer = {
 
     seismicity = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/10",
-        title: "Seismicity 1850 to 2016",
+        title: "Seismicity 1850 to 2016 (Magnitude)",
         elevationInfo: [{
             mode: "on-the-ground"
         }],
@@ -777,7 +778,8 @@ var waterLevelRenderer = {
 
     bougerGravity = new TileLayer({
         url: "https://tiles.arcgis.com/tiles/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Bouger_Tile/MapServer",
-        title: "Bouger Gravity",
+        title: "Bouger Gravity (mGal)",
+        listMode: "hide-children",
         opacity: 0.8
     });
 
@@ -1044,6 +1046,8 @@ var waterLevelRenderer = {
 //             })
 //     }
 //     }
+
+
 
     function layerTable(response) {
         console.log("Table Generating");
@@ -1622,7 +1626,7 @@ var waterLevelRenderer = {
                                             name: 'station'
                                         },
                                         {
-                                            alias: 'Temperature',
+                                            alias: 'Temperature (°C)',
                                             name: 'temp'
                                         },
                                         {
