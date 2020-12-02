@@ -210,10 +210,10 @@ require([
             content += "<span class='bold' ><b>Label: </b></span>{label}<br/>";
         }
         if (feature.graphic.attributes.watereleva) {
-            content += "<span class='bold' ><b>Water Level: </b></span>{watereleva}<br/>";
+            content += "<span class='bold' ><b>Water Level: </b></span>{watereleva} feet<br/>";
         }
         if (feature.graphic.attributes.dtw) {
-            content += "<span class='bold' ><b>Depth to Water: </b></span>{dtw}<br/>";
+            content += "<span class='bold' ><b>Depth to Water: </b></span>{dtw} feet below ground surface<br/>";
         }
         if (feature.graphic.attributes.datemeasur) {
             content += "<span class='bold' ><b>Date Measured: </b></span>{datemeasur}<br/>";
@@ -1072,6 +1072,26 @@ var waterLevelRenderer = {
                     return obj;
                 }, {});
         });
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].sampledate) {
+                console.log("Found Survey Date");
+                for (var i = 0; i < data.length; i++) {
+                    var dateString = moment(data[i].sampledate).format('MMMM Do YYYY');
+                    data[i].sampledate = dateString;
+
+                }
+            }
+            if (data[i].datemeasur) {
+                console.log("Found Sample Date");
+                for (var i = 0; i < data.length; i++) {
+                    var dateString = moment(data[i].datemeasur).format('MMMM Do YYYY');
+                    data[i].datemeasur = dateString;
+
+                }
+            }
+            
+        }
 
 
         // set the datastore for the grid using the
