@@ -1555,7 +1555,7 @@ var waterLevelRenderer = {
                                 })
                             });
                             
-                            gridFields = ["objectid", "name", "watereleva", "datemeasur"];
+                            gridFields = ["objectid", "name", "label", "watereleva", "datemeasur"];
                                 
                                 var query = waterLevel.createQuery();
                                 // add table close x to right hand corner
@@ -1564,7 +1564,7 @@ var waterLevelRenderer = {
             
                                 console.log(query);
                                 query.where = "1=1";
-                                query.outfields = ["objectid", "name", "watereleva", "datemeasur"];
+                                query.outfields = ["objectid", "name", "label", "watereleva", "datemeasur"];
                                 waterLevel.queryFeatures(query).then(function(e) {
                                     console.log(e);
             
@@ -1582,12 +1582,16 @@ var waterLevelRenderer = {
                                         srch.items.push(att);
                                     });
                                     console.log(srch);
-                                    gridFields = ["objectid", "name", "watereleva", "datemeasur"];
+                                    gridFields = ["objectid", "name", "label", "watereleva", "datemeasur"];
                                     var fieldArray = [
                                         //{alias: 'objectid', name: 'objectid'}, 
                                         {
                                             alias: 'Name',
                                             name: 'name'
+                                        },
+                                        {
+                                            alias: "ID",
+                                            name: "label"
                                         },
                                         {
                                             alias: 'Water Elevation',
