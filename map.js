@@ -2595,20 +2595,46 @@ watchUtils.watch(infrastructure, 'visible', function(e) {
 });
 mapView.map.add(wells);
 
-var measurementWidget = new Measurement({
-    view: mapView,
-    activeTool: "direct-line",
-    container: measureWidg
-  });
+// var measurementWidget = new Measurement({
+//     view: mapView,
+//     activeTool: "direct-line",
+//     container: measureWidg
+//   });
 
-  const clearButton = document.getElementById("clear");
-  clearButton.addEventListener("click", function () {
-    clearMeasurements();
-  });
-  function clearMeasurements() {
-    measurementWidget.clear();
-  }
+        // Create new instance of the Measurement widget
+        const measurement = new Measurement(
+            {
+                view: mapView,
+                container: measureWidg
+            }
+        );
 
+
+        // Set-up event handlers for buttons and click events
+        const distanceButton = document.getElementById("distance");
+        const clearButton = document.getElementById("clear");
+
+
+        distanceButton.addEventListener("click", function () {
+          distanceMeasurement();
+        });
+        clearButton.addEventListener("click", function () {
+          clearMeasurements();
+        });
+
+        function distanceMeasurement() {
+            const type = mapView.type;
+            console.log(type);
+            measurement.activeTool =
+              type.toUpperCase() === "2D" ? "distance" : "direct-line";
+            distanceButton.classList.add("active");
+          }
+  
+          // Clears all measurements
+          function clearMeasurements() {
+            distanceButton.classList.remove("active");
+            measurement.clear();
+          }
   
      //watches when geoUnitsImagery is turned to also turn geoUnitsFeatures
      watchUtils.watch(geology, 'visible', function(ee) {

@@ -111,6 +111,28 @@ top: 60px;
   width: 80%;
 }
 
+#toolbarDiv {
+        top: 15px;
+        right: 15px;
+        cursor: default;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+      }
+
+
+      /* .esri-widget--button.active,
+      .esri-widget--button.active:hover,
+      .esri-widget--button.active:focus {
+        cursor: default;
+        background-color: #999696;
+      }
+      .esri-widget--button.active path,
+      .esri-widget--button.active:hover path,
+      .esri-widget--button.active:focus path {
+        fill: #e4e4e4;
+      } */
+
 .esri-feature__last-edited-info {
 
     display: none;
@@ -352,16 +374,21 @@ div.esri-legend__message {
       <div id="collapseLegend" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingLegend">
         <div class="panel-body">            
           <div id="measureWidg">
-            <button
-        id="distance"
-        class="esri-widget--button esri-interactive esri-icon-measure-line"
-        title="Distance Measurement Tool"
-      ></button>
-            <button
-        id="clear"
-        class="esri-widget--button esri-interactive esri-icon-trash"
-        title="Clear Measurements"
-      ></button>
+            <div id="toolbarDiv" class="esri-component esri-widget">
+
+              <button id="distance" class="esri-button esri-button--secondary esri-direct-line-measurement-3d__clear-button" title="Distance Measurement Tool">New measurement</button>
+              <button id="clear" class="esri-button esri-button--secondary esri-direct-line-measurement-3d__clear-button" title="Distance Measurement Tool">Clear measurement</button>
+              <!-- <button
+                id="distance"
+                class="esri-widget--button esri-interactive esri-icon-measure-line"
+                title="Distance Measurement Tool"
+              ></button> -->
+              <!-- <button
+                id="clear"
+                class="esri-widget--button esri-interactive esri-icon-trash"
+                title="Clear Measurements"
+              ></button> -->
+            </div>
           </div>
         </div>
       </div>
