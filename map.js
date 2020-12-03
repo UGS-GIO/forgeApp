@@ -23,6 +23,7 @@ require([
     "esri/widgets/Zoom",
     "esri/widgets/Compass",
     "esri/widgets/Search",
+    "esri/widgets/Measurement",
     "esri/widgets/DirectLineMeasurement3D",
     "esri/widgets/Legend",
     "esri/widgets/Expand",
@@ -72,7 +73,7 @@ require([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, LabelClass, SceneLayer, GroupLayer, Ground, watchUtils, urlUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
+], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, LabelClass, SceneLayer, GroupLayer, Ground, watchUtils, urlUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Measurement, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
     //************** grid initial setup
     let grid;
@@ -1368,7 +1369,7 @@ var waterLevelRenderer = {
             layer = waterChemistry;
         } else if (title === "Seismometers") {
             layer = seismoms;
-        } else if (title === "Seismicity 1850 to 2016") {
+        } else if (title === "Seismicity 1850 to 2016 (Magnitude)") {
             layer = seismicity;
         } else if (title === "Benchmarks") {
             layer = benchmarks;
@@ -1436,7 +1437,6 @@ var waterLevelRenderer = {
                             "items": []
                         };
                         resultsArray.forEach(function(ftrs) {
-                            console.log(ftrs);
                             var att = ftrs.attributes;
 
                             srch.items.push(att);
@@ -1716,7 +1716,7 @@ else if (title == "Seismometers") {
     
 }
 // sesimicity
-else if (title == "Seismicity 1850 to 2016") {
+else if (title == "Seismicity 1850 to 2016 (Magnitude)") {
     doGridClear()
                             
     gridFields = ["mag", "depth", "day", "month", "year"];
@@ -2595,10 +2595,20 @@ watchUtils.watch(infrastructure, 'visible', function(e) {
 });
 mapView.map.add(wells);
 
-var measurementWidget = new DirectLineMeasurement3D({
+var measurementWidget = new Measurement({
     view: mapView,
+    activeTool: "direct-line",
     container: measureWidg
   });
+
+  const clearButton = document.getElementById("clear");
+  clearButton.addEventListener("click", function () {
+    clearMeasurements();
+  });
+  function clearMeasurements() {
+    measurementWidget.clear();
+  }
+
   
      //watches when geoUnitsImagery is turned to also turn geoUnitsFeatures
      watchUtils.watch(geology, 'visible', function(ee) {
