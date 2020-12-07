@@ -462,6 +462,11 @@ require([
     roads = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/1",
         title: "Roads",
+        popupTemplate: {
+            outFields: ["*"],
+            title: "<b>FORGE Roads</b>",
+            content: "<span class='bold' ><b>Road Name: </b></span>{fullname}<br/>"
+        },
         elevationInfo: [{
             mode: "on-the-ground"
         }],
@@ -2630,7 +2635,7 @@ mapView.map.add(wells);
             const type = mapView.type;
             console.log(type);
             measurement.activeTool =
-              type.toUpperCase() === "2D" ? "distance" : "direct-line";
+              "direct-line";
             distanceButton.classList.add("active");
           }
   
