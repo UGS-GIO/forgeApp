@@ -459,9 +459,20 @@ require([
         },
     });
 
+    var roadRenderer = {
+        type: "simple",
+        symbol: {
+            type: "simple-line",
+            color: "black",
+            width: "3px",
+
+        }
+    }
+
     roads = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/1",
         title: "Roads",
+        renderer: roadRenderer,
         popupTemplate: {
             outFields: ["*"],
             title: "<b>FORGE Roads</b>",
