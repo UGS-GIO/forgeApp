@@ -1099,7 +1099,7 @@ var waterLevelRenderer = {
 
                 }
             }
-            if (data[i].datemeasur) {
+            else if (data[i].datemeasur) {
                 console.log("Found Sample Date");
                 for (var i = 0; i < data.length; i++) {
                     var dateString = moment(data[i].datemeasur).format('MMMM Do YYYY');
