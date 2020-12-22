@@ -546,7 +546,7 @@ var waterLevelRenderer = {
 
     waterChemistry = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/8",
-        title: "Water Chemistry",
+        title: "Water Chemistry (TDS mg/L)",
         elevationInfo: [{
             mode: "on-the-ground"
         }],
