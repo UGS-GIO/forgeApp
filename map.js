@@ -1381,7 +1381,7 @@ var waterLevelRenderer = {
             layer = power;
         } else if (title === "Water Levels") {
             layer = waterLevel;
-        } else if (title === "Water Chemistry") {
+        } else if (title === "Water Chemistry (TDS mg/L)") {
             layer = waterChemistry;
         } else if (title === "Seismometers") {
             layer = seismoms;
@@ -2064,7 +2064,12 @@ else {
     });
 
     function zoomToLayer(layer) {
+        //console.log(mapView);
+        console.log(layer);
+        //layer.outSpatialReference = mapView.spatialReference;
+        //mapView.goTo(layer);
         return layer.queryExtent().then(function (response) {
+            console.log(response);
           mapView.goTo(response.extent).catch(function (error) {
             if (error.name != "AbortError") {
               console.error(error);
