@@ -1413,6 +1413,8 @@ var waterLevelRenderer = {
             layer = geologicSymbols;
         } else if (title === "Geophysical Benchmarks") {
             layer = geoPhysBenchmarks;
+        } else if (title === "FORGE Gravity Points") {
+            layer = gravityPoints;
         }
 
         //*********** TABLE CODE  ***********/
@@ -1628,7 +1630,7 @@ var waterLevelRenderer = {
                             
                         }
                         // Water chemistry
-                        else if (title == "Water Chemistry") {
+                        else if (title == "Water Chemistry (TDS mg/L)") {
                             doGridClear()
                             
                             gridFields = ["objectid", "station", "temp", "sampledate"];
@@ -2027,6 +2029,95 @@ else if (title == "Geophysical Benchmarks") {
             layerTable(e);
 
         });
+}
+
+else if (title == "FORGE Gravity Points") {
+
+    doGridClear()
+                            
+    gridFields = ["name", "hae", "ngvd29", "obs", "errg", "iztc", "oztc", "gfa", "gsbga", "gcbga", "adj", "adj", "gcbgav2"];
+        
+        var query = geoPhysBenchmarks.createQuery();
+        // add table close x to right hand corner
+        document.getElementById("removeX").setAttribute("class", "glyphicon glyphicon-remove");
+        document.getElementById("removeX").setAttribute("style", "float: right;");
+
+        console.log(query);
+        query.where = "1=1";
+        query.outfields = ["objectid", "name", "hae", "ngvd29", "obs", "errg", "iztc", "oztc", "gfa", "gsbga", "gcbga", "adj", "adj", "gcbgav2"];
+        gravityPoints.queryFeatures(query).then(function(e) {
+            console.log(e);
+
+
+            resultsArray = e["features"];
+            console.log(resultsArray);
+            // put our attributes in an object the datagrid can ingest.
+            var srch = {
+                "items": []
+            };
+            resultsArray.forEach(function(ftrs) {
+                console.log(ftrs);
+                var att = ftrs.attributes;
+
+                srch.items.push(att);
+            });
+            console.log(srch);
+            gridFields = ["objectid", "name", "hae", "ngvd29", "obs", "errg", "iztc", "oztc", "gfa", "gsbga", "gcbga", "adj", "gcbgav2"];
+            var fieldArray = [
+                //{alias: 'objectid', name: 'objectid'}, 
+                {
+                    alias: 'Point Name',
+                    name: 'name'
+                },
+                {
+                    alias: 'hae',
+                    name: 'hae'
+                },
+                {
+                    alias: 'ngvd29',
+                    name: 'ngvd29'
+                },
+                {
+                    alias: 'obs',
+                    name: 'obs'
+                },
+                {
+                    alias: 'errg',
+                    name: 'errg'
+                },
+                {
+                    alias: 'iztc',
+                    name: 'iztc'
+                },
+                {
+                    alias: 'gfa',
+                    name: 'gfa'
+                },
+                {
+                    alias: 'gsbga',
+                    name: 'gsbga'
+                },
+                {
+                    alias: 'gcbga',
+                    name: 'gcbga'
+                },
+                {
+                    alias: 'adj',
+                    name: 'adj'
+                },
+                {
+                    alias: 'gcbgav2',
+                    name: 'gcbgav2'
+                }
+                
+            ];
+
+            e.fields = fieldArray;
+            console.log(e);
+            layerTable(e);
+
+        });
+
 }
 
 else {
