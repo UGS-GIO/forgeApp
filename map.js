@@ -77,6 +77,7 @@ require([
 
     //************** grid initial setup
     let grid;
+    helpLoaded = "no";
 
     // create a new datastore for the on demandgrid
     // will be used to display attributes of selected features
@@ -2808,6 +2809,83 @@ function showCoordinates(pt) {
     console.log("error:", error);
   }
 
+
+// Check for mobile screen to load with collapsed legend
+
+isResponsiveSize = mapView.widthBreakpoint === "xsmall";
+updateView(isResponsiveSize);
+
+// Breakpoints
+
+mapView.watch("widthBreakpoint", function(breakpoint) {
+    console.log("watching breakpoint");
+    console.log(breakpoint);
+  switch (breakpoint) {
+    case "xsmall":
+      updateView(true);
+      break;
+    case "small":
+    case "medium":
+    case "large":
+    case "xlarge":
+      updateView(false);
+      break;
+    default:
+  }
+});
+
+
+function updateView(isMobile) {
+    
+  setLegendMobile(isMobile);
+
+}
+
+    loadHelp = document.querySelector('.help-tip img');
+
+
+
+    var navHelp = '<div class="esri-component esri-widget">';
+    navHelp += '<div id="help-tip" class="esri-widget--button esri-widget esri-interactive" role="button" title="Navigation Help">';
+    navHelp += '<span aria-hidden="true" role="presentation" class="esri-icon esri-icon-question"></span>';
+    navHelp += '<span class="esri-icon-font-fallback-text">Navigation Help</span></div></div>';
+    $(".esri-ui-top-left").append(navHelp);
+    
+    if (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
+                loadHelp.style.display = "none";
+				loadHelp.src = "map_navigation_mobile_crop.png";
+				loadHelp.style.maxWidth = "92%";
+				loadHelp.style.left = "15px";
+    } else {
+                loadHelp.style.display = "block";
+				loadHelp.src = "map_navigation_crop.png";
+				loadHelp.style.maxWidth = "75%";
+				loadHelp.style.left = "54px";
+    }
+
+$("#help-tip, .help-tip").click(function() {
+	$(loadHelp).toggle();
+});
+
+function setLegendMobile(isMobile) {
+  var toAdd = isMobile ? expandLegend : legend;
+  var toRemove = isMobile ? legend : expandLegend;
+
+
+  mapView.ui.remove(toRemove);
+  mapView.ui.add(toAdd, "top-left");
+}
+
+//uncollapse mobile popup when it docks
+popup = mapView.popup;
+mapView.when(function() {
+  popup.watch("collapsed", function(value){
+      if(value){
+      popup.collapsed = false;
+    }
+  });
+
+});
 
 
 

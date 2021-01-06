@@ -260,6 +260,46 @@ div.esri-legend__message {
     width: 350px;
 }
 
+.help-tip img {
+  display: none;
+	position: fixed;
+	max-height: 70%;
+	max-width: 75%;
+	left: 54px;
+	background-color: white;
+	bottom: 11px;
+	border-radius: 3px;
+	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+	cursor: pointer
+}
+
+.invisible {
+        visibility: collapse;
+      }
+
+      .esri-expand .esri-expand__content {
+        box-shadow: none;
+      }
+
+      .esri-view-height-xsmall
+        .esri-ui-corner
+        .esri-expand
+        .esri-legend.esri-widget,
+      .esri-view-height-small
+        .esri-ui-corner
+        .esri-expand
+        .esri-legend.esri-widget {
+        max-height: 100%;
+      }
+
+      .esri-view-width-less-than-small .esri-zoom .esri-widget--button {
+        display: none;
+      }
+
+      .esri-view-width-xsmall .esri-expand--auto .esri-expand__container--expanded {
+top: 60px;
+}
+
 
 
 
@@ -584,6 +624,11 @@ div.esri-legend__message {
       </button>
     </div>
     <div id="maskDiv" class="hide screenshotCursor"></div>
+
+    <div class="help-tip" role="button">
+      <img src="map_navigation_crop.png">
+    </div>
+    <div class="callout"></div>
 
 
 
