@@ -413,7 +413,14 @@ require([
     //     // }],
     // });
 
+    deviatedWell16A = new SceneLayer({
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Deviated_Well/SceneServer",
+        title: "Deviated Well 16A",
+        elevationInfo: [{
+            mode: "on-the-ground"
+        }], 
 
+    });
 
     landownership = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/0",
@@ -922,7 +929,7 @@ var waterLevelRenderer = {
 
     infrastructure = new GroupLayer({
         title: "FORGE Infrastructure",
-        layers: [wellsFeature, wellPads, power, office, boundary],
+        layers: [deviatedWell16A, wellsFeature, wellPads, power, office, boundary],
         //visible: true,
     });
 
