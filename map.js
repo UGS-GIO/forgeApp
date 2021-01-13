@@ -18,6 +18,9 @@ require([
     "esri/core/urlUtils",
     "esri/layers/support/DimensionalDefinition",
     "esri/layers/support/MosaicRule",
+    "esri/geometry/SpatialReference",
+    "esri/tasks/GeometryService",
+    "esri/tasks/support/ProjectParameters",
     // Widgets
     "esri/widgets/Home",
     "esri/widgets/Zoom",
@@ -73,7 +76,7 @@ require([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, LabelClass, SceneLayer, GroupLayer, Ground, watchUtils, urlUtils, DimensionalDefinition, MosaicRule, Home, Zoom, Compass, Search, Measurement, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
+], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, LabelClass, SceneLayer, GroupLayer, Ground, watchUtils, urlUtils, DimensionalDefinition, MosaicRule, SpatialReference, GeometryService, ProjectParameters, Home, Zoom, Compass, Search, Measurement, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
     //************** grid initial setup
     let grid;
@@ -1416,6 +1419,8 @@ var waterLevelRenderer = {
             layer = geoPhysBenchmarks;
         } else if (title === "FORGE Gravity Points") {
             layer = gravityPoints;
+        } else if (title === "Bouger Gravity (mGal)") {
+            layer = bougerGravity;
         }
 
         //*********** TABLE CODE  ***********/
@@ -2127,13 +2132,6 @@ else {
       
 }
 
-            
-    
-
-
-
-
-
 
         } else if (id === "increase-opacity") {
             // if the increase-opacity action is triggered, then
@@ -2151,24 +2149,24 @@ else {
             }
         }  else if (id === "zoom-to") {
 
-            zoomToLayer(layer);
+            if(event.item.layer.fullExtent.spatialReference !== mapView.spatialReference){
+                var geomSer = new GeometryService({url: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer'});
+                var params = new ProjectParameters({
+                  geometries: [event.item.layer.fullExtent],
+                  outSpatialReference: mapView.spatialReference
+                });
+                geomSer.project(params).then(function(results){
+                  mapView.goTo(results[0]);
+                });
+              }else{
+                view.goTo(event.item.layer.fullExtent);
+              }
+
+
         }
     });
 
-    function zoomToLayer(layer) {
-        //console.log(mapView);
-        console.log(layer);
-        //layer.outSpatialReference = mapView.spatialReference;
-        //mapView.goTo(layer);
-        return layer.queryExtent().then(function (response) {
-            console.log(response);
-          mapView.goTo(response.extent).catch(function (error) {
-            if (error.name != "AbortError") {
-              console.error(error);
-            }
-          });
-        });
-      }
+
 
     function doGridClear() {
         console.log("doGridClear");
