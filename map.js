@@ -127,17 +127,43 @@ require([
             top: 50,
             bottom: 0
         },
-        //viewingMode: "local",
-        // highlightOptions: {
-        //     color: [255, 255, 0, 1],
-        //     haloColor: "white",
-        //     haloOpacity: 0.9,
-        //     fillOpacity: 0.2
-        //   },
+        camera: {
+            position: {
+              x: -112.9, // lon
+              y: 38.35,   // lat
+              z: 9000 // elevation in meters
+            },
+        
+            tilt: 65
+          },
+          environment: {
+            background: {
+              type: "color",
+              color: [255, 252, 244, 1]
+            },
+            starsEnabled: false,
+            atmosphereEnabled: true,
+            quality: "high",
+          },
+          qualityProfile: "high",
+
         ui: {
             components: []
         }
     });
+
+    // Set the sun position to reflect the current time
+mapView.environment.lighting.date = Date.now();
+
+// Disable automatic lighting updates by camera tracking
+mapView.environment.lighting.cameraTrackingEnabled = true;
+
+// Enable displaying shadows cast by the sun
+mapView.environment.lighting.directShadowsEnabled = true;
+
+
+
+
     // Popup and panel sync
     mapView.when(function() {
         CalciteMapArcGISSupport.setPopupPanelSync(mapView);
@@ -941,7 +967,6 @@ var waterLevelRenderer = {
 
 
 
-
     //**********************   GRID CODE ****************
 
     // create grid
@@ -965,7 +990,45 @@ var waterLevelRenderer = {
                     //sortable: true,
                     hidden: true
                 };
-            } else {
+            
+            } else if (field.name == "so4") {
+                console.log("found so4");
+                return {
+                renderHeaderCell: function(node){
+                    var div = document.createElement("div");
+                    div.innerHTML = "SO<sub>4</sub>";
+                    return div;
+                }
+            }
+            } else if (field.name == "hco3") {
+                console.log("found so4");
+                return {
+                renderHeaderCell: function(node){
+                    var div = document.createElement("div");
+                    div.innerHTML = "HCO<sub>3</sub>";
+                    return div;
+                }
+            }
+            } else if (field.name == "f18o") {
+                console.log("found so4");
+                return {
+                renderHeaderCell: function(node){
+                    var div = document.createElement("div");
+                    div.innerHTML = "<sub>18</sub>O";
+                    return div;
+                }
+            }
+            } else if (field.name == "f2h") {
+                console.log("found so4");
+                return {
+                renderHeaderCell: function(node){
+                    var div = document.createElement("div");
+                    div.innerHTML = "<sub>2</sub>H";
+                    return div;
+                }
+            }
+            } 
+            else {
                 console.log("SHOW COLUMN");
                 return {
                     field: field.name,
@@ -979,6 +1042,11 @@ var waterLevelRenderer = {
 
         console.log(columns);
 
+
+
+
+
+
         // create a new onDemandGrid with its selection and columnhider
         // extensions. Set the columns of the grid to display attributes
         // the hurricanes cvslayer
@@ -986,94 +1054,11 @@ var waterLevelRenderer = {
             columns: columns,
             minRowsPerPage: 5000,
             maxRowsPerPage: 5000,
-            //bufferRows: 5000
-            //pagingMethod: "throttleDelayed",
-            //pagingDelay: 1000,
-            //keepScrollPosition: "true"
         }, "grid");
 
         grid.on("dgrid-select", selectFeatureFromGrid);
 
-        // add a row-click listener on the grid. This will be used
-        // to highlight the corresponding feature on the view
-            //grid.on("dgrid-select", selectFeatureFromGrid);
-            //console.log(grid.columns[0].field);
-
-            
-
     }
-
-
-//     function selectFeatureFromGrid(event) {
-//         console.log(event);
-//         mapView.popup.close();
-//         mapView.graphics.removeAll();
-//         var row = event.rows[0]
-//         console.log(row);
-//         var id = row.data.objectid;
-//         console.log(id);
-
-//         var sublayer = geologicUnits.findSublayerById(4);
-//         console.log(sublayer);
-//         sublayer.createFeatureLayer()
-//             .then(function(featureLayer) {
-//                 return featureLayer.load();
-//             })
-//             .then(continueSelect);
-
-// function continueSelect (){
-//         var query = sublayer.createQuery();
-
-//         query.where = "objectid = '" + id + "'";
-//         query.returnGeometry = true;
-//         query.outFields = ["*"],
-
-//             // query the palntLayerView using the query set above
-//             sublayer.queryFeatures(query).then(function(results) {
-//                 console.log(results);
-//                 var graphics = results.features;
-//                 console.log(graphics);
-//                 var item = graphics[0];
-
-//                 //  //checks to see if site is confidential or not
-//                 //if (item.attributes.confidential != 1) {
-//                 //    console.log("public");
-//                 var cntr = [];
-//                 cntr.push(item.geometry.longitude);
-//                 cntr.push(item.geometry.latitude);
-//                 console.log(item.geometry);
-//                 mapView.goTo({
-//                     center: cntr, // position:
-//                     zoom: 13
-//                 });
-
-//                 console.log(mapView.graphics);
-
-//                 mapView.graphics.removeAll();
-//                 var selectedGraphic = new Graphic({
-
-//                     geometry: item.geometry,
-//                     symbol: new SimpleFillSymbol({
-//                         //color: [0,255,255],
-//                         //style: "circle",
-//                         //size: "8px",
-//                         outline: {
-//                             color: [255, 255, 0],
-//                             width: 3
-//                         }
-//                     })
-//                 });
-
-//                 mapView.graphics.add(selectedGraphic);
-
-//                 mapView.popup.open({
-//                     features: [item],
-//                     location: item.geometry
-//                 });
-
-//             })
-//     }
-//     }
 
 
 
@@ -1358,6 +1343,7 @@ var waterLevelRenderer = {
         expandTooltip: "Expand Legend",
         expanded: true
     })
+
 
     //layerlist action for opacity
 
@@ -1646,7 +1632,7 @@ var waterLevelRenderer = {
                         else if (title == "Water Chemistry (TDS mg/L)") {
                             doGridClear()
                             
-                            gridFields = ["objectid", "station", "temp", "sampledate"];
+                            gridFields = ["objectid", "station", "ph", "k", "na", "ca", "mg", "br", "cl", "f", "so4", "hco3", "no3", "f18o", "f2h", "temp", "b", "si", "tds", "sampledate", "watertype"];
                                 
                                 var query = waterChemistry.createQuery();
                                 // add table close x to right hand corner
@@ -1667,13 +1653,12 @@ var waterLevelRenderer = {
                                         "items": []
                                     };
                                     resultsArray.forEach(function(ftrs) {
-                                        console.log(ftrs);
                                         var att = ftrs.attributes;
             
                                         srch.items.push(att);
                                     });
                                     console.log(srch);
-                                    gridFields = ["objectid", "station", "temp", "sampledate"];
+                                    gridFields = ["objectid", "station", "ph", "k", "na", "ca", "mg", "br", "cl", "f", "so4", "hco3", "no3", "f18o", "f2h", "temp", "b", "si", "tds", "sampledate", "watertype"];
                                     var fieldArray = [
                                         //{alias: 'objectid', name: 'objectid'}, 
                                         {
@@ -1681,12 +1666,68 @@ var waterLevelRenderer = {
                                             name: 'station'
                                         },
                                         {
+                                            alias: 'pH',
+                                            name: 'ph'
+                                        },
+                                        {
+                                            alias: 'K',
+                                            name: 'k'
+                                        },{
+                                            alias: 'Na',
+                                            name: 'na'
+                                        },{
+                                            alias: 'CA',
+                                            name: 'ca'
+                                        },{
+                                            alias: 'MG',
+                                            name: 'mg'
+                                        },{
+                                            alias: 'BR',
+                                            name: 'br'
+                                        },{
+                                            alias: 'Cl',
+                                            name: 'cl'
+                                        },{
+                                            alias: 'F',
+                                            name: 'f'
+                                        },{
+
+                                            alias: "SO", 
+                                            name: 'so4',
+                                            
+                                        },{
+                                            alias: 'HCO<sub>3</sub>',
+                                            name: 'hco3'
+                                        },{
+                                            alias: '<sub>18</sub>O',
+                                            name: 'f18o'
+                                        },{
+                                            alias: '<sub>2</sub>H',
+                                            name: 'f2h'
+                                        },
+                                        {
                                             alias: 'Temperature (°C)',
                                             name: 'temp'
                                         },
                                         {
+                                            alias: 'B',
+                                            name: 'b'
+                                        },
+                                        {
+                                            alias: 'Si',
+                                            name: 'si'
+                                        },
+                                        {
+                                            alias: 'TDS',
+                                            name: 'tds'
+                                        },
+                                        {
                                             alias: 'Sample Date',
                                             name: 'sampledate'
+                                        },
+                                        {
+                                            alias: 'Water Type',
+                                            name: 'watertype'
                                         }
                                         
                                     ];
@@ -1698,6 +1739,8 @@ var waterLevelRenderer = {
                                 });
                             
                         }
+
+
 // sesimoms
 else if (title == "Seismometers") {
     doGridClear()
