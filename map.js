@@ -992,17 +992,28 @@ var waterLevelRenderer = {
                 };
             
             } else if (field.name == "so4") {
-                console.log("found so4");
+                //console.log("found so4");
                 return {
-                renderHeaderCell: function(node){
+                    renderCell: function(object, value, node){
+                        var div = document.createElement("div");
+                    div.innerHTML = value.so4;
+                    return div;
+                    },
+                renderHeaderCell: function(headerNode){
+                    console.log(headerNode);
                     var div = document.createElement("div");
                     div.innerHTML = "SO<sub>4</sub>";
                     return div;
                 }
             }
             } else if (field.name == "hco3") {
-                console.log("found so4");
-                return {
+                //console.log("found so4");
+                return {   
+                        renderCell: function(object, value, node){
+                            var div = document.createElement("div");
+                        div.innerHTML = value.hco3;
+                        return div;
+                        },
                 renderHeaderCell: function(node){
                     var div = document.createElement("div");
                     div.innerHTML = "HCO<sub>3</sub>";
@@ -1010,8 +1021,13 @@ var waterLevelRenderer = {
                 }
             }
             } else if (field.name == "f18o") {
-                console.log("found so4");
+               // console.log("found so4");
                 return {
+                    renderCell: function(object, value, node){
+                        var div = document.createElement("div");
+                    div.innerHTML = value.f18o;
+                    return div;
+                    },
                 renderHeaderCell: function(node){
                     var div = document.createElement("div");
                     div.innerHTML = "<sub>18</sub>O";
@@ -1019,8 +1035,13 @@ var waterLevelRenderer = {
                 }
             }
             } else if (field.name == "f2h") {
-                console.log("found so4");
+                //console.log("found so4");
                 return {
+                    renderCell: function(object, value, node){
+                        var div = document.createElement("div");
+                    div.innerHTML = value.f2h;
+                    return div;
+                    },
                 renderHeaderCell: function(node){
                     var div = document.createElement("div");
                     div.innerHTML = "<sub>2</sub>H";
@@ -1692,7 +1713,7 @@ var waterLevelRenderer = {
                                             name: 'f'
                                         },{
 
-                                            alias: "SO", 
+                                            alias: "SO4", 
                                             name: 'so4',
                                             
                                         },{
