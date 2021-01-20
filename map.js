@@ -994,17 +994,18 @@ var waterLevelRenderer = {
             } else if (field.name == "so4") {
                 //console.log("found so4");
                 return {
+                    
                     renderCell: function(object, value, node){
                         var div = document.createElement("div");
                     div.innerHTML = value.so4;
                     return div;
                     },
                 renderHeaderCell: function(headerNode){
-                    console.log(headerNode);
                     var div = document.createElement("div");
                     div.innerHTML = "SO<sub>4</sub>";
                     return div;
-                }
+                },
+                sortable: true
             }
             } else if (field.name == "hco3") {
                 //console.log("found so4");
