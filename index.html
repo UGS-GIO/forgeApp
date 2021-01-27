@@ -301,6 +301,44 @@ top: 60px;
 }
 
 
+/* Slides CSS */
+#createSlideDiv {
+        background-color: white;
+        opacity: 0.9;
+        color: black;
+        padding: 6px;
+      }
+
+      #slidesDiv {
+        background-color: white;
+        opacity: 0.9;
+        color: black;
+        padding: 10px;
+        visibility: hidden;
+        bottom: 20px;
+        overflow-y: auto;
+        text-align: center;
+        height: 260px;
+      }
+
+      #slidesDiv .slide {
+        /* Show cursor as pointer when on a slide */
+        cursor: pointer;
+        margin-bottom: 6px;
+      }
+
+      #slidesDiv .slide .title {
+        /* Center the title text */
+        text-align: center;
+      }
+      /* Draw active slide with a nice border around the thumbnail */
+
+      #slidesDiv .slide.active img {
+        box-shadow: 0px 0px 12px black;
+        border-style: solid;
+        border-width: thin;
+        border-color: black;
+      }
 
 
 
@@ -381,6 +419,12 @@ top: 60px;
     
   </div>
   <!-- /calcite-map ******************************************** test ************************************************** -->
+
+  <div id="createSlideDiv" class="esri-widget">
+    New slide: <input type="text" id="createSlideTitleInput" size="10" />
+    <button id="createSlideButton">Create</button>
+  </div>
+  <div id="slidesDiv" class="esri-widget"></div>
 
   <!-- Panels -->
 
