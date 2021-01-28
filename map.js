@@ -1430,12 +1430,16 @@ var waterLevelRenderer = {
             layer = geologicLabels;
         } else if (title === "Geologic Symbols") {
             layer = geologicSymbols;
-        } else if (title === "Geophysical Benchmarks") {
+        } else if (title === "Gravity and GPS Benchmarks") {
             layer = geoPhysBenchmarks;
         } else if (title === "FORGE Gravity Points") {
             layer = gravityPoints;
         } else if (title === "Bouger Gravity (mGal)") {
             layer = bougerGravity;
+        } else if (title === "Milford Valley Top of Bedrock Surface") {
+            layer = milValleySubSymbology;
+        } else if (title === "Top of Bedrock Surface") {
+            layer = bedrockSymbology;
         }
 
         //*********** TABLE CODE  ***********/
