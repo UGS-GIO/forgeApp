@@ -3,6 +3,7 @@ require([
     "esri/Map",
     "esri/views/MapView",
     "esri/views/SceneView",
+    "esri/webscene/Slide",
     "esri/layers/FeatureLayer",
     "esri/layers/SceneLayer",
     "esri/layers/ElevationLayer",
@@ -76,7 +77,7 @@ require([
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/domReady!"
-], function(Map, MapView, SceneView, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, LabelClass, SceneLayer, GroupLayer, Ground, watchUtils, urlUtils, DimensionalDefinition, MosaicRule, SpatialReference, GeometryService, ProjectParameters, Home, Zoom, Compass, Search, Measurement, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
+], function(Map, MapView, SceneView, Slide, FeatureLayer, SceneLayer, ElevationLayer, TileLayer, ImageryLayer, MapImageLayer, RasterStretchRenderer, LabelClass, SceneLayer, GroupLayer, Ground, watchUtils, urlUtils, DimensionalDefinition, MosaicRule, SpatialReference, GeometryService, ProjectParameters, Home, Zoom, Compass, Search, Measurement, DirectLineMeasurement3D, Legend, Expand, SketchViewModel, BasemapToggle, ScaleBar, Attribution, LayerList, Locate, NavigationToggle, GraphicsLayer, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, FeatureSet, Query, QueryTask, AttachmentsContent, query, Memory, ObjectStore, ItemFileReadStore, DataGrid, OnDemandGrid, ColumnHider, Selection, StoreAdapter, List, declare, parser, aspect, request, mouse, Collapse, Dropdown, Share, CalciteMaps, CalciteMapArcGISSupport, on, arrayUtils, dom, domClass, domConstruct) {
 
     //************** grid initial setup
     let grid;
@@ -169,10 +170,9 @@ mapView.environment.lighting.directShadowsEnabled = true;
         CalciteMapArcGISSupport.setPopupPanelSync(mapView);
     });
 
-    // const share = new Share({
-    //     view: mapView,
-    //     //container: "shareDiv"
-    // });
+//SLides
+
+
 
     faultsPopup = function(feature) {
                 var content = "";
@@ -824,7 +824,7 @@ var waterLevelRenderer = {
 
     geoPhysBenchmarks = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/11",
-        title: "Geophysical Benchmarks",
+        title: "Gravity and GPS Benchmarks",
         elevationInfo: [{
             mode: "on-the-ground"
         }],
@@ -942,7 +942,7 @@ var waterLevelRenderer = {
     });
 
     geoPhysData = new GroupLayer({
-        title: "Geophysical Data",
+        title: "Gravity Data",
         visible: false,
         layers: [geoPhysBenchmarks, bougerGravity, gravityPoints]
     });
