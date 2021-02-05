@@ -1296,7 +1296,6 @@ var waterLevelRenderer = {
 
 
 
-
     mapView.map.add(water);
     mapView.map.add(geoPhysData);
     mapView.map.add(seismicData);
@@ -1308,6 +1307,29 @@ var waterLevelRenderer = {
     mapView.map.add(infrastructure);
     mapView.map.add(geologicUnits);
     mapView.map.add(geologicFaults);
+
+    //testing code for loading certain layers, zooms, camera positions with urlUtils
+
+var checkURL = urlUtils.urlToObject(window.location.href);
+console.log(checkURL);
+
+if (checkURL.query != null) {
+if (checkURL.query.loadview == "subsurface") {  //load subsurface view and data
+    subSurface.visible = true;
+    geology.visible = false;
+    mapView.camera.position.z = -431.67459647450596;
+    mapView.camera.tilt = 93.26527489700682;
+} else if (checkURL.query.loadview == "thermal") { //load thermal view and data
+    thermalData.visible = true;
+    geology.visible = false;
+    mapView.camera.position.latitude = 38.482522462;
+    mapView.camera.position.longitude = -112.87325304;
+    mapView.camera.position.z = 70000;
+    mapView.camera.tilt = 0;
+    mapView.camera.position.heading = 359.98;
+}
+
+}
 
 
 
@@ -2871,10 +2893,11 @@ function showCoordinates(pt) {
   }
 
   mapView.watch("stationary", function(isStationary) {
+    console.log(mapView.camera);
     showCoordinates(mapView.center);
   });
 
-  mapView.on("pointer-move", function(evt) {
+  mapView.watch("stationary", function(evt) {
 
     showCoordinates(mapView.toMap({ x: evt.x, y: evt.y }));
   });
