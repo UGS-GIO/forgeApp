@@ -142,8 +142,6 @@ require([
               type: "color",
               color: [255, 252, 244, 1]
             },
-            starsEnabled: false,
-            atmosphereEnabled: true,
             quality: "high",
           },
           qualityProfile: "high",
@@ -153,14 +151,7 @@ require([
         }
     });
 
-    // Set the sun position to reflect the current time
-mapView.environment.lighting.date = Date.now();
 
-// Disable automatic lighting updates by camera tracking
-mapView.environment.lighting.cameraTrackingEnabled = true;
-
-// Enable displaying shadows cast by the sun
-mapView.environment.lighting.directShadowsEnabled = true;
 
 
 
@@ -449,7 +440,7 @@ mapView.environment.lighting.directShadowsEnabled = true;
     });
 
     landownership = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/0",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/0",
         title: "Land Ownership",
         opacity: .3,
         elevationInfo: [{
@@ -460,7 +451,7 @@ mapView.environment.lighting.directShadowsEnabled = true;
     });
 
     boundary = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/3",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/3",
         title: "FORGE Boundary",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -484,7 +475,7 @@ mapView.environment.lighting.directShadowsEnabled = true;
     });
 
     wellsFeature = new FeatureLayer ({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/4",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/4",
         title: "Wells",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -507,7 +498,7 @@ mapView.environment.lighting.directShadowsEnabled = true;
     }
 
     roads = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/1",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/1",
         title: "Roads",
         renderer: roadRenderer,
         popupTemplate: {
@@ -521,7 +512,7 @@ mapView.environment.lighting.directShadowsEnabled = true;
     });
 
     plss = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/2",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/2",
         title: "PLSS",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -530,7 +521,7 @@ mapView.environment.lighting.directShadowsEnabled = true;
     });
 
     office = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/5",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/5",
         title: "Field Office",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -539,7 +530,7 @@ mapView.environment.lighting.directShadowsEnabled = true;
     });
 
     power = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/6",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/6",
         title: "Power Line",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -568,7 +559,7 @@ var waterLevelRenderer = {
 };
 
     waterLevel = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/7",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/7",
         title: "Water Levels",
         renderer: waterLevelRenderer,
         elevationInfo: [{
@@ -582,7 +573,7 @@ var waterLevelRenderer = {
     });
 
     waterChemistry = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/8",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/8",
         title: "Water Chemistry (TDS mg/L)",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -595,7 +586,7 @@ var waterLevelRenderer = {
     });
 
     seismoms = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/9",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/9",
         title: "Seismometers",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -608,7 +599,7 @@ var waterLevelRenderer = {
     });
 
     seismicity = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/10",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/10",
         title: "Seismicity 1850 to 2016 (Magnitude)",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -616,7 +607,7 @@ var waterLevelRenderer = {
     });
 
     benchmarks = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/11",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/11",
         title: "Benchmarks",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -629,7 +620,7 @@ var waterLevelRenderer = {
     });
 
     iso1km = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/12",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/12",
         title: "Isotherms at 1km depth",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -638,7 +629,7 @@ var waterLevelRenderer = {
     });
 
     iso2km = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/13",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/13",
         title: "Isotherms at 2km depth",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -647,7 +638,7 @@ var waterLevelRenderer = {
     });
 
     iso3km = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/14",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/14",
         title: "Isotherms at 3km depth",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -656,7 +647,7 @@ var waterLevelRenderer = {
     });
 
     iso4km = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/15",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/15",
         title: "Isotherms at 4km depth",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -665,7 +656,7 @@ var waterLevelRenderer = {
     });
 
     heatflow = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/16",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/16",
         title: "Heat Flow (W/m²)",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -674,7 +665,7 @@ var waterLevelRenderer = {
     });
 
     shallowWellsFeature =  new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/Forge_AGOL_map_View/FeatureServer/17",
         title: "Shallow Well Temperatures",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -721,7 +712,7 @@ var waterLevelRenderer = {
     });
 
     intWellsFeature =  new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/Forge_AGOL_map_View/FeatureServer/18",
         title: "Intermediate Well Temperatures",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -769,7 +760,7 @@ var waterLevelRenderer = {
     });
 
     deepWellsFeature =  new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/Forge_AGOL_map_View/FeatureServer/19",
         title: "Deep Well Temperatures",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -814,7 +805,7 @@ var waterLevelRenderer = {
     });
 
     wellPads = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/21",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/21",
         title: "Well Pads",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -823,7 +814,7 @@ var waterLevelRenderer = {
     });
 
     geoPhysBenchmarks = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/11",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/11",
         title: "Gravity and GPS Benchmarks",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -846,7 +837,7 @@ var waterLevelRenderer = {
     // });
 
     gravityPoints = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_WebmapSDE_View/FeatureServer/22",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/22",
         title: "FORGE Gravity Points",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -1327,6 +1318,13 @@ if (checkURL.query.loadview == "subsurface") {  //load subsurface view and data
     mapView.camera.position.z = 70000;
     mapView.camera.tilt = 0;
     mapView.camera.position.heading = 359.98;
+} else if (checkURL.query.loadview == "geologic") { //load geolgoic setting view and data
+    geology.visible = true;
+    mapView.camera.position.latitude = 38.482522462;
+    mapView.camera.position.longitude = -112.87325304;
+    mapView.camera.position.z = 70000;
+    mapView.camera.tilt = 0;
+    mapView.camera.position.heading = 270;
 }
 
 }
@@ -1387,6 +1385,8 @@ if (checkURL.query.loadview == "subsurface") {  //load subsurface view and data
         expandTooltip: "Expand Legend",
         expanded: true
     })
+
+
 
 
     //layerlist action for opacity
@@ -1910,7 +1910,7 @@ else if (title == "Shallow Well Temperatures") {
     doGridClear()
     gridFields = ["objectid","well_name", "depth_m"];
     var shallowWellsLayer =  new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/17",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/Forge_AGOL_map_View/FeatureServer/17",
         outFields: ["*"],
     })
 
@@ -1969,7 +1969,7 @@ else if (title == "Intermediate Well Temperatures") {
     doGridClear()
     gridFields = ["objectid", "well_name", "depth_m"];
     var intWellsLayer =  new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/18",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/Forge_AGOL_map_View/FeatureServer/18",
         outFields: ["*"],
     })
 
@@ -2029,7 +2029,7 @@ else if (title == "Deep Well Temperatures") {
 
     gridFields = ["objectid", "well_name", "depth_m"];
     var deepWellsLayer =  new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/FORGE_WebmapSDE_View/FeatureServer/19",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/ArcGIS/rest/services/Forge_AGOL_map_View/FeatureServer/19",
         outFields: ["*"],
     })
 
@@ -2985,5 +2985,64 @@ mapView.when(function() {
 });
 
 
+function catchAbortError(error){
+    if (error.name != "AbortError"){
+      console.error(error);
+    }
+  }
+
+document.getElementById("default").addEventListener("click", function() { 
+    console.log("sub");
+
+        subSurface.visible = true;
+    geology.visible = false;
+
+    mapView.goTo(
+        {
+            position: {
+                x: -112.9, // lon
+                y: 38.35,   // lat
+                z: -431 // elevation in meters
+              },
+          heading: 359,
+          tilt: 93
+        },
+        {
+          speedFactor: 0.3,
+        }
+      ).catch(catchAbortError);
+
+
+
+
+    })
+
+    document.getElementById("default2").addEventListener("click", function() { 
+        console.log("geology");
+    
+            subSurface.visible = true;
+        geology.visible = true;
+    
+        mapView.goTo(
+            {
+                position: {
+                    x: -113.02598857958381, // lon
+                    y: 38.504534148367306,   // lat
+                    z: 3280 // elevation in meters
+                  },
+              heading: 92,
+              tilt: 82
+            },
+            {
+              speedFactor: 0.3,
+            }
+          ).catch(catchAbortError);
+    
+    
+    
+    
+        })
+
 
 });
+
