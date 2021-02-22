@@ -65,7 +65,6 @@ require([
     // Bootstrap
     "bootstrap/Collapse",
     "bootstrap/Dropdown",
-    "share-Widget/Share",
     // Calcite Maps
     "calcite-maps/calcitemaps-v0.10",
 
@@ -431,7 +430,7 @@ require([
     // });
 
     deviatedWell16A = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Deviated_Well/SceneServer",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Deviated_Well_new/SceneServer",
         title: "Deviated Well 16A",
         elevationInfo: [{
             mode: "on-the-ground"
@@ -888,7 +887,8 @@ var waterLevelRenderer = {
 
 
     geologicUnitsTile = new TileLayer({
-        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
+        url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeAppGeology/MapServer",
+        //url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
         title: "Geology", 
         outFields: ["*"],
         //listMode: "show",
@@ -1283,7 +1283,7 @@ var waterLevelRenderer = {
         index: 1
       });
 
-    //   mapView.ui.add(share, "top-left");
+
 
 
 
