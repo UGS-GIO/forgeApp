@@ -65,6 +65,7 @@ require([
     // Bootstrap
     "bootstrap/Collapse",
     "bootstrap/Dropdown",
+    "share-Widget/Share",
     // Calcite Maps
     "calcite-maps/calcitemaps-v0.10",
 
@@ -888,7 +889,6 @@ var waterLevelRenderer = {
 
     geologicUnitsTile = new TileLayer({
         url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeAppGeology/MapServer",
-        //url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeGeology_SDE/MapServer",
         title: "Geology", 
         outFields: ["*"],
         //listMode: "show",
@@ -1283,7 +1283,7 @@ var waterLevelRenderer = {
         index: 1
       });
 
-
+    //   mapView.ui.add(share, "top-left");
 
 
 
