@@ -123,20 +123,20 @@ require([
         container: "mapViewDiv",
         map: map,
         center: [-112.884, 38.502],
-        zoom: 12.5,
+        zoom: 13,
         padding: {
             top: 50,
             bottom: 0
         },
-        camera: {
-            position: {
-              x: -112.9, // lon
-              y: 38.35,   // lat
-              z: 9000 // elevation in meters
-            },
+        // camera: {
+        //     position: {
+        //       x: -112.9, // lon
+        //       y: 38.35,   // lat
+        //       z: 9000 // elevation in meters
+        //     },
         
-            tilt: 65
-          },
+        //     tilt: 65
+        //   },
           environment: {
             background: {
               type: "color",
@@ -513,21 +513,13 @@ require([
 
     plss = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/2",
-        title: "PLSS",
+        title: "Township & Range",
         elevationInfo: [{
             mode: "on-the-ground"
         }],
         labelsVisible: false,
     });
 
-    office = new FeatureLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/5",
-        title: "Field Office",
-        elevationInfo: [{
-            mode: "on-the-ground"
-        }],
-        visible: false
-    });
 
     power = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/6",
@@ -946,7 +938,7 @@ var waterLevelRenderer = {
 
     infrastructure = new GroupLayer({
         title: "FORGE Infrastructure",
-        layers: [deviatedWell16A, wellsFeature, wellPads, power, office, boundary],
+        layers: [deviatedWell16A, wellsFeature, wellPads, power, boundary],
         //visible: true,
     });
 
@@ -1414,7 +1406,7 @@ if (checkURL.query.loadview == "subsurface") {  //load subsurface view and data
             layer = geologicUnitsTile;
         } else if (title === "Roads") {
             layer = roads;
-        } else if (title === "PLSS") {
+        } else if (title === "Township & Range") {
             layer = plss;
         } else if (title === "Field Office") {
             layer = office;
