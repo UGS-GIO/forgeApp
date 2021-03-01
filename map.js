@@ -2893,7 +2893,6 @@ function showCoordinates(pt) {
   }
 
   mapView.watch("stationary", function(isStationary) {
-    console.log(mapView.camera);
     showCoordinates(mapView.center);
   });
 
