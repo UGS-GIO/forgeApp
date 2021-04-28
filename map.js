@@ -937,7 +937,7 @@ var waterLevelRenderer = {
     });
 
     infrastructure = new GroupLayer({
-        title: "FORGE Infrastructure",
+        title: "UTAH FORGE Infrastructure",
         layers: [deviatedWell16A, wellsFeature, wellPads, power, boundary],
         //visible: true,
     });
