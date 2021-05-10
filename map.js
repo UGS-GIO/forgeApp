@@ -452,7 +452,7 @@ require([
 
     boundary = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/3",
-        title: "FORGE Boundary",
+        title: "Utah FORGE Boundary",
         elevationInfo: [{
             mode: "on-the-ground"
         }],
@@ -469,7 +469,7 @@ require([
         listMode: "hide",
         popupTemplate: {
             outFields: ["*"],
-            title: "<b>FORGE Wells</b>",
+            title: "<b>Utah FORGE Wells</b>",
             content: wellsPopup
         },
     });
@@ -482,7 +482,7 @@ require([
         }], 
         popupTemplate: {
             outFields: ["*"],
-            title: "<b>FORGE Wells</b>",
+            title: "<b>Utah FORGE Wells</b>",
             content: wellsPopup
         },
     });
@@ -503,7 +503,7 @@ require([
         renderer: roadRenderer,
         popupTemplate: {
             outFields: ["*"],
-            title: "<b>FORGE Roads</b>",
+            title: "<b>Utah FORGE Roads</b>",
             content: "<span class='bold' ><b>Road Name: </b></span>{fullname}<br/>"
         },
         elevationInfo: [{
@@ -1396,7 +1396,7 @@ if (checkURL.query.loadview == "subsurface") {  //load subsurface view and data
 
         console.log(title);
 
-        if (title === "FORGE Boundary") {
+        if (title === "Utah FORGE Boundary") {
             layer = boundary;
         } else if (title === "Land Ownership") {
             layer = landownership;
@@ -1446,7 +1446,7 @@ if (checkURL.query.loadview == "subsurface") {  //load subsurface view and data
             layer = geologicSymbols;
         } else if (title === "Gravity and GPS Benchmarks") {
             layer = geoPhysBenchmarks;
-        } else if (title === "FORGE Gravity Points") {
+        } else if (title === "Utah FORGE Gravity Points") {
             layer = gravityPoints;
         } else if (title === "Bouger Gravity (mGal)") {
             layer = bougerGravity;
@@ -2127,7 +2127,7 @@ else if (title == "Geophysical Benchmarks") {
         });
 }
 
-else if (title == "FORGE Gravity Points") {
+else if (title == "Utah FORGE Gravity Points") {
 
     doGridClear()
                             
