@@ -830,7 +830,7 @@ var waterLevelRenderer = {
 
     gravityPoints = new FeatureLayer({
         url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Forge_AGOL_map_View/FeatureServer/22",
-        title: "FORGE Gravity Points",
+        title: "Gravity Points",
         elevationInfo: [{
             mode: "on-the-ground"
         }],
