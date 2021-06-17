@@ -189,17 +189,17 @@ require([
 ;        var content = "";
 
 
-        if (feature.graphic.attributes.UnitSymbol) {
-            content += "<span class='bold' ><b>Unit: </b></span>{UnitSymbol}<br/>";
+        if (feature.graphic.attributes.unitsymbol) {
+            content += "<span class='bold' ><b>Unit: </b></span>{unitsymbol}<br/>";
         }
-        if (feature.graphic.attributes.UnitName) {
-            content += "<span class='bold' ><b>Unit Name: </b></span>{UnitName}<br/>";
+        if (feature.graphic.attributes.unitname) {
+            content += "<span class='bold' ><b>Unit Name: </b></span>{unitname}<br/>";
         }
         if (feature.graphic.attributes.age_strat) {
             content += "<span class='bold' ><b>Age: </b></span>{age_strat}<br/>";
         }
-        if (feature.graphic.attributes.Description) {
-            content += "<span class='bold' ><b>Unit Description: </b></span>{Description}<br/>";
+        if (feature.graphic.attributes.description) {
+            content += "<span class='bold' ><b>Unit Description: </b></span>{description}<br/>";
         }
         return content;
     }
@@ -841,7 +841,7 @@ var waterLevelRenderer = {
 
    
     geologicUnits = new FeatureLayer ({
-            url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank_WGS/FeatureServer/0",
+            url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeAppGeology_QueryLayer/FeatureServer/0",
         //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank/FeatureServer/0",
         title: "Geologic Units",
         outFields: ["*"],
