@@ -459,7 +459,7 @@ require([
     });
 
     wells = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Infrastructure_Wells_3d_drop25m/SceneServer", 
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Infrastructure_Wells_3d_drop25m_/SceneServer", 
         //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Inf_Wells_3d/SceneServer",  old old
         title: "Wells",
         // elevationInfo: [{
