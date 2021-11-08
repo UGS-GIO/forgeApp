@@ -459,7 +459,7 @@ require([
     });
 
     wells = new SceneLayer({
-        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Infrastructure_Wells_3d_drop25m/SceneServer", 
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Infrastructure_Wells_3d_drop25m_/SceneServer", 
         //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Inf_Wells_3d/SceneServer",  old old
         title: "Wells",
         // elevationInfo: [{
@@ -815,7 +815,7 @@ var waterLevelRenderer = {
 
     bougerGravity = new TileLayer({
         url: "https://tiles.arcgis.com/tiles/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_Bouger_Tile/MapServer",
-        title: "Bouger Gravity (mGal)",
+        title: "Bouguer Gravity (mGal)",
         listMode: "hide-children",
         opacity: 0.8
     });
@@ -1448,7 +1448,7 @@ if (checkURL.query.loadview == "subsurface") {  //load subsurface view and data
             layer = geoPhysBenchmarks;
         } else if (title === "Utah FORGE Gravity Points") {
             layer = gravityPoints;
-        } else if (title === "Bouger Gravity (mGal)") {
+        } else if (title === "Bouguer Gravity (mGal)") {
             layer = bougerGravity;
         } else if (title === "Milford Valley Top of Bedrock Surface") {
             layer = milValleySubSymbology;
