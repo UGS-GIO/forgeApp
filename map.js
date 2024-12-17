@@ -841,7 +841,8 @@ var waterLevelRenderer = {
 
    
     geologicUnits = new FeatureLayer ({
-            url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeAppGeology_QueryLayer/FeatureServer/0",
+        url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/forgegeounit_query/FeatureServer",
+            //url: "https://webmaps.geology.utah.gov/arcgis/rest/services/Energy_Mineral/ForgeAppGeology_QueryLayer/FeatureServer/0",
         //url: "https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/FORGE_GeoUnits_Blank/FeatureServer/0",
         title: "Geologic Units",
         outFields: ["*"],
