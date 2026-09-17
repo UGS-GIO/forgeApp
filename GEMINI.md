@@ -16,3 +16,7 @@ prefer minimal, in-style fixes over refactors.
 
 ## Correctness
 - Fail loud on fetch/query errors — don't silently blank the map; handle empty/failed responses.
+
+## Review scope & severity
+- Skip (don't post findings): `share-widget-master/` (vendored Esri widget — compiled `.js`/`.js.map`, its own `package-lock.json`, `nls/` i18n) and root vendored libs (`moment.js`); review only intentional local edits to them.
+- Blocking here (not a nit): merge to `master` deploys the public site live (Firebase `channelId: live`) even though the app is dormant — so a committed secret/API key/ArcGIS token, or XSS/DOM-injection (unescaped feature attributes or URL params into `innerHTML`), is blocking. Cosmetic issues in dormant/vendored code are not.
